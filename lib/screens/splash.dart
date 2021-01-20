@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localite/services/wrapper.dart';
 class SplashPage extends StatefulWidget {
   @override
   _SplashPageState createState() => _SplashPageState();
@@ -9,7 +10,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_){
-        return Container();//todo home or signup
+        return Wrapper();//todo home or signup
       }));
     });
     super.initState();
