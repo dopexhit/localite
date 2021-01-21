@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:localite/models/user_data.dart';
+import 'package:localite/screens/user_home.dart';
 import 'package:localite/services/auth.dart';
+import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -119,10 +121,12 @@ class _RegisterUserState extends State<RegisterUser> {
                         if (newUser != null) {
                           MyToast().getToast('Registered successfully!');
                           //TODO: go to user home screen
+                          SharedPrefs.preferences
+                              .setBool('isServiceProvider', false);
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Container()));
+                                  builder: (context) => UserHomeScreen()));
                         }
                       }
                     },

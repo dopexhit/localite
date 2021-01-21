@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:localite/services/auth.dart';
+import 'package:localite/services/shared_pref.dart';
 
 class ServiceProviderHomeScreen extends StatefulWidget {
   @override
@@ -12,8 +14,18 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
     return Scaffold(
       body: SafeArea(
         child: Center(
-          child: Text('service provider screen'),
-        ),
+            child: Column(
+          children: [
+            Text('Service provider screen'),
+            RaisedButton(
+              onPressed: () async {
+                await AuthService().signOut();
+                SharedPrefs.preferences.remove('isServiceProvider');
+              },
+              child: Text('SignOut'),
+            ),
+          ],
+        )),
       ),
       bottomNavigationBar: Padding(
         padding: EdgeInsets.only(bottom: 12),

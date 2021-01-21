@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/service_provider_data.dart';
+import 'package:localite/screens/service_provider_home.dart';
 import 'package:localite/services/auth.dart';
+import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -182,10 +184,13 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                           if (newUser != null) {
                             MyToast().getToast('Registered successfully!');
                             //TODO: go to service provider home screen
+                            SharedPrefs.preferences
+                                .setBool('isServiceProvider', true);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => Container()));
+                                    builder: (context) =>
+                                        ServiceProviderHomeScreen()));
                           }
                         }
                       },

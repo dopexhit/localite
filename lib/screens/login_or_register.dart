@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:localite/screens/register_service_provider.dart';
 import 'package:localite/screens/register_user.dart';
+import 'package:localite/screens/service_provider_home.dart';
+import 'package:localite/screens/user_home.dart';
 import 'package:localite/services/auth.dart';
+import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
 import '../constants.dart';
+
+//TODO: IMP: user can enter login page and vice-versa for service provider (make correction by using data snapshots)
 
 class LoginAndRegisterScreen extends StatefulWidget {
   final bool isServiceProvider;
@@ -82,7 +86,6 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
 
                         final newUser = await AuthService()
                             .signInwithEmailandPassword(email, password);
-
                         setState(() {
                           showSpinner = false;
                         });
@@ -91,18 +94,23 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                           MyToast().getToast('Signed in successfully!');
 
                           if (widget.isServiceProvider == true) {
-                            //TODO: go to service provider home screen
+                            // go to service provider home screen
+                            SharedPrefs.preferences
+                                .setBool('isServiceProvider', true);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Container()),
+                                  builder: (context) =>
+                                      ServiceProviderHomeScreen()),
                             );
                           } else {
-                            //TODO: go to user home screen
+                            // go to user home screen
+                            SharedPrefs.preferences
+                                .setBool('isServiceProvider', false);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Container()),
+                                  builder: (context) => UserHomeScreen()),
                             );
                           }
                         }

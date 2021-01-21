@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/models/offered_services.dart';
+import 'package:localite/services/auth.dart';
+import 'package:localite/services/shared_pref.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override
@@ -57,7 +59,14 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     children: getCards(),
                   ),
                 ),
-              )
+              ),
+              RaisedButton(
+                onPressed: () async {
+                  await AuthService().signOut();
+                  SharedPrefs.preferences.remove('isServiceProvider');
+                },
+                child: Text('SignOut'),
+              ),
             ],
           ),
         ),

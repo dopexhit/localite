@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
+import 'package:localite/widgets/toast.dart';
 
 class AuthService {
   // todo specify the fields to input
@@ -9,9 +10,7 @@ class AuthService {
 
   //creating user object based on FirebaseUser
   CustomUser _userFromFirebaseUser(User user) {
-    return user != null
-        ? CustomUser(uid: user.uid)
-        : null; //todo change custom type
+    return user != null ? CustomUser(uid: user.uid) : null;
   }
 
   //auth change user stream of data changes
@@ -28,10 +27,13 @@ class AuthService {
           email: email, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+        MyToast().getToast('No user found for that email!');
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+        MyToast().getToast('Wrong password provided for that user!');
       }
+      return null;
+    } catch (e) {
+      MyToast().getToast(e.toString());
       return null;
     }
   }
@@ -46,13 +48,13 @@ class AuthService {
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        MyToast().getToast('The password provided is too weak!');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        MyToast().getToast('The account already exists for that email!');
       }
       return null;
     } catch (e) {
-      print(e);
+      MyToast().getToast(e.toString());
       return null;
     }
   }
@@ -67,23 +69,24 @@ class AuthService {
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        MyToast().getToast('The password provided is too weak!');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        MyToast().getToast('The account already exists for that email!');
       }
       return null;
     } catch (e) {
-      print(e);
+      MyToast().getToast(e.toString());
       return null;
     }
   }
 
   //sign out
   Future signOut() async {
+    //todo: remove shared pref
     try {
       return await _auth.signOut();
     } catch (e) {
-      print(e.toString);
+      MyToast().getToast(e.toString());
       return null;
     }
   }
