@@ -137,25 +137,26 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                   ),
                   SizedBox(height: 8.0),
                   RaisedButton(
-                      child: Text('Select default location for service'),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SimpleLocationPicker(
-                                      initialLatitude: 28.7,
-                                      initialLongitude: 77.1,
-                                      appBarTitle: "Select Location",
-                                    ))).then((value) {
-                          if (value != null) {
-                            setState(() {
-                              selectedLocation = value;
-                              latitude = selectedLocation.latitude;
-                              longitude = selectedLocation.longitude;
-                            });
-                          }
-                        });
-                      }),
+                    child: Text('Select default location for service'),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SimpleLocationPicker(
+                                    initialLatitude: 28.7,
+                                    initialLongitude: 77.1,
+                                    appBarTitle: "Select Location",
+                                  ))).then((value) {
+                        if (value != null) {
+                          setState(() {
+                            selectedLocation = value;
+                            latitude = selectedLocation.latitude;
+                            longitude = selectedLocation.longitude;
+                          });
+                        }
+                      });
+                    },
+                  ),
                   SizedBox(height: 24.0),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 16.0),

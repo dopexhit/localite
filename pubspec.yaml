@@ -54,6 +54,7 @@ dependencies:
   fluttertoast: ^7.1.6
   modal_progress_hud: ^0.1.3
   simple_location_picker: ^0.0.3
+  geocoding: ^1.0.5
 
 
 
