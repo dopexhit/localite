@@ -175,7 +175,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                               service == null) {
                             MyToast().getToast('Enter all the fields!');
                           } else if (latitude == null || longitude == null) {
-                            MyToast().getToast("Couldn't sign in.. try again!");
+                            MyToast().getToast("Please select a location!");
                           } else {
                             setState(() {
                               showSpinner = true;
@@ -189,13 +189,14 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                                 longitude: longitude,
                                 service: service);
 
-                            final newUser = AuthService()
+                            final newUser = await AuthService()
                                 .serviceProviderRegisterwithEmailandPassword(
                                     email, password, data);
 
                             setState(() {
                               showSpinner = false;
                             });
+
                             if (newUser != null) {
                               MyToast().getToast('Registered successfully!');
                               // go to service provider home screen
