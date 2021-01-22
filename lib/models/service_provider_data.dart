@@ -1,4 +1,5 @@
 class ServiceProviderData {
+  String uid;
   String name;
   String contact;
   String address;
@@ -8,7 +9,8 @@ class ServiceProviderData {
   String service;
 
   ServiceProviderData(
-      {this.name,
+      {this.uid,
+      this.name,
       this.contact,
       this.address,
       this.longitude,

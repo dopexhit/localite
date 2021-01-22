@@ -113,7 +113,7 @@ class _RegisterUserState extends State<RegisterUser> {
                         UserData data = UserData(name: name, contact: contact);
                         final newUser = AuthService()
                             .userRegisterwithEmailandPassword(
-                                email, password, data);
+                                email, password,data);
 
                         setState(() {
                           showSpinner = false;

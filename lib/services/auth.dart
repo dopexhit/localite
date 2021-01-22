@@ -4,6 +4,8 @@ import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/widgets/toast.dart';
 
+import 'database.dart';
+
 class AuthService {
   // todo specify the fields to input
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -44,7 +46,8 @@ class AuthService {
     try {
       UserCredential user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // todo create new document with uid
+      // create new document with uid
+      DatabaseService().addUserDetails(user.user.uid, data);
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -65,7 +68,8 @@ class AuthService {
     try {
       UserCredential user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      // todo create new document with uid
+      // create new document with uid
+      DatabaseService().addSPDetails(user.user.uid, data);
       return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {

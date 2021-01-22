@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/screens/service_provider_home.dart';
 import 'package:localite/services/auth.dart';
+import 'package:localite/services/database.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -176,7 +178,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
 
                           final newUser = AuthService()
                               .serviceProviderRegisterwithEmailandPassword(
-                                  email, password, data);
+                                  email, password,data);
 
                           setState(() {
                             showSpinner = false;
