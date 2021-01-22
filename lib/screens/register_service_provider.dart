@@ -25,7 +25,6 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
   String address;
   double latitude;
   double longitude;
-  String city = 'kanpur';
   String service = 'Carpenter';
   bool showSpinner = false;
 
@@ -174,9 +173,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                               address == null ||
                               service == null) {
                             MyToast().getToast('Enter all the fields!');
-                          } else if (latitude == null ||
-                              longitude == null ||
-                              city == null) {
+                          } else if (latitude == null || longitude == null) {
                             MyToast().getToast("Couldn't sign in.. try again!");
                           } else {
                             setState(() {
@@ -189,7 +186,6 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                                 address: address,
                                 latitude: latitude,
                                 longitude: longitude,
-                                city: city,
                                 service: service);
 
                             final newUser = AuthService()
