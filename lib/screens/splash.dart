@@ -12,7 +12,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(Duration(seconds: 3), () {
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        return Wrapper(); //todo home or signup
+        return Wrapper(); // home or signup
       }));
     });
     super.initState();

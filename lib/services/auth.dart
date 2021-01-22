@@ -5,7 +5,6 @@ import 'package:localite/models/user_data.dart';
 import 'package:localite/widgets/toast.dart';
 
 class AuthService {
-  // todo specify the fields to input
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   //creating user object based on FirebaseUser

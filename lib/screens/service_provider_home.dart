@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 
@@ -19,8 +20,15 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
             Text('Service provider screen'),
             RaisedButton(
               onPressed: () async {
-                await AuthService().signOut();
                 SharedPrefs.preferences.remove('isServiceProvider');
+                await AuthService().signOut().whenComplete(
+                  () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectionScreen()));
+                  },
+                );
               },
               child: Text('SignOut'),
             ),

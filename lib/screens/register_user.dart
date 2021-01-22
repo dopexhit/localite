@@ -120,7 +120,7 @@ class _RegisterUserState extends State<RegisterUser> {
                         });
                         if (newUser != null) {
                           MyToast().getToast('Registered successfully!');
-                          //TODO: go to user home screen
+                          // go to user home screen
                           SharedPrefs.preferences
                               .setBool('isServiceProvider', false);
                           Navigator.push(

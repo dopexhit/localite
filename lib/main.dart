@@ -5,7 +5,6 @@ import 'package:localite/screens/splash.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:provider/provider.dart';
-
 import 'models/custom_user.dart';
 
 void main() async {
