@@ -1,6 +1,7 @@
 class UserData {
+  String uid;
   String name;
   String contact;
 
-  UserData({this.name, this.contact});
+  UserData({this.uid,this.name, this.contact});
 }
