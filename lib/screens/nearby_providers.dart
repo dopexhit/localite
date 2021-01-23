@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/service_provider_data.dart';
+import 'package:localite/screens/service_provider_detail.dart';
 import 'package:localite/services/database.dart';
 
 
@@ -45,7 +46,7 @@ class _NearbySPState extends State<NearbySP> {
                           );
 
                           if(currentSP.name=='hj')//todo change if condition
-                            spTiles.add(SPTile(service: serviceProvider.data()['name']));
+                            spTiles.add(SPTile(currentSP: currentSP,));
                         }
                         return ListView(
                           children: spTiles,
@@ -77,19 +78,22 @@ class _NearbySPState extends State<NearbySP> {
 
 class SPTile extends StatelessWidget {
   //the tile which displays carpenter details
-  final String service;
-  SPTile({this.service});
+  ServiceProviderData currentSP;
+  SPTile({this.currentSP});
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(10),
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: Text(
-          service,
-          textAlign: TextAlign.center,
+    return GestureDetector(
+      onTap:(){ Navigator.push(context, MaterialPageRoute(builder:(_)=>SPDetail(currentSp: currentSP),));},
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: EdgeInsets.all(10),
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            currentSP.name,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
