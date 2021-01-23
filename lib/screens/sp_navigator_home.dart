@@ -3,7 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/service_provider_home.dart';
-import 'package:localite/screens/temp_user_chat.dart';
+import 'package:localite/screens/sp_chatlist.dart';
 import 'package:localite/screens/temp_user_profile.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class SPNavigatorHome extends StatefulWidget {
 class _SPNavigatorHomeState extends State<SPNavigatorHome> {
   int pageIndex = 0;
   final ServiceProviderHomeScreen _spHomeScreen = ServiceProviderHomeScreen();
-  final TempUserChat _userChat = TempUserChat();
+  final SPChatList _spChat = SPChatList();
   final TempUserProfile _userProfile = TempUserProfile();
 
   Widget _showPage = new ServiceProviderHomeScreen();
@@ -27,7 +27,7 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
         break;
 
       case 1:
-        return _userChat;
+        return _spChat;
         break;
 
       default:
