@@ -6,7 +6,9 @@ import 'package:localite/services/database.dart';
 
 class NearbySP extends StatefulWidget {
   final String title;
-  NearbySP({this.title});
+  final double userLongitude;
+  final double userLatitude;
+  NearbySP({this.title,this.userLatitude,this.userLongitude});
   @override
   _NearbySPState createState() => _NearbySPState();
 }

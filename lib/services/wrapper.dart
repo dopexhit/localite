@@ -4,6 +4,7 @@ import 'package:localite/screens/login_or_register.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/service_provider_home.dart';
 import 'package:localite/screens/user_home.dart';
+import 'package:localite/screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +27,7 @@ class Wrapper extends StatelessWidget {
       if (isServiceProvider == true) {
         return ServiceProviderHomeScreen();
       } else {
-        return UserHomeScreen();
+        return UserNavigatorHome();
       }
     }
   }
