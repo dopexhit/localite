@@ -15,6 +15,16 @@ class DatabaseService {
     }).catchError((e) {
       print(e.toString());
     });
+
+    await FirebaseFirestore.instance
+        .collection('Service Provider Type')
+        .doc(uid)
+        .set({
+      'uid': uid,
+      'service': data.service,
+    }).catchError((e) {
+      print(e.toString());
+    });
   }
 
   addUserDetails(String uid, UserData data) async {

@@ -8,10 +8,6 @@ import 'package:localite/screens/chat_room.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
 
-final _firestore = FirebaseFirestore.instance;
-UserData loggedUserDetails;
-User loggedUser;
-
 class SPDetail extends StatefulWidget {
   final ServiceProviderData currentSp;
   SPDetail({this.currentSp});
@@ -20,36 +16,6 @@ class SPDetail extends StatefulWidget {
 }
 
 class _SPDetailState extends State<SPDetail> {
-  final _auth = FirebaseAuth.instance;
-
-  @override
-  void initState() {
-    super.initState();
-    getCurrentUser();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedUser = user;
-
-        var userDetail =
-            await _firestore.collection('Users').doc(loggedUser.uid).get();
-        var name = userDetail.data()['name'];
-        var contact = userDetail.data()['contact'];
-        var uid = userDetail.data()['uid'];
-        loggedUserDetails = UserData(uid: uid, name: name, contact: contact);
-
-        print(loggedUserDetails.name);
-      } else {
-        MyToast().getToastBottom('failed!');
-      }
-    } catch (e) {
-      MyToast().getToastBottom(e.message.toString());
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final loggedUser = Provider.of<CustomUser>(context);
