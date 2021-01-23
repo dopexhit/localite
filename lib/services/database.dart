@@ -18,7 +18,7 @@ class DatabaseService {
   }
 
   addUserDetails(String uid, UserData data) async {
-    await FirebaseFirestore.instance.collection('User').doc(uid).set({
+    await FirebaseFirestore.instance.collection('Users').doc(uid).set({
       'uid': uid,
       'name': data.name,
       'contact': data.contact,
@@ -27,7 +27,7 @@ class DatabaseService {
     });
   }
 
-  getAllSP(String service){
+  getAllSP(String service) {
     return FirebaseFirestore.instance.collection(service).snapshots();
   }
 }
