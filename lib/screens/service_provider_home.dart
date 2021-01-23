@@ -35,16 +35,6 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
           ],
         )),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 12),
-        child: Row(
-          children: [
-            Expanded(child: Icon(Icons.chat)),
-            Expanded(child: Icon(Icons.home_filled)),
-            Expanded(child: Icon(Icons.person)),
-          ],
-        ),
-      ),
     );
   }
 }

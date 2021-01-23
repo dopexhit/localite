@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:localite/screens/register_service_provider.dart';
 import 'package:localite/screens/register_user.dart';
 import 'package:localite/screens/service_provider_home.dart';
+import 'package:localite/screens/sp_navigator_home.dart';
 import 'package:localite/screens/user_home.dart';
 import 'package:localite/screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
@@ -102,7 +103,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      ServiceProviderHomeScreen()),
+                                      SPNavigatorHome()),
                             );
                           } else {
                             // go to user home screen

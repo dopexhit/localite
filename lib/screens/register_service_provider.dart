@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/screens/service_provider_home.dart';
+import 'package:localite/screens/sp_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
@@ -206,7 +207,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          ServiceProviderHomeScreen()));
+                                          SPNavigatorHome()));
                             }
                           }
                         },
