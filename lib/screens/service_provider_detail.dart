@@ -7,37 +7,61 @@ import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/chat_room.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 class SPDetail extends StatefulWidget {
   final ServiceProviderData currentSp;
   SPDetail({this.currentSp});
   @override
   _SPDetailState createState() => _SPDetailState();
 }
-
+_makePhoneCall(String contact) async{
+  final url = 'tel:$contact';
+  print(url);
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
 class _SPDetailState extends State<SPDetail> {
   @override
   Widget build(BuildContext context) {
     final loggedUser = Provider.of<CustomUser>(context);
 
-    return ChangeNotifierProvider(
-      create: (context) => UserDetails(),
-      child: Scaffold(
-        body: Center(
-            child: IconButton(
-          icon: Icon(Icons.message),
-          onPressed: () {
-            String roomId = loggedUser.uid + '-' + widget.currentSp.uid;
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChatRoom(
-                          roomId: roomId,
-                          receiver: widget.currentSp,
-                        )));
-          },
-        )),
-      ),
+    return Scaffold(
+      body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            child: Column(
+              children: [
+                Text('Name: '+widget.currentSp.name),
+                SizedBox(height: 20),
+                Text('Address: '+widget.currentSp.address),
+                SizedBox(height: 20),
+                Row(
+                  children: [
+                    SizedBox(width: 40),
+                    IconButton(
+                        icon: Icon(Icons.call), onPressed:()async=> _makePhoneCall(widget.currentSp.contact.toString())),
+                    SizedBox(width: 20),
+                    IconButton(
+                      icon: Icon(Icons.message),
+                      onPressed: () {
+                          String roomId = loggedUser.uid + '-' + widget.currentSp.uid;
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ChatRoom(
+                                        roomId: roomId,
+                                        receiver: widget.currentSp,
+                                      )));
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          )),
     );
   }
 }
