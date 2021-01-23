@@ -3,6 +3,7 @@ import 'package:localite/screens/register_service_provider.dart';
 import 'package:localite/screens/register_user.dart';
 import 'package:localite/screens/service_provider_home.dart';
 import 'package:localite/screens/user_home.dart';
+import 'package:localite/screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
@@ -110,7 +111,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UserHomeScreen()),
+                                  builder: (context) => UserNavigatorHome()),
                             );
                           }
                         }

@@ -15,12 +15,14 @@ class UserHomeScreen extends StatefulWidget {
   _UserHomeScreenState createState() => _UserHomeScreenState();
 }
 
+double latitude;
+double longitude;
+
 class _UserHomeScreenState extends State<UserHomeScreen> {
   SimpleLocationResult selectedLocation;
   String location;
   String searchValue;
-  double latitude;
-  double longitude;
+
 
   @override
   Widget build(BuildContext context) {
@@ -135,16 +137,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.only(bottom: 12),
-        child: Row(
-          children: [
-            Expanded(child: Icon(Icons.chat)),
-            Expanded(child: Icon(Icons.home_filled)),
-            Expanded(child: Icon(Icons.person)),
-          ],
-        ),
-      ),
     );
   }
 }
@@ -165,7 +157,7 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=> NearbySP(title: title,)));},//todo
+      onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=> NearbySP(title: title,userLatitude: latitude,userLongitude: longitude,)));},//todo
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

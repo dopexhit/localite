@@ -7,7 +7,9 @@ import 'package:localite/services/database.dart';
 
 class NearbySP extends StatefulWidget {
   final String title;
-  NearbySP({this.title});
+  final double userLongitude;
+  final double userLatitude;
+  NearbySP({this.title,this.userLatitude,this.userLongitude});
   @override
   _NearbySPState createState() => _NearbySPState();
 }
@@ -78,7 +80,7 @@ class _NearbySPState extends State<NearbySP> {
 
 class SPTile extends StatelessWidget {
   //the tile which displays carpenter details
-  ServiceProviderData currentSP;
+  final ServiceProviderData currentSP;
   SPTile({this.currentSP});
   @override
   Widget build(BuildContext context) {
