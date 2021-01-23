@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
 
@@ -11,9 +12,9 @@ User loggedUser;
 
 class ChatRoom extends StatefulWidget {
   final String roomId;
-  final messageReceiverUID;
+  final receiver;
 
-  ChatRoom({this.roomId, this.messageReceiverUID});
+  ChatRoom({this.roomId, this.receiver});
 
   @override
   _ChatRoomState createState() => _ChatRoomState();
@@ -37,7 +38,6 @@ class _ChatRoomState extends State<ChatRoom> {
       if (user != null) {
         loggedUser = user;
         print(user.email);
-        MyToast().getToastBottom(user.email.toString());
       } else {
         MyToast().getToastBottom('failed!');
       }
@@ -95,7 +95,7 @@ class _ChatRoomState extends State<ChatRoom> {
 
                         message = null;
 
-                        addUIDs(widget.messageReceiverUID);
+                        addUIDs(widget.receiver);
                       }
                     },
                     color: Colors.white,
@@ -170,21 +170,21 @@ class MessageBubble extends StatelessWidget {
   final Timestamp timestamp;
 
   MessageBubble({this.text, this.sender, this.isMe, this.timestamp});
+
   @override
   Widget build(BuildContext context) {
+    int hour = timestamp.toDate().hour.toInt();
+    int minute = timestamp.toDate().minute.toInt();
+    final String time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
+        ':' +
+        (minute > 9 ? minute.toString() : '0' + minute.toString());
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 7),
       child: Column(
         crossAxisAlignment:
             isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
         children: [
-          Text(
-            sender,
-            style: TextStyle(fontSize: 12, color: Colors.black54),
-          ),
-          SizedBox(
-            height: 2,
-          ),
           Material(
             color: isMe ? Colors.lightBlueAccent[200] : Colors.white,
             elevation: 4.0,
@@ -205,16 +205,18 @@ class MessageBubble extends StatelessWidget {
               ),
             ),
           ),
-          Text(timestamp.toDate().hour.toString() +
-              ':' +
-              timestamp.toDate().minute.toString()),
+          Padding(
+            padding: EdgeInsets.only(top: 2),
+            child: Text(time,
+                style: TextStyle(fontSize: 12, color: Colors.black54)),
+          ),
         ],
       ),
     );
   }
 }
 
-void addUIDs(String messageReceiverUID) {
+void addUIDs(ServiceProviderData receiver) {
   bool isServiceProvider = SharedPrefs.preferences.getBool('isServiceProvider');
 
   if (isServiceProvider == true) {
@@ -222,19 +224,22 @@ void addUIDs(String messageReceiverUID) {
         .collection('Service Providers')
         .doc(loggedUser.uid)
         .collection('listOfChats')
-        .doc(messageReceiverUID);
+        .doc(receiver.uid);
 
     docRefUser.get().then((value) {
       if (value.exists) {
         docRefUser.update({'lastMsg': Timestamp.now()});
       } else {
-        docRefUser.set({'uid': messageReceiverUID, 'lastMsg': Timestamp.now()});
+        docRefUser.set({
+          'uid': receiver.uid,
+          'lastMsg': Timestamp.now(),
+        });
       }
     });
 
     var docRefSP = _firestore
         .collection('Users')
-        .doc(messageReceiverUID)
+        .doc(receiver.uid)
         .collection('listOfChats')
         .doc(loggedUser.uid);
 
@@ -250,19 +255,19 @@ void addUIDs(String messageReceiverUID) {
         .collection('Users')
         .doc(loggedUser.uid)
         .collection('listOfChats')
-        .doc(messageReceiverUID);
+        .doc(receiver.uid);
 
     docRefUser.get().then((value) {
       if (value.exists) {
         docRefUser.update({'lastMsg': Timestamp.now()});
       } else {
-        docRefUser.set({'uid': messageReceiverUID, 'lastMsg': Timestamp.now()});
+        docRefUser.set({'uid': receiver.uid, 'lastMsg': Timestamp.now()});
       }
     });
 
     var docRefSP = _firestore
         .collection('Service Providers')
-        .doc(messageReceiverUID)
+        .doc(receiver.uid)
         .collection('listOfChats')
         .doc(loggedUser.uid);
 
