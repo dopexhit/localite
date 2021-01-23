@@ -3,6 +3,7 @@ import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/login_or_register.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/service_provider_home.dart';
+import 'package:localite/screens/sp_navigator_home.dart';
 import 'package:localite/screens/user_home.dart';
 import 'package:localite/screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
@@ -25,7 +26,7 @@ class Wrapper extends StatelessWidget {
           SharedPrefs.preferences.getBool('isServiceProvider');
 
       if (isServiceProvider == true) {
-        return ServiceProviderHomeScreen();
+        return SPNavigatorHome();
       } else {
         return UserNavigatorHome();
       }
