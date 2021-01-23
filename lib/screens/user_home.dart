@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:localite/constants.dart';
+import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/offered_services.dart';
+import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/nearby_providers.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
+import 'package:provider/provider.dart';
 import 'package:simple_location_picker/simple_location_picker_screen.dart';
 import 'package:simple_location_picker/simple_location_result.dart';
 
@@ -23,9 +26,10 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String location;
   String searchValue;
 
-
   @override
   Widget build(BuildContext context) {
+    GlobalContext.context = context;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -74,9 +78,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                               selectedLocation = value;
                               latitude = selectedLocation.latitude;
                               longitude = selectedLocation.longitude;
-                              MyToast().getToast(latitude.toString() +
-                                  '  ' +
-                                  longitude.toString());
                             });
                           }
                         });
@@ -157,7 +158,20 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=> NearbySP(title: title,userLatitude: latitude,userLongitude: longitude,)));},//todo
+      onTap: () {
+        if (latitude == null || longitude == null) {
+          MyToast().getToast('Please select a location!');
+        } else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => NearbySP(
+                        title: title,
+                        userLatitude: latitude,
+                        userLongitude: longitude,
+                      )));
+        }
+      },
       child: Card(
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),

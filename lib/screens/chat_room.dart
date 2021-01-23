@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
+import 'package:localite/models/user_data.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
-
+import 'package:provider/provider.dart';
 import '../constants.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -216,10 +218,13 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-void addUIDs(ServiceProviderData receiver) {
+void addUIDs(var receiver) {
   bool isServiceProvider = SharedPrefs.preferences.getBool('isServiceProvider');
 
   if (isServiceProvider == true) {
+    ServiceProviderData loggedSPData =
+        Provider.of<SPDetails>(GlobalContext.context).getSPDetails;
+
     var docRefUser = _firestore
         .collection('Service Providers')
         .doc(loggedUser.uid)
@@ -232,6 +237,7 @@ void addUIDs(ServiceProviderData receiver) {
       } else {
         docRefUser.set({
           'uid': receiver.uid,
+          'name': receiver.name,
           'lastMsg': Timestamp.now(),
         });
       }
@@ -247,10 +253,18 @@ void addUIDs(ServiceProviderData receiver) {
       if (value.exists) {
         docRefSP.update({'lastMsg': Timestamp.now()});
       } else {
-        docRefSP.set({'uid': loggedUser.uid, 'lastMsg': Timestamp.now()});
+        docRefSP.set({
+          'uid': loggedUser.uid,
+          'name': loggedSPData.name,
+          'service': loggedSPData.service,
+          'lastMsg': Timestamp.now(),
+        });
       }
     });
   } else {
+    UserData loggedUserData =
+        Provider.of<UserDetails>(GlobalContext.context).getUserDetails;
+
     var docRefUser = _firestore
         .collection('Users')
         .doc(loggedUser.uid)
@@ -261,7 +275,12 @@ void addUIDs(ServiceProviderData receiver) {
       if (value.exists) {
         docRefUser.update({'lastMsg': Timestamp.now()});
       } else {
-        docRefUser.set({'uid': receiver.uid, 'lastMsg': Timestamp.now()});
+        docRefUser.set({
+          'uid': receiver.uid,
+          'name': receiver.name,
+          'service': receiver.service,
+          'lastMsg': Timestamp.now(),
+        });
       }
     });
 
@@ -275,7 +294,11 @@ void addUIDs(ServiceProviderData receiver) {
       if (value.exists) {
         docRefSP.update({'lastMsg': Timestamp.now()});
       } else {
-        docRefSP.set({'uid': loggedUser.uid, 'lastMsg': Timestamp.now()});
+        docRefSP.set({
+          'uid': loggedUser.uid,
+          'name': loggedUserData.name,
+          'lastMsg': Timestamp.now(),
+        });
       }
     });
   }

@@ -20,21 +20,24 @@ class _SPDetailState extends State<SPDetail> {
   Widget build(BuildContext context) {
     final loggedUser = Provider.of<CustomUser>(context);
 
-    return Scaffold(
-      body: Center(
-          child: IconButton(
-        icon: Icon(Icons.message),
-        onPressed: () {
-          String roomId = loggedUser.uid + '-' + widget.currentSp.uid;
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ChatRoom(
-                        roomId: roomId,
-                        receiver: widget.currentSp,
-                      )));
-        },
-      )),
+    return ChangeNotifierProvider(
+      create: (context) => UserDetails(),
+      child: Scaffold(
+        body: Center(
+            child: IconButton(
+          icon: Icon(Icons.message),
+          onPressed: () {
+            String roomId = loggedUser.uid + '-' + widget.currentSp.uid;
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ChatRoom(
+                          roomId: roomId,
+                          receiver: widget.currentSp,
+                        )));
+          },
+        )),
+      ),
     );
   }
 }

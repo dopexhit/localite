@@ -14,19 +14,23 @@ final _firestore = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
 User loggedUser;
 
+class GlobalContext {
+  static BuildContext context;
+}
+
 class UserDetails extends ChangeNotifier {
   UserData userData;
-
-  UserData get getUserDetails {
-    return userData;
-  }
 
   UserDetails() {
     getCurrentUser();
     notifyListeners();
   }
 
-  void getCurrentUser() async {
+  UserData get getUserDetails {
+    return userData;
+  }
+
+  Future<void> getCurrentUser() async {
     try {
       final user = _auth.currentUser;
       if (user != null) {

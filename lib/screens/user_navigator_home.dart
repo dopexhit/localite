@@ -2,8 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
+import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/temp_user_chat.dart';
 import 'package:localite/screens/temp_user_profile.dart';
+import 'package:localite/screens/user_chatlist.dart';
 import 'package:localite/screens/user_home.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +17,7 @@ class UserNavigatorHome extends StatefulWidget {
 class _UserNavigatorHomeState extends State<UserNavigatorHome> {
   int pageIndex = 0;
   final UserHomeScreen _userHomeScreen = UserHomeScreen();
-  final TempUserChat _userChat = TempUserChat();
+  final UserChatList _userChat = UserChatList();
   final TempUserProfile _userProfile = TempUserProfile();
 
   Widget _showPage = new UserHomeScreen();
