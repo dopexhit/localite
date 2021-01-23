@@ -42,13 +42,13 @@ class _NearbySPState extends State<NearbySP> {
                             name: serviceProvider.data()['name'],
                             contact: serviceProvider.data()['contact'],
                             address: serviceProvider.data()['address'],
-                            longitude: double.parse(serviceProvider.data()['longitude']),
-                            latitude: double.parse(serviceProvider.data()['latitude']),
+                            longitude: double.parse(serviceProvider.data()['longitude'].toString()),
+                            latitude: double.parse(serviceProvider.data()['latitude'].toString()),
                             service: serviceProvider.data()['service'],
                           );
 
-                          double latitudeDiff=(currentSP.latitude-widget.userLatitude).abs();
-                          double longitudeDiff=(currentSP.longitude-widget.userLongitude).abs();
+                          var latitudeDiff=(currentSP.latitude-widget.userLatitude).abs();
+                          var longitudeDiff=(currentSP.longitude-widget.userLongitude).abs();
 
                           if(latitudeDiff<=0.2 && longitudeDiff<=0.2)//todo change if condition
                             spTiles.add(SPTile(currentSP: currentSP,));
