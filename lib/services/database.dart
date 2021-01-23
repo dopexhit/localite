@@ -26,4 +26,8 @@ class DatabaseService {
       print(e.toString());
     });
   }
+
+  getAllSP(String service){
+    return FirebaseFirestore.instance.collection(service).snapshots();
+  }
 }

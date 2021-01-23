@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/models/offered_services.dart';
+import 'package:localite/screens/nearby_providers.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
@@ -163,15 +164,18 @@ class CustomCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(10),
-      child: Padding(
-        padding: EdgeInsets.all(20),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
+    return GestureDetector(
+      onTap:(){ Navigator.push(context, MaterialPageRoute(builder: (context)=> NearbySP(title: title,)));},//todo
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: EdgeInsets.all(10),
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(
+            title,
+            textAlign: TextAlign.center,
+          ),
         ),
       ),
     );
