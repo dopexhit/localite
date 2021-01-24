@@ -1,20 +1,22 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/chat_room.dart';
+import 'package:localite/screens/user_request_screen.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
+import 'package:simple_location_picker/simple_location_picker_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 class SPDetail extends StatefulWidget {
   final ServiceProviderData currentSp;
   SPDetail({this.currentSp});
   @override
   _SPDetailState createState() => _SPDetailState();
 }
-_makePhoneCall(String contact) async{
+
+_makePhoneCall(String contact) async {
   final url = 'tel:$contact';
   print(url);
   if (await canLaunch(url)) {
@@ -23,6 +25,7 @@ _makePhoneCall(String contact) async{
     throw 'Could not launch $url';
   }
 }
+
 class _SPDetailState extends State<SPDetail> {
   @override
   Widget build(BuildContext context) {
@@ -31,37 +34,60 @@ class _SPDetailState extends State<SPDetail> {
     return Scaffold(
       body: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-            child: Column(
+        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        child: Column(
+          children: [
+            Text('Name: ' + widget.currentSp.name),
+            SizedBox(height: 20),
+            Text('Address: ' + widget.currentSp.address),
+            SizedBox(height: 20),
+            Row(
               children: [
-                Text('Name: '+widget.currentSp.name),
-                SizedBox(height: 20),
-                Text('Address: '+widget.currentSp.address),
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    SizedBox(width: 40),
-                    IconButton(
-                        icon: Icon(Icons.call), onPressed:()async=> _makePhoneCall(widget.currentSp.contact.toString())),
-                    SizedBox(width: 20),
-                    IconButton(
-                      icon: Icon(Icons.message),
-                      onPressed: () {
-                          String roomId = loggedUser.uid + '-' + widget.currentSp.uid;
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChatRoom(
-                                        roomId: roomId,
-                                        receiver: widget.currentSp,
-                                      )));
-                      },
-                    ),
-                  ],
+                SizedBox(width: 40),
+                IconButton(
+                    icon: Icon(Icons.call),
+                    onPressed: () async =>
+                        _makePhoneCall(widget.currentSp.contact.toString())),
+                SizedBox(width: 20),
+                IconButton(
+                  icon: Icon(Icons.message),
+                  onPressed: () {
+                    String roomId = loggedUser.uid + '-' + widget.currentSp.uid;
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChatRoom(
+                                  roomId: roomId,
+                                  receiver: widget.currentSp,
+                                )));
+                  },
                 ),
               ],
             ),
-          )),
+            RaisedButton(
+                child: Text('Locate on map'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SimpleLocationPicker(
+                                initialLatitude: widget.currentSp.latitude,
+                                initialLongitude: widget.currentSp.longitude,
+                                appBarTitle: "Display Location",
+                                displayOnly: true,
+                              )));
+                }),
+            RaisedButton(
+                child: Text('Request home service'),
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => UserRequestScreen()));
+                })
+          ],
+        ),
+      )),
     );
   }
 }

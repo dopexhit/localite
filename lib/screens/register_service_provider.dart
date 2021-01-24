@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/screens/service_provider_home.dart';
@@ -139,13 +140,23 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                   SizedBox(height: 8.0),
                   RaisedButton(
                     child: Text('Select default location for service'),
-                    onPressed: () {
+                    onPressed: () async {
+                      double lat = 28.1, long = 77.1;
+
+                      if (address != '' && address != null) {
+                        List<Location> locations =
+                            await locationFromAddress(address);
+                        if (locations != null) {
+                          lat = locations[0].latitude;
+                          long = locations[0].longitude;
+                        }
+                      }
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SimpleLocationPicker(
-                                    initialLatitude: 28.7,
-                                    initialLongitude: 77.1,
+                                    initialLatitude: lat,
+                                    initialLongitude: long,
                                     appBarTitle: "Select Location",
                                   ))).then((value) {
                         if (value != null) {
@@ -206,8 +217,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          SPNavigatorHome()));
+                                      builder: (context) => SPNavigatorHome()));
                             }
                           }
                         },
