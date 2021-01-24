@@ -202,7 +202,7 @@ void addUIDs(ServiceProviderData receiver) {
         'name': loggedUserData.name,
         'pending': true,
         'completed': false,
-        'lastMsg': Timestamp.now(),
+        'lastRequest': Timestamp.now(),
       });
     }
   });

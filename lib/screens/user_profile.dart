@@ -12,6 +12,8 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   Widget build(BuildContext context) {
+    UserData data = Provider.of<UserDetails>(context).getUserDetails;
+    MyToast().getToast(data.uid);
     return Container(
       child: Text('UserProfile'),
     );
