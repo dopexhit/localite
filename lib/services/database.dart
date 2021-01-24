@@ -32,6 +32,7 @@ class DatabaseService {
       'uid': uid,
       'name': data.name,
       'contact': data.contact,
+      'photoUrl': null,
     }).catchError((e) {
       print(e.toString());
     });
@@ -39,5 +40,8 @@ class DatabaseService {
 
   getAllSP(String service) {
     return FirebaseFirestore.instance.collection(service).snapshots();
+  }
+  getUserData(String uid){
+    return FirebaseFirestore.instance.collection('Users').doc(uid).snapshots();
   }
 }
