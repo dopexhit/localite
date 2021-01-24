@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/user_data.dart';
+import 'package:localite/screens/user_pending_requests.dart';
 import 'package:localite/screens/user_profile.dart';
 import 'package:localite/screens/user_chatlist.dart';
 import 'package:localite/screens/user_home.dart';
@@ -17,6 +18,7 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
   int pageIndex = 0;
   final UserHomeScreen _userHomeScreen = UserHomeScreen();
   final UserChatList _userChat = UserChatList();
+  final UserPendingRequests _userPendingRequests = UserPendingRequests();
   final UserProfile _userProfile = UserProfile();
 
   Widget _showPage = new UserHomeScreen();
@@ -30,6 +32,9 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
       case 1:
         return _userChat;
         break;
+
+      case 2:
+        return _userPendingRequests;
 
       default:
         return _userProfile;
@@ -58,6 +63,10 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
             ),
             Icon(
               Icons.chat,
+              size: 20,
+            ),
+            Icon(
+              Icons.more_time_sharp,
               size: 20,
             ),
             Icon(

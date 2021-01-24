@@ -3,6 +3,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/service_provider_home.dart';
+import 'package:localite/screens/service_provider_profile.dart';
 import 'package:localite/screens/sp_chatlist.dart';
 import 'package:localite/screens/user_profile.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
   int pageIndex = 0;
   final ServiceProviderHomeScreen _spHomeScreen = ServiceProviderHomeScreen();
   final SPChatList _spChat = SPChatList();
-  final UserProfile _userProfile = UserProfile();
+  final SPProfile _spProfile = SPProfile();
 
   Widget _showPage = new ServiceProviderHomeScreen();
 
@@ -31,7 +32,7 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
         break;
 
       default:
-        return _userProfile;
+        return _spProfile;
         break;
     }
   }
