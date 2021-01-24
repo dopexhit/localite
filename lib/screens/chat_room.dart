@@ -84,7 +84,6 @@ class _ChatRoomState extends State<ChatRoom> {
                       //Implement send functionality.
                       messageTextController.clear();
                       if (message != null) {
-                        // var a = Random().nextInt(3).toString();
                         _firestore
                             .collection('chatRoom')
                             .doc(widget.roomId)

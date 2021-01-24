@@ -50,10 +50,9 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                     visible: pendingVisibility,
                     child: SizedBox(
                       width: double.maxFinite,
-                      child: Card(
+                      child: Container(
                         margin: EdgeInsets.only(
-                            left: 20, right: 20, top: 20, bottom: 10),
-                        elevation: 5,
+                            left: 20, right: 20, top: 20, bottom: 5),
                         child: Padding(
                           padding: EdgeInsets.only(top: 8, left: 8, right: 8),
                           child: Column(
@@ -74,7 +73,7 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Icon(
-                                        Icons.keyboard_arrow_down_rounded,
+                                        pendingIcon,
                                       ),
                                     ],
                                   ),
@@ -83,7 +82,15 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                                       flexCompleted = (flexCompleted + 1) % 2;
                                       completedVisibility =
                                           !completedVisibility;
-                                      if (pendingIconDown == true) {}
+                                      if (pendingIconDown == true) {
+                                        pendingIconDown = false;
+                                        pendingIcon =
+                                            Icons.keyboard_arrow_up_rounded;
+                                      } else {
+                                        pendingIconDown = true;
+                                        pendingIcon =
+                                            Icons.keyboard_arrow_down_rounded;
+                                      }
                                     });
                                   },
                                 ),
@@ -99,11 +106,53 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                     visible: completedVisibility,
                     child: SizedBox(
                       width: double.maxFinite,
-                      child: Card(
+                      child: Container(
                         margin: EdgeInsets.only(
-                            left: 20, right: 20, top: 10, bottom: 20),
-                        elevation: 5,
-                        child: Text('jj'),
+                            left: 20, right: 20, top: 5, bottom: 20),
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                'Completed requests',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(fontSize: 15),
+                              ),
+                              SizedBox(height: 8),
+                              Expanded(child: ListView()),
+                              SizedBox(
+                                height: 30,
+                                child: RawMaterialButton(
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        completedIcon,
+                                      ),
+                                    ],
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      flexPending = (flexPending + 1) % 2;
+                                      pendingVisibility = !pendingVisibility;
+                                      if (completedIconDown == true) {
+                                        completedIconDown = false;
+                                        completedIcon =
+                                            Icons.keyboard_arrow_up_rounded;
+                                      } else {
+                                        completedIconDown = true;
+                                        completedIcon =
+                                            Icons.keyboard_arrow_down_rounded;
+                                      }
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     )))
           ],
