@@ -18,6 +18,14 @@ class GlobalContext {
   static BuildContext context;
 }
 
+class GlobalUserDetail {
+  static UserData userData;
+}
+
+class GlobalServiceProviderDetail {
+  static ServiceProviderData spData;
+}
+
 class UserDetails extends ChangeNotifier {
   UserData userData;
 
@@ -41,7 +49,9 @@ class UserDetails extends ChangeNotifier {
         var name = userDetail.data()['name'];
         var contact = userDetail.data()['contact'];
         var uid = userDetail.data()['uid'];
+
         userData = UserData(uid: uid, name: name, contact: contact);
+        GlobalUserDetail.userData = userData;
       } else {
         MyToast().getToastBottom('failed!');
       }
@@ -92,6 +102,8 @@ class SPDetails extends ChangeNotifier {
             longitude: longitude,
             latitude: latitude,
             service: service);
+
+        GlobalServiceProviderDetail.spData = spData;
       } else {
         MyToast().getToastBottom('failed!');
       }

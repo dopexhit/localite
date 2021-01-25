@@ -145,6 +145,7 @@ class _UserRequestScreenState extends State<UserRequestScreen> {
                         'address': address,
                         'latitude': latitude,
                         'longitude': longitude,
+                        'contact': user.contact,
                         'timestamp': Timestamp.now(),
                       });
 
@@ -172,8 +173,7 @@ void addUIDs(ServiceProviderData receiver) {
 
   docRefUser.get().then((value) {
     if (value.exists) {
-      docRefUser.update(
-          {'lastMsg': Timestamp.now(), 'pending': true, 'completed': true});
+      docRefUser.update({'lastMsg': Timestamp.now(), 'pending': true});
     } else {
       docRefUser.set({
         'uid': receiver.uid,
@@ -194,8 +194,7 @@ void addUIDs(ServiceProviderData receiver) {
 
   docRefSP.get().then((value) {
     if (value.exists) {
-      docRefSP.update(
-          {'lastMsg': Timestamp.now(), 'pending': true, 'completed': true});
+      docRefSP.update({'lastMsg': Timestamp.now(), 'pending': true});
     } else {
       docRefSP.set({
         'uid': loggedUser.uid,

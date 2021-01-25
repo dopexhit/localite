@@ -144,7 +144,7 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
                               Text(
-                                'Completed requests',
+                                'Accepted requests',
                                 textAlign: TextAlign.center,
                                 style: TextStyle(fontSize: 15),
                               ),
@@ -255,7 +255,7 @@ class TileStreamCompleted extends StatelessWidget {
               final tile = MessageTile(
                 uid: doc.data()['uid'],
                 name: doc.data()['name'],
-                timestamp: doc.data()['lastMsg'],
+                timestamp: doc.data()['lastRequest'],
                 type: 'completed',
               );
               tiles.add(tile);
