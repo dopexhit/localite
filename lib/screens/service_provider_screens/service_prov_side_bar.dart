@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:localite/screens/selection_screen.dart';
+import 'package:localite/screens/service_provider_screens/service_provider_accepted_requests.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
+
 class SPDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -11,35 +13,46 @@ class SPDrawer extends StatelessWidget {
           DrawerHeader(
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: NetworkImage("https://www.computerhope.com/jargon/n/navigate.jpg"),
+                    image: NetworkImage(
+                        "https://www.computerhope.com/jargon/n/navigate.jpg"),
                     fit: BoxFit.cover)),
             child: Text("Localite"),
           ),
-          SizedBox(height: 10.0,),
+          SizedBox(
+            height: 10.0,
+          ),
           ListTile(
             title: Text("Confirmed Requests"),
             onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => SPAcceptedRequests()));
             },
           ),
-          SizedBox(height: 10.0,),
+          SizedBox(
+            height: 10.0,
+          ),
           ListTile(
             title: Text("Update Profile"),
-            onTap: () {
-            },
+            onTap: () {},
           ),
-          SizedBox(height: 10.0,),
+          SizedBox(
+            height: 10.0,
+          ),
           ListTile(
             title: Text("About Us"),
-            onTap: () {
-            },
+            onTap: () {},
           ),
-          SizedBox(height: 10.0,),
+          SizedBox(
+            height: 10.0,
+          ),
           ListTile(
             title: Text("Sign Out"),
-            onTap: ()async {
+            onTap: () async {
               SharedPrefs.preferences.remove('isServiceProvider');
               await AuthService().signOut().whenComplete(
-                    () {
+                () {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -53,4 +66,3 @@ class SPDrawer extends StatelessWidget {
     );
   }
 }
-

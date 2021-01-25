@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:localite/models/user_data.dart';
-import 'file:///D:/Android/localite/lib/screens/user_screens/user_navigator_home.dart';
+import 'package:localite/screens/user_screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';

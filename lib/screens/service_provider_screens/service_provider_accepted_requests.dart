@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
-import 'file:///D:/Android/localite/lib/screens/service_provider_screens/sp_showall_completed_requests.dart';
+import 'package:localite/screens/service_provider_screens/sp_showall_completed_requests.dart';
 
 final _firestore = FirebaseFirestore.instance;
 

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/selection_screen.dart';
-import 'file:///D:/Android/localite/lib/screens/service_provider_screens/sp_pending_request_detailed_screen.dart';
-import 'file:///D:/Android/localite/lib/screens/service_provider_screens/sp_showall_completed_requests.dart';
+import 'package:localite/screens/service_provider_screens/sp_pending_request_detailed_screen.dart';
+import 'package:localite/screens/service_provider_screens/sp_showall_completed_requests.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
@@ -64,133 +64,40 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
           child: Center(
               child: Column(
             children: [
-              RaisedButton(
-                onPressed: () async {
-                  SharedPrefs.preferences.remove('isServiceProvider');
-                  await AuthService().signOut().whenComplete(
-                    () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SelectionScreen()));
-                    },
-                  );
-                },
-                child: Text('SignOut'),
-              ),
+              // RaisedButton(
+              //   onPressed: () async {
+              //     SharedPrefs.preferences.remove('isServiceProvider');
+              //     await AuthService().signOut().whenComplete(
+              //       () {
+              //         Navigator.pushReplacement(
+              //             context,
+              //             MaterialPageRoute(
+              //                 builder: (context) => SelectionScreen()));
+              //       },
+              //     );
+              //   },
+              //   child: Text('SignOut'),
+              // ),
               Expanded(
-                  flex: flexPending,
-                  child: Visibility(
-                      visible: pendingVisibility,
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 20, right: 20, top: 20, bottom: 5),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 8, left: 8, right: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  'Pending requests',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                SizedBox(height: 8),
-                                TileStreamPending(),
-                                SizedBox(
-                                  height: 30,
-                                  child: RawMaterialButton(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          pendingIcon,
-                                        ),
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        flexCompleted = (flexCompleted + 1) % 2;
-                                        completedVisibility =
-                                            !completedVisibility;
-                                        if (pendingIconDown == true) {
-                                          pendingIconDown = false;
-                                          pendingIcon =
-                                              Icons.keyboard_arrow_up_rounded;
-                                        } else {
-                                          pendingIconDown = true;
-                                          pendingIcon =
-                                              Icons.keyboard_arrow_down_rounded;
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ))),
-              Expanded(
-                  flex: flexCompleted,
-                  child: Visibility(
-                      visible: completedVisibility,
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 20, right: 20, top: 5, bottom: 20),
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 8, left: 8, right: 8),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Text(
-                                  'Accepted requests',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(fontSize: 15),
-                                ),
-                                SizedBox(height: 8),
-                                TileStreamCompleted(),
-                                SizedBox(
-                                  height: 30,
-                                  child: RawMaterialButton(
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          completedIcon,
-                                        ),
-                                      ],
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        flexPending = (flexPending + 1) % 2;
-                                        pendingVisibility = !pendingVisibility;
-                                        if (completedIconDown == true) {
-                                          completedIconDown = false;
-                                          completedIcon =
-                                              Icons.keyboard_arrow_up_rounded;
-                                        } else {
-                                          completedIconDown = true;
-                                          completedIcon =
-                                              Icons.keyboard_arrow_down_rounded;
-                                        }
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ))),
+                  child: Container(
+                margin:
+                    EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+                child: Padding(
+                  padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Pending requests',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 25),
+                      TileStreamPending(),
+                    ],
+                  ),
+                ),
+              )),
             ],
           )),
         ),
