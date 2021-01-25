@@ -37,7 +37,6 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
     super.initState();
 
     getCurrentUser();
-    SPDetails();
   }
 
   void getCurrentUser() async {

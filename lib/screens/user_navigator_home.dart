@@ -43,6 +43,12 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    UserDetails();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => UserDetails(),

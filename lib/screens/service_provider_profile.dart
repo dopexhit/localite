@@ -19,7 +19,7 @@ class SPProfile extends StatefulWidget {
 
 class _SPProfileState extends State<SPProfile> {
   File _imageFile;
-  ServiceProviderData currentSP=GlobalServiceProviderDetail.spData;
+  ServiceProviderData currentSP;
 
   _getImage(BuildContext context,ImageSource source) async{
     final image=await ImagePicker.pickImage(source: source, maxWidth: 400.0);
@@ -91,7 +91,7 @@ class _SPProfileState extends State<SPProfile> {
 
   @override
   Widget build(BuildContext context) {
-
+    currentSP=GlobalServiceProviderDetail.spData;
     return StreamBuilder<DocumentSnapshot>(
         stream: DatabaseService().getSPProfile(currentSP.uid,currentSP.service),
         builder: (context, snapshot) {

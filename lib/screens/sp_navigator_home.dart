@@ -38,6 +38,12 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    SPDetails();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => SPDetails(),
