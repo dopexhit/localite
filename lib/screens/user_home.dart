@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:localite/constants.dart';
+import 'package:localite/main.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/user_data.dart';
@@ -27,114 +29,125 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String searchValue;
 
   @override
+  void initState() {
+    super.initState();
+    UserDetails();
+  }
+
+  @override
   Widget build(BuildContext context) {
     GlobalContext.context = context;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {
-                        location = value;
-                      },
-                      style: TextStyle(
-                        color: Colors.black87,
-                      ),
-                      textAlign: TextAlign.center,
-                      decoration: kLoginDecoration.copyWith(
-                        hintText: 'Enter your location',
-                        icon: Icon(Icons.location_on),
+    return WillPopScope(
+      onWillPop: () {
+        return SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        onChanged: (value) {
+                          location = value;
+                        },
+                        style: TextStyle(
+                          color: Colors.black87,
+                        ),
+                        textAlign: TextAlign.center,
+                        decoration: kLoginDecoration.copyWith(
+                          hintText: 'Enter your location',
+                          icon: Icon(Icons.location_on),
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: () async {
-                      List<Location> locations =
-                          await locationFromAddress(location);
-                      if (locations == null) {
-                        MyToast().getToast(
-                            'An error occurred! Enter your location again');
-                      } else {
-                        double lat = locations[0].latitude;
-                        double long = locations[0].longitude;
+                    SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () async {
+                        List<Location> locations =
+                            await locationFromAddress(location);
+                        if (locations == null) {
+                          MyToast().getToast(
+                              'An error occurred! Enter your location again');
+                        } else {
+                          double lat = locations[0].latitude;
+                          double long = locations[0].longitude;
 
-                        Navigator.push(
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SimpleLocationPicker(
+                                        initialLatitude: lat,
+                                        initialLongitude: long,
+                                        appBarTitle: "Select Location",
+                                      ))).then((value) {
+                            if (value != null) {
+                              setState(() {
+                                selectedLocation = value;
+                                latitude = selectedLocation.latitude;
+                                longitude = selectedLocation.longitude;
+                              });
+                            }
+                          });
+                        }
+                      },
+                      child: Text(
+                        'Done',
+                        style: TextStyle(
+                          color: Colors.lightBlueAccent,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 16,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 20),
+                TextField(
+                  onChanged: (value) {
+                    searchValue = value;
+                  },
+                  style: TextStyle(
+                    color: Colors.black87,
+                  ),
+                  textAlign: TextAlign.center,
+                  decoration: kLoginDecoration.copyWith(
+                    hintText: 'search',
+                    icon: Icon(
+                      Icons.person_search_sharp,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: ListView(
+                      shrinkWrap: true,
+                      physics: ClampingScrollPhysics(),
+                      children: getCards(),
+                    ),
+                  ),
+                ),
+                RaisedButton(
+                  onPressed: () async {
+                    SharedPrefs.preferences.remove('isServiceProvider');
+                    await AuthService().signOut().whenComplete(
+                      () {
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => SimpleLocationPicker(
-                                      initialLatitude: lat,
-                                      initialLongitude: long,
-                                      appBarTitle: "Select Location",
-                                    ))).then((value) {
-                          if (value != null) {
-                            setState(() {
-                              selectedLocation = value;
-                              latitude = selectedLocation.latitude;
-                              longitude = selectedLocation.longitude;
-                            });
-                          }
-                        });
-                      }
-                    },
-                    child: Text(
-                      'Done',
-                      style: TextStyle(
-                        color: Colors.lightBlueAccent,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 16,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(height: 20),
-              TextField(
-                onChanged: (value) {
-                  searchValue = value;
-                },
-                style: TextStyle(
-                  color: Colors.black87,
+                                builder: (context) => SelectionScreen()));
+                      },
+                    );
+                  },
+                  child: Text('SignOut'),
                 ),
-                textAlign: TextAlign.center,
-                decoration: kLoginDecoration.copyWith(
-                  hintText: 'search',
-                  icon: Icon(
-                    Icons.person_search_sharp,
-                  ),
-                ),
-              ),
-              SizedBox(height: 30),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
-                    children: getCards(),
-                  ),
-                ),
-              ),
-              RaisedButton(
-                onPressed: () async {
-                  SharedPrefs.preferences.remove('isServiceProvider');
-                  await AuthService().signOut().whenComplete(
-                    () {
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SelectionScreen()));
-                    },
-                  );
-                },
-                child: Text('SignOut'),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

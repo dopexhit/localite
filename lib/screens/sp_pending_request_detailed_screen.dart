@@ -1,7 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/screens/chat_room.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:simple_location_picker/simple_location_picker_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -27,6 +30,8 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
   String spName = '';
   Timestamp requestTime = Timestamp.now();
   String service = '';
+  String time = '';
+  String date = '';
 
   @override
   void initState() {
@@ -55,12 +60,37 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
             contact = doc.data()['contact'];
             service = doc.data()['service'];
             requestTime = doc.data()['timestamp'];
+
+            //get date and time from timestamp
+            int hour = requestTime.toDate().hour;
+            int minute = requestTime.toDate().minute;
+            int day = requestTime.toDate().day;
+            int month = requestTime.toDate().month;
+            int year = requestTime.toDate().year;
+            time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
+                ':' +
+                (minute > 9 ? minute.toString() : '0' + minute.toString());
+            date = (day > 9 ? day.toString() : '0' + day.toString()) +
+                '/' +
+                (month > 9 ? month.toString() : '0' + month.toString()) +
+                '/' +
+                year.toString();
             asyncCall = false;
           });
           break;
         }
       }
     });
+  }
+
+  _makePhoneCall(String contact) async {
+    final url = 'tel:$contact';
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -75,26 +105,50 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                 Text('name: $userName'),
                 Text('description: $description'),
                 Text('address: $address'),
-                Text(requestTime.toDate().toString()),
+                Text('Request made at $time on $date'),
                 Row(
                   children: [
                     Expanded(
                         child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        IconButton(icon: Icon(Icons.call), onPressed: () {}),
+                        IconButton(
+                            icon: Icon(Icons.call),
+                            onPressed: () async =>
+                                _makePhoneCall(contact.toString())),
                         Text(contact),
                       ],
                     )),
                     Expanded(
                         child: IconButton(
-                            icon: Icon(Icons.message), onPressed: () {})),
+                            icon: Icon(Icons.message),
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChatRoom(
+                                          roomId: widget.requestID,
+                                          userUid: widget.userUID,
+                                          spUid: widget.spUID)));
+                            })),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(icon: Icon(Icons.location_on), onPressed: () {}),
+                    IconButton(
+                        icon: Icon(Icons.location_on),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SimpleLocationPicker(
+                                        initialLatitude: latitude,
+                                        initialLongitude: longitude,
+                                        appBarTitle: "Display Location",
+                                        displayOnly: true,
+                                      )));
+                        }),
                     Text('Find on map')
                   ],
                 ),
@@ -178,7 +232,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                         });
 
                         // push pending data in completed request list
-                        var docRefCompleted = _firestore
+                        _firestore
                             .collection('requests')
                             .doc(widget.requestID)
                             .collection('completed')

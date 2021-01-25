@@ -7,12 +7,12 @@ final _firestore = FirebaseFirestore.instance;
 
 String userUID = GlobalUserDetail.userData.uid;
 
-class UserPendingRequests extends StatefulWidget {
+class UserAcceptedRequests extends StatefulWidget {
   @override
-  _UserPendingRequestsState createState() => _UserPendingRequestsState();
+  _UserAcceptedRequestsState createState() => _UserAcceptedRequestsState();
 }
 
-class _UserPendingRequestsState extends State<UserPendingRequests> {
+class _UserAcceptedRequestsState extends State<UserAcceptedRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +24,12 @@ class _UserPendingRequestsState extends State<UserPendingRequests> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Pending requests',
+                'Accepted requests',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
-              TileStreamPending(),
+              TileStreamCompleted(),
             ],
           ),
         )),
@@ -38,7 +38,7 @@ class _UserPendingRequestsState extends State<UserPendingRequests> {
   }
 }
 
-class TileStreamPending extends StatelessWidget {
+class TileStreamCompleted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -54,13 +54,13 @@ class TileStreamPending extends StatelessWidget {
           List<MessageTile> tiles = [];
 
           for (var doc in userListOfRequests) {
-            if (doc.data()['pending'] == true) {
+            if (doc.data()['completed'] == true) {
               final tile = MessageTile(
                 uid: doc.data()['uid'],
                 name: doc.data()['name'],
                 service: doc.data()['service'],
                 timestamp: doc.data()['lastRequest'],
-                type: 'pending',
+                type: 'completed',
               );
               tiles.add(tile);
             }
