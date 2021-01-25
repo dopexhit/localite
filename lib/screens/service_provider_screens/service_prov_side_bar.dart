@@ -17,12 +17,6 @@ class SPDrawer extends StatelessWidget {
           ),
           SizedBox(height: 10.0,),
           ListTile(
-            title: Text("Pending requests"),
-            onTap: () {
-            },
-          ),
-          SizedBox(height: 10.0,),
-          ListTile(
             title: Text("Confirmed Requests"),
             onTap: () {
             },
