@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/user_side_bar.dart';
+import 'file:///D:/Android/localite/lib/screens/user_screens/user_side_bar.dart';
 import 'package:localite/services/database.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
@@ -112,7 +112,7 @@ class _UserProfileState extends State<UserProfile> {
                           child: SizedBox(
                             width: 100,
                             height: 100,
-                            child: (photoUrl==null)?
+                            child: (photoUrl=='null')?
                             Image.asset('assets/images/default_profile_pic.jpg'):
                             Image.network(photoUrl,fit: BoxFit.fill),
                           ),

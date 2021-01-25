@@ -3,17 +3,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/widgets/toast.dart';
 
-import 'chat_room.dart';
+import '../chat_room.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedUser;
 
-class SPChatList extends StatefulWidget {
+class UserChatList extends StatefulWidget {
   @override
-  _SPChatListState createState() => _SPChatListState();
+  _UserChatListState createState() => _UserChatListState();
 }
 
-class _SPChatListState extends State<SPChatList> {
+class _UserChatListState extends State<UserChatList> {
   final _auth = FirebaseAuth.instance;
   final messageTextController = TextEditingController();
   String message;
@@ -46,7 +46,7 @@ class _SPChatListState extends State<SPChatList> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: TileStream(),
+        child: Expanded(child: TileStream()),
       ),
     );
   }
@@ -57,7 +57,7 @@ class TileStream extends StatelessWidget {
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
-          .collection('Service Providers')
+          .collection('Users')
           .doc(loggedUser.uid)
           .collection('listOfChats')
           .orderBy('lastMsg', descending: true)
@@ -71,6 +71,7 @@ class TileStream extends StatelessWidget {
             final tile = MessageTile(
               uid: chatDetail.data()['uid'],
               name: chatDetail.data()['name'],
+              service: chatDetail.data()['service'],
               timestamp: chatDetail.data()['lastMsg'],
             );
             tiles.add(tile);
@@ -97,8 +98,9 @@ class MessageTile extends StatelessWidget {
   final uid;
   final Timestamp timestamp;
   final String name;
+  final String service;
 
-  MessageTile({this.uid, this.timestamp, this.name});
+  MessageTile({this.uid, this.timestamp, this.name, this.service});
 
   @override
   Widget build(BuildContext context) {
@@ -109,14 +111,14 @@ class MessageTile extends StatelessWidget {
         (minute > 9 ? minute.toString() : '0' + minute.toString());
 
     return RawMaterialButton(
-      onPressed: () async {
+      onPressed: () {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ChatRoom(
-                      roomId: uid + '-' + loggedUser.uid,
-                      userUid: uid,
-                      spUid: loggedUser.uid,
+                      roomId: loggedUser.uid + '-' + uid,
+                      userUid: loggedUser.uid,
+                      spUid: uid,
                     )));
       },
       child: Padding(
@@ -135,6 +137,10 @@ class MessageTile extends StatelessWidget {
                           style: TextStyle(fontSize: 20),
                         ),
                         SizedBox(height: 7),
+                        Text(
+                          service,
+                          style: TextStyle(color: Colors.black54),
+                        ),
                       ],
                     ),
                   ),

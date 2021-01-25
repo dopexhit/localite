@@ -1,80 +1,69 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:localite/widgets/toast.dart';
-
-import 'chat_room.dart';
+import 'package:localite/models/custom_user.dart';
+import 'file:///D:/Android/localite/lib/screens/user_screens/request_detailed_user.dart';
 
 final _firestore = FirebaseFirestore.instance;
-User loggedUser;
 
-class UserChatList extends StatefulWidget {
+String userUID = GlobalUserDetail.userData.uid;
+
+class UserAcceptedRequests extends StatefulWidget {
   @override
-  _UserChatListState createState() => _UserChatListState();
+  _UserAcceptedRequestsState createState() => _UserAcceptedRequestsState();
 }
 
-class _UserChatListState extends State<UserChatList> {
-  final _auth = FirebaseAuth.instance;
-  final messageTextController = TextEditingController();
-  String message;
-
-  @override
-  void initState() {
-    super.initState();
-
-    getCurrentUser();
-  }
-
-  void getCurrentUser() async {
-    try {
-      final user = _auth.currentUser;
-      if (user != null) {
-        loggedUser = user;
-      } else {
-        MyToast().getToastBottom('failed!');
-      }
-    } catch (e) {
-      MyToast().getToastBottom(e.message.toString());
-    }
-  }
-
+class _UserAcceptedRequestsState extends State<UserAcceptedRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chats'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Expanded(child: TileStream()),
+      body: SafeArea(
+        child: Expanded(
+            child: Padding(
+          padding: EdgeInsets.only(top: 20, left: 8, right: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Accepted requests',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 15),
+              ),
+              SizedBox(height: 20),
+              TileStreamCompleted(),
+            ],
+          ),
+        )),
       ),
     );
   }
 }
 
-class TileStream extends StatelessWidget {
+class TileStreamCompleted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
           .collection('Users')
-          .doc(loggedUser.uid)
-          .collection('listOfChats')
-          .orderBy('lastMsg', descending: true)
+          .doc(userUID)
+          .collection('requests')
+          .orderBy('lastRequest', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final userListOfChats = snapshot.data.docs;
+          final userListOfRequests = snapshot.data.docs;
           List<MessageTile> tiles = [];
 
-          for (var chatDetail in userListOfChats) {
-            final tile = MessageTile(
-              uid: chatDetail.data()['uid'],
-              name: chatDetail.data()['name'],
-              service: chatDetail.data()['service'],
-              timestamp: chatDetail.data()['lastMsg'],
-            );
-            tiles.add(tile);
+          for (var doc in userListOfRequests) {
+            if (doc.data()['completed'] == true) {
+              final tile = MessageTile(
+                uid: doc.data()['uid'],
+                name: doc.data()['name'],
+                service: doc.data()['service'],
+                timestamp: doc.data()['lastRequest'],
+                type: 'completed',
+              );
+              tiles.add(tile);
+            }
           }
           return Expanded(
             child: ListView(
@@ -98,9 +87,10 @@ class MessageTile extends StatelessWidget {
   final uid;
   final Timestamp timestamp;
   final String name;
-  final String service;
+  final service;
+  final String type;
 
-  MessageTile({this.uid, this.timestamp, this.name, this.service});
+  MessageTile({this.uid, this.timestamp, this.name, this.service, this.type});
 
   @override
   Widget build(BuildContext context) {
@@ -115,10 +105,9 @@ class MessageTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ChatRoom(
-                      roomId: loggedUser.uid + '-' + uid,
-                      userUid: loggedUser.uid,
-                      spUid: uid,
+                builder: (context) => UserRequestDetailed(
+                      requestId: userUID + '-' + uid,
+                      typeOfRequest: type,
                     )));
       },
       child: Padding(
@@ -140,7 +129,7 @@ class MessageTile extends StatelessWidget {
                         Text(
                           service,
                           style: TextStyle(color: Colors.black54),
-                        ),
+                        )
                       ],
                     ),
                   ),

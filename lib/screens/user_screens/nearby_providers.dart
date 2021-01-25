@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/service_provider_detail.dart';
+import 'file:///D:/Android/localite/lib/screens/service_provider_screens/service_provider_detail.dart';
 import 'package:localite/services/database.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';

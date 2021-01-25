@@ -6,7 +6,7 @@ import 'package:localite/main.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/nearby_providers.dart';
+import 'file:///D:/Android/localite/lib/screens/user_screens/nearby_providers.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';

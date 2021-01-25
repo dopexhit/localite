@@ -8,7 +8,7 @@ import 'package:localite/models/user_data.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
 import 'package:simple_location_picker/simple_location_picker_screen.dart';
-import '../constants.dart';
+import '../../constants.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedUser;

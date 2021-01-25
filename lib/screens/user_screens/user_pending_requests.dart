@@ -1,18 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
-import 'package:localite/screens/request_detailed_user.dart';
+import 'file:///D:/Android/localite/lib/screens/user_screens/request_detailed_user.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
 String userUID = GlobalUserDetail.userData.uid;
 
-class UserAcceptedRequests extends StatefulWidget {
+class UserPendingRequests extends StatefulWidget {
   @override
-  _UserAcceptedRequestsState createState() => _UserAcceptedRequestsState();
+  _UserPendingRequestsState createState() => _UserPendingRequestsState();
 }
 
-class _UserAcceptedRequestsState extends State<UserAcceptedRequests> {
+class _UserPendingRequestsState extends State<UserPendingRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +24,12 @@ class _UserAcceptedRequestsState extends State<UserAcceptedRequests> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Accepted requests',
+                'Pending requests',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
-              TileStreamCompleted(),
+              TileStreamPending(),
             ],
           ),
         )),
@@ -38,7 +38,7 @@ class _UserAcceptedRequestsState extends State<UserAcceptedRequests> {
   }
 }
 
-class TileStreamCompleted extends StatelessWidget {
+class TileStreamPending extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -54,13 +54,13 @@ class TileStreamCompleted extends StatelessWidget {
           List<MessageTile> tiles = [];
 
           for (var doc in userListOfRequests) {
-            if (doc.data()['completed'] == true) {
+            if (doc.data()['pending'] == true) {
               final tile = MessageTile(
                 uid: doc.data()['uid'],
                 name: doc.data()['name'],
                 service: doc.data()['service'],
                 timestamp: doc.data()['lastRequest'],
-                type: 'completed',
+                type: 'pending',
               );
               tiles.add(tile);
             }
