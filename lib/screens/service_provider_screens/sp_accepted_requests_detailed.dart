@@ -3,16 +3,11 @@ import 'package:flutter/material.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
-class UserRequestDetailed extends StatefulWidget {
+class SPShowAllCompletedRequests extends StatelessWidget {
   final String requestId;
-  final String typeOfRequest;
 
-  UserRequestDetailed({this.requestId, this.typeOfRequest});
-  @override
-  _UserRequestDetailedState createState() => _UserRequestDetailedState();
-}
+  SPShowAllCompletedRequests({this.requestId});
 
-class _UserRequestDetailedState extends State<UserRequestDetailed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,8 +15,7 @@ class _UserRequestDetailedState extends State<UserRequestDetailed> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: TileStream(
-            type: widget.typeOfRequest,
-            id: widget.requestId,
+            id: requestId,
           ),
         ),
       ),
@@ -30,9 +24,9 @@ class _UserRequestDetailedState extends State<UserRequestDetailed> {
 }
 
 class TileStream extends StatelessWidget {
-  final String type;
   final String id;
-  TileStream({this.type, this.id});
+
+  TileStream({this.id});
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +34,7 @@ class TileStream extends StatelessWidget {
       stream: _firestore
           .collection('requests')
           .doc(id)
-          .collection(type)
+          .collection('completed')
           .orderBy('timestamp', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
@@ -52,8 +46,8 @@ class TileStream extends StatelessWidget {
             final tile = MessageTile(
               address: doc.data()['address'],
               description: doc.data()['description'],
-              providerName: doc.data()['service provider'],
-              service: doc.data()['service'],
+              userName: doc.data()['user name'],
+              contact: doc.data()['contact'],
               timestamp: doc.data()['timestamp'],
             );
             tiles.add(tile);
@@ -79,16 +73,16 @@ class TileStream extends StatelessWidget {
 class MessageTile extends StatelessWidget {
   final String address;
   final Timestamp timestamp;
-  final String providerName;
-  final String service;
+  final String userName;
   final String description;
+  final String contact;
 
   MessageTile(
       {this.address,
       this.timestamp,
-      this.providerName,
-      this.service,
-      this.description});
+      this.userName,
+      this.description,
+      this.contact});
 
   @override
   Widget build(BuildContext context) {
@@ -121,13 +115,8 @@ class MessageTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    providerName,
+                    userName,
                     style: TextStyle(fontSize: 30),
-                  ),
-                  SizedBox(height: 7),
-                  Text(
-                    service,
-                    style: TextStyle(color: Colors.black54, fontSize: 17),
                   ),
                   SizedBox(height: 40),
                   Text(
@@ -138,6 +127,17 @@ class MessageTile extends StatelessWidget {
                   Text(
                     'Your service address: $address',
                     style: TextStyle(fontSize: 15, color: Colors.black87),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Icon(Icons.call),
+                      SizedBox(width: 10),
+                      Text(
+                        contact,
+                        style: TextStyle(fontSize: 15, color: Colors.black87),
+                      ),
+                    ],
                   )
                 ],
               ),

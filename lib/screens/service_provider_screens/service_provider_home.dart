@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/service_provider_screens/sp_pending_request_detailed_screen.dart';
-import 'package:localite/screens/service_provider_screens/sp_showall_completed_requests.dart';
+import 'package:localite/screens/service_provider_screens/sp_accepted_requests_detailed.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';

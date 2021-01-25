@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
-import 'package:localite/screens/user_screens/request_detailed_user.dart';
+import 'package:localite/screens/user_screens/user_accepted_request_detailed.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
@@ -105,7 +105,7 @@ class MessageTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => UserRequestDetailed(
+                builder: (context) => UserAcceptedRequestDetailed(
                       requestId: userUID + '-' + uid,
                       typeOfRequest: type,
                     )));

@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:localite/constants.dart';
-import 'package:localite/main.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/offered_services.dart';
-import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/user_screens/nearby_providers.dart';
-import 'package:localite/services/auth.dart';
-import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
-import 'package:provider/provider.dart';
 import 'package:simple_location_picker/simple_location_picker_screen.dart';
 import 'package:simple_location_picker/simple_location_result.dart';
 
@@ -132,20 +126,20 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                RaisedButton(
-                  onPressed: () async {
-                    SharedPrefs.preferences.remove('isServiceProvider');
-                    await AuthService().signOut().whenComplete(
-                      () {
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SelectionScreen()));
-                      },
-                    );
-                  },
-                  child: Text('SignOut'),
-                ),
+                // RaisedButton(
+                //   onPressed: () async {
+                //     SharedPrefs.preferences.remove('isServiceProvider');
+                //     await AuthService().signOut().whenComplete(
+                //       () {
+                //         Navigator.pushReplacement(
+                //             context,
+                //             MaterialPageRoute(
+                //                 builder: (context) => SelectionScreen()));
+                //       },
+                //     );
+                //   },
+                //   child: Text('SignOut'),
+                // ),
               ],
             ),
           ),

@@ -5,7 +5,6 @@ import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/chat_room.dart';
-import 'package:localite/screens/user_screens/show_allrequest_user.dart';
 import 'package:localite/screens/user_screens/user_request_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
@@ -148,13 +147,6 @@ class _SPDetailState extends State<SPDetail> {
                       style: TextStyle(color: Colors.red),
                     ),
                   )),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserRequests()));
-                },
-                child: Text('all requests'),
-              )
             ],
           ),
         )),
