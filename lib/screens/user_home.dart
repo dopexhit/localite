@@ -29,6 +29,12 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
   String searchValue;
 
   @override
+  void initState() {
+    super.initState();
+    UserDetails();
+  }
+
+  @override
   Widget build(BuildContext context) {
     GlobalContext.context = context;
 

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/selection_screen.dart';
-import 'package:localite/screens/service_provider_accepted_requests.dart';
 import 'package:localite/screens/sp_pending_request_detailed_screen.dart';
 import 'package:localite/screens/sp_showall_completed_requests.dart';
 import 'package:localite/services/auth.dart';
@@ -38,6 +37,7 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
     super.initState();
 
     getCurrentUser();
+    SPDetails();
   }
 
   void getCurrentUser() async {

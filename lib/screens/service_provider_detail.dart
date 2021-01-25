@@ -42,6 +42,7 @@ class _SPDetailState extends State<SPDetail> {
     checkRequest();
   }
 
+//todo: change status when request accepted
   void checkRequest() {
     UserData data =
         Provider.of<UserDetails>(GlobalContext.context).getUserDetails;

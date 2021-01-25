@@ -13,7 +13,7 @@ class _SPProfileState extends State<SPProfile> {
   @override
   Widget build(BuildContext context) {
     ServiceProviderData data = Provider.of<SPDetails>(context).getSPDetails;
-
+    MyToast().getToast(GlobalServiceProviderDetail.spData.uid);
     return Container(
       child: Row(
         children: [
