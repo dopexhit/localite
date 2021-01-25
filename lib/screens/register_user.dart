@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/user_home.dart';
 import 'package:localite/screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';

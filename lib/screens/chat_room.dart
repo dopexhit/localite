@@ -11,12 +11,16 @@ import '../constants.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedUser;
+String userUID;
+String spUID;
 
 class ChatRoom extends StatefulWidget {
   final String roomId;
   final receiver;
+  final userUid;
+  final spUid;
 
-  ChatRoom({this.roomId, this.receiver});
+  ChatRoom({this.roomId, this.receiver, this.userUid, this.spUid});
 
   @override
   _ChatRoomState createState() => _ChatRoomState();
@@ -31,6 +35,8 @@ class _ChatRoomState extends State<ChatRoom> {
   void initState() {
     super.initState();
 
+    userUID = widget.userUid;
+    spUID = widget.spUid;
     getCurrentUser();
   }
 
@@ -217,12 +223,12 @@ class MessageBubble extends StatelessWidget {
   }
 }
 
-void addUIDs(var receiver) {
+void addUIDs(var receiver) async {
   bool isServiceProvider = SharedPrefs.preferences.getBool('isServiceProvider');
 
   if (isServiceProvider == true) {
-    ServiceProviderData loggedSPData =
-        Provider.of<SPDetails>(GlobalContext.context).getSPDetails;
+    ServiceProviderData loggedSPData = GlobalServiceProviderDetail.spData;
+    receiver = await getUserOnTap();
 
     var docRefUser = _firestore
         .collection('Service Providers')
@@ -261,9 +267,9 @@ void addUIDs(var receiver) {
       }
     });
   } else {
-    UserData loggedUserData =
-        Provider.of<UserDetails>(GlobalContext.context).getUserDetails;
+    UserData loggedUserData = GlobalUserDetail.userData;
 
+    receiver = await getSPOnTap();
     var docRefUser = _firestore
         .collection('Users')
         .doc(loggedUser.uid)
@@ -301,4 +307,43 @@ void addUIDs(var receiver) {
       }
     });
   }
+}
+
+Future<UserData> getUserOnTap() async {
+  UserData data;
+
+  var userDetail = await _firestore.collection('Users').doc(userUID).get();
+  var name = userDetail.data()['name'];
+  var contact = userDetail.data()['contact'];
+  var uid = userDetail.data()['uid'];
+
+  data = UserData(uid: uid, name: name, contact: contact);
+  return data;
+}
+
+Future<ServiceProviderData> getSPOnTap() async {
+  ServiceProviderData data;
+
+  var doc =
+      await _firestore.collection('Service Provider Type').doc(spUID).get();
+  var service = doc.data()['service'];
+
+  var spDetail = await _firestore.collection(service).doc(spUID).get();
+
+  var name = spDetail.data()['name'];
+  var contact = spDetail.data()['contact'];
+  var uid = spDetail.data()['uid'];
+  var address = spDetail.data()['address'];
+  var latitude = spDetail.data()['latitude'];
+  var longitude = spDetail.data()['longitude'];
+
+  data = ServiceProviderData(
+      uid: uid,
+      name: name,
+      contact: contact,
+      address: address,
+      longitude: longitude,
+      latitude: latitude,
+      service: service);
+  return data;
 }
