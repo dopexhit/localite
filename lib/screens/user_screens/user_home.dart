@@ -17,10 +17,11 @@ class UserHomeScreen extends StatefulWidget {
 double latitude;
 double longitude;
 
+String searchValue = '';
+
 class _UserHomeScreenState extends State<UserHomeScreen> {
   SimpleLocationResult selectedLocation;
   String location;
-  String searchValue;
 
   @override
   void initState() {
@@ -103,7 +104,9 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                 SizedBox(height: 20),
                 TextField(
                   onChanged: (value) {
-                    searchValue = value;
+                    setState(() {
+                      searchValue = value;
+                    });
                   },
                   style: TextStyle(
                     color: Colors.black87,
@@ -153,7 +156,11 @@ List<CustomCard> getCards() {
   List<CustomCard> myCards = [];
 
   for (var service in servicesList) {
-    myCards.add(CustomCard(title: service));
+    if (searchValue == '') {
+      myCards.add(CustomCard(title: service));
+    } else if (service.toLowerCase().contains(searchValue.toLowerCase())) {
+      myCards.add(CustomCard(title: service));
+    }
   }
   return myCards;
 }
