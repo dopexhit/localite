@@ -100,6 +100,8 @@ class _SPDetailState extends State<SPDetail> {
                               builder: (context) => ChatRoom(
                                     roomId: roomId,
                                     receiver: widget.currentSp,
+                                    userUid: loggedUser.uid,
+                                    spUid: widget.currentSp.uid,
                                   )));
                     },
                   ),

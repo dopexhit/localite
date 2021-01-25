@@ -235,7 +235,7 @@ class TileStreamCompleted extends StatelessWidget {
                 uid: doc.data()['uid'],
                 name: doc.data()['name'],
                 service: doc.data()['service'],
-                timestamp: doc.data()['lastMsg'],
+                timestamp: doc.data()['lastRequest'],
                 type: 'completed',
               );
               tiles.add(tile);

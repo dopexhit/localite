@@ -46,7 +46,7 @@ class _SPChatListState extends State<SPChatList> {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Expanded(child: TileStream()),
+        child: TileStream(),
       ),
     );
   }
@@ -109,12 +109,14 @@ class MessageTile extends StatelessWidget {
         (minute > 9 ? minute.toString() : '0' + minute.toString());
 
     return RawMaterialButton(
-      onPressed: () {
+      onPressed: () async {
         Navigator.push(
             context,
             MaterialPageRoute(
                 builder: (context) => ChatRoom(
                       roomId: uid + '-' + loggedUser.uid,
+                      userUid: uid,
+                      spUid: loggedUser.uid,
                     )));
       },
       child: Padding(

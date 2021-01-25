@@ -1,11 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:localite/models/custom_user.dart';
-import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/user_home.dart';
 import 'package:localite/widgets/toast.dart';
-import 'package:provider/provider.dart';
 
 import 'chat_room.dart';
 
@@ -121,6 +117,8 @@ class MessageTile extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => ChatRoom(
                       roomId: loggedUser.uid + '-' + uid,
+                      userUid: loggedUser.uid,
+                      spUid: uid,
                     )));
       },
       child: Padding(
