@@ -12,6 +12,7 @@ class DatabaseService {
       'latitude': data.latitude,
       'longitude': data.longitude,
       'service': data.service,
+      'photoUrl': null,
     }).catchError((e) {
       print(e.toString());
     });
@@ -32,7 +33,7 @@ class DatabaseService {
       'uid': uid,
       'name': data.name,
       'contact': data.contact,
-      'photoUrl': 'https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg',
+      'photoUrl': null,
     }).catchError((e) {
       print(e.toString());
     });
@@ -43,5 +44,8 @@ class DatabaseService {
   }
   getUserProfile(String uid){
     return FirebaseFirestore.instance.collection('Users').doc(uid).snapshots();
+  }
+  getSPProfile(String uid, String service){
+    return FirebaseFirestore.instance.collection(service).doc(uid).snapshots();
   }
 }
