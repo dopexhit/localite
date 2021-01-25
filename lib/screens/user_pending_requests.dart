@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/request_detailed_user.dart';
+import 'package:localite/screens/user_accepted_request.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
