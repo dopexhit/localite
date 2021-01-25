@@ -101,7 +101,7 @@ class MessageTile extends StatelessWidget {
     final String time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
-    String date = (day > 9 ? hour.toString() : '0' + day.toString()) +
+    String date = (day > 9 ? day.toString() : '0' + day.toString()) +
         '/' +
         (month > 9 ? month.toString() : '0' + month.toString()) +
         '/' +
