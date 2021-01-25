@@ -2,10 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
-import 'package:localite/screens/service_provider_home.dart';
-import 'package:localite/screens/service_provider_profile.dart';
-import 'package:localite/screens/sp_chatlist.dart';
-import 'package:localite/screens/user_profile.dart';
+import 'file:///D:/Android/localite/lib/screens/service_provider_screens/service_provider_home.dart';
+import 'file:///D:/Android/localite/lib/screens/service_provider_screens/service_provider_profile.dart';
+import 'file:///D:/Android/localite/lib/screens/service_provider_screens/sp_chatlist.dart';
+import 'file:///D:/Android/localite/lib/screens/user_screens/user_profile.dart';
 import 'package:provider/provider.dart';
 
 class SPNavigatorHome extends StatefulWidget {

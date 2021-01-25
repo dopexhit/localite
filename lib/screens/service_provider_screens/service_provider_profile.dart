@@ -7,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
-import 'package:localite/screens/user_side_bar.dart';
+import 'package:localite/screens/service_provider_screens/service_prov_side_bar.dart';
+import 'file:///D:/Android/localite/lib/screens/user_screens/user_side_bar.dart';
 import 'package:localite/services/database.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
@@ -98,7 +99,7 @@ class _SPProfileState extends State<SPProfile> {
           if(snapshot.hasData) {
             String photoUrl=snapshot.data.data()['photoUrl'].toString();
             return Scaffold(
-              endDrawer: UserDrawer(),
+              endDrawer: SPDrawer(),
               body: Center(
                 child: SingleChildScrollView(
                   child: Column(
@@ -113,8 +114,8 @@ class _SPProfileState extends State<SPProfile> {
                             child: SizedBox(
                               width: 100,
                               height: 100,
-                              child: (photoUrl==null)?
-                              AssetImage('assets/images/default_profile_pic.jpg'):
+                              child: (photoUrl=='null')?
+                              Image.asset('assets/images/default_profile_pic.jpg'):
                               Image.network(photoUrl,fit: BoxFit.fill),
                             ),
                           ),

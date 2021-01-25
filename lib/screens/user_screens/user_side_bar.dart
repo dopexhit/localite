@@ -17,13 +17,13 @@ class UserDrawer extends StatelessWidget {
           ),
           SizedBox(height: 10.0,),
           ListTile(
-            title: Text("Pending requests"),
+            title: Text("Update Profile"),
             onTap: () {
             },
           ),
           SizedBox(height: 10.0,),
           ListTile(
-            title: Text("Update Profile"),
+            title: Text("Confirmed Requests"),
             onTap: () {
             },
           ),

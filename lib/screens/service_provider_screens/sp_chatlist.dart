@@ -1,69 +1,79 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:localite/models/custom_user.dart';
-import 'package:localite/screens/sp_showall_completed_requests.dart';
+import 'package:localite/widgets/toast.dart';
+
+import '../chat_room.dart';
 
 final _firestore = FirebaseFirestore.instance;
+User loggedUser;
 
-String serviceProviderUID = GlobalServiceProviderDetail.spData.uid;
-
-class SPAcceptedRequests extends StatefulWidget {
+class SPChatList extends StatefulWidget {
   @override
-  _SPAcceptedRequestsState createState() => _SPAcceptedRequestsState();
+  _SPChatListState createState() => _SPChatListState();
 }
 
-class _SPAcceptedRequestsState extends State<SPAcceptedRequests> {
+class _SPChatListState extends State<SPChatList> {
+  final _auth = FirebaseAuth.instance;
+  final messageTextController = TextEditingController();
+  String message;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedUser = user;
+      } else {
+        MyToast().getToastBottom('failed!');
+      }
+    } catch (e) {
+      MyToast().getToastBottom(e.message.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Expanded(
-            child: Padding(
-          padding: EdgeInsets.only(top: 20, left: 8, right: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Accepted requests',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15),
-              ),
-              SizedBox(height: 20),
-              TileStreamCompleted(),
-            ],
-          ),
-        )),
+      appBar: AppBar(
+        title: Text('Chats'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: TileStream(),
       ),
     );
   }
 }
 
-class TileStreamCompleted extends StatelessWidget {
+class TileStream extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
           .collection('Service Providers')
-          .doc(serviceProviderUID)
-          .collection('requests')
-          .orderBy('lastRequest', descending: true)
+          .doc(loggedUser.uid)
+          .collection('listOfChats')
+          .orderBy('lastMsg', descending: true)
           .snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final userListOfRequests = snapshot.data.docs;
+          final userListOfChats = snapshot.data.docs;
           List<MessageTile> tiles = [];
 
-          for (var doc in userListOfRequests) {
-            if (doc.data()['completed'] == true) {
-              final tile = MessageTile(
-                uid: doc.data()['uid'],
-                name: doc.data()['name'],
-                timestamp: doc.data()['lastRequest'],
-              );
-              tiles.add(tile);
-            }
+          for (var chatDetail in userListOfChats) {
+            final tile = MessageTile(
+              uid: chatDetail.data()['uid'],
+              name: chatDetail.data()['name'],
+              timestamp: chatDetail.data()['lastMsg'],
+            );
+            tiles.add(tile);
           }
           return Expanded(
             child: ListView(
@@ -99,12 +109,14 @@ class MessageTile extends StatelessWidget {
         (minute > 9 ? minute.toString() : '0' + minute.toString());
 
     return RawMaterialButton(
-      onPressed: () {
+      onPressed: () async {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => SPShowAllCompletedRequests(
-                      requestId: uid + '-' + serviceProviderUID,
+                builder: (context) => ChatRoom(
+                      roomId: uid + '-' + loggedUser.uid,
+                      userUid: uid,
+                      spUid: loggedUser.uid,
                     )));
       },
       child: Padding(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
-class UserDrawer extends StatelessWidget {
+class SPDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -14,6 +14,18 @@ class UserDrawer extends StatelessWidget {
                     image: NetworkImage("https://www.computerhope.com/jargon/n/navigate.jpg"),
                     fit: BoxFit.cover)),
             child: Text("Localite"),
+          ),
+          SizedBox(height: 10.0,),
+          ListTile(
+            title: Text("Pending requests"),
+            onTap: () {
+            },
+          ),
+          SizedBox(height: 10.0,),
+          ListTile(
+            title: Text("Confirmed Requests"),
+            onTap: () {
+            },
           ),
           SizedBox(height: 10.0,),
           ListTile(

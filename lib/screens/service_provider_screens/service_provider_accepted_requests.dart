@@ -1,18 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/models/custom_user.dart';
-import 'package:localite/screens/request_detailed_user.dart';
+import 'file:///D:/Android/localite/lib/screens/service_provider_screens/sp_showall_completed_requests.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
-String userUID = GlobalUserDetail.userData.uid;
+String serviceProviderUID = GlobalServiceProviderDetail.spData.uid;
 
-class UserPendingRequests extends StatefulWidget {
+class SPAcceptedRequests extends StatefulWidget {
   @override
-  _UserPendingRequestsState createState() => _UserPendingRequestsState();
+  _SPAcceptedRequestsState createState() => _SPAcceptedRequestsState();
 }
 
-class _UserPendingRequestsState extends State<UserPendingRequests> {
+class _SPAcceptedRequestsState extends State<SPAcceptedRequests> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +26,12 @@ class _UserPendingRequestsState extends State<UserPendingRequests> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Pending requests',
+                'Accepted requests',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 15),
               ),
               SizedBox(height: 20),
-              TileStreamPending(),
+              TileStreamCompleted(),
             ],
           ),
         )),
@@ -38,13 +40,13 @@ class _UserPendingRequestsState extends State<UserPendingRequests> {
   }
 }
 
-class TileStreamPending extends StatelessWidget {
+class TileStreamCompleted extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
       stream: _firestore
-          .collection('Users')
-          .doc(userUID)
+          .collection('Service Providers')
+          .doc(serviceProviderUID)
           .collection('requests')
           .orderBy('lastRequest', descending: true)
           .snapshots(),
@@ -54,13 +56,11 @@ class TileStreamPending extends StatelessWidget {
           List<MessageTile> tiles = [];
 
           for (var doc in userListOfRequests) {
-            if (doc.data()['pending'] == true) {
+            if (doc.data()['completed'] == true) {
               final tile = MessageTile(
                 uid: doc.data()['uid'],
                 name: doc.data()['name'],
-                service: doc.data()['service'],
                 timestamp: doc.data()['lastRequest'],
-                type: 'pending',
               );
               tiles.add(tile);
             }
@@ -87,10 +87,8 @@ class MessageTile extends StatelessWidget {
   final uid;
   final Timestamp timestamp;
   final String name;
-  final service;
-  final String type;
 
-  MessageTile({this.uid, this.timestamp, this.name, this.service, this.type});
+  MessageTile({this.uid, this.timestamp, this.name});
 
   @override
   Widget build(BuildContext context) {
@@ -105,9 +103,8 @@ class MessageTile extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => UserRequestDetailed(
-                      requestId: userUID + '-' + uid,
-                      typeOfRequest: type,
+                builder: (context) => SPShowAllCompletedRequests(
+                      requestId: uid + '-' + serviceProviderUID,
                     )));
       },
       child: Padding(
@@ -126,10 +123,6 @@ class MessageTile extends StatelessWidget {
                           style: TextStyle(fontSize: 20),
                         ),
                         SizedBox(height: 7),
-                        Text(
-                          service,
-                          style: TextStyle(color: Colors.black54),
-                        )
                       ],
                     ),
                   ),
