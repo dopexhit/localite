@@ -32,7 +32,7 @@ class DatabaseService {
       'uid': uid,
       'name': data.name,
       'contact': data.contact,
-      'photoUrl': null,
+      'photoUrl': 'https://st.depositphotos.com/2101611/3925/v/600/depositphotos_39258143-stock-illustration-businessman-avatar-profile-picture.jpg',
     }).catchError((e) {
       print(e.toString());
     });
@@ -41,7 +41,7 @@ class DatabaseService {
   getAllSP(String service) {
     return FirebaseFirestore.instance.collection(service).snapshots();
   }
-  getUserData(String uid){
+  getUserProfile(String uid){
     return FirebaseFirestore.instance.collection('Users').doc(uid).snapshots();
   }
 }
