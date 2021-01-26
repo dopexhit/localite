@@ -69,6 +69,7 @@ class _SPDetailState extends State<SPDetail> {
   @override
   Widget build(BuildContext context) {
     final loggedUser = Provider.of<CustomUser>(context);
+    String photoUrl = widget.currentSp.photoUrl.toString();
     return ModalProgressHUD(
       inAsyncCall: asyncCall,
       child: Scaffold(
@@ -77,6 +78,19 @@ class _SPDetailState extends State<SPDetail> {
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           child: Column(
             children: [
+              SizedBox(
+                height: 100.0,
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: CircleAvatar(
+                  radius: 40.0,
+                  backgroundImage: (photoUrl == 'null')
+                      ? AssetImage('assets/images/default_profile_pic.jpg')
+                      : NetworkImage(photoUrl),
+                ),
+              ),
+              SizedBox(height: 20),
               Text('Name: ' + widget.currentSp.name),
               SizedBox(height: 20),
               Text('Address: ' + widget.currentSp.address),

@@ -95,12 +95,24 @@ class SPTile extends StatelessWidget {
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: EdgeInsets.all(10),
-        child: Padding(
-          padding: EdgeInsets.all(20),
-          child: Text(
-            currentSP.name,
-            textAlign: TextAlign.center,
-          ),
+        child: Row(
+          children: [
+            SizedBox(width: 10.0,),
+            CircleAvatar(
+              radius: 20,
+              backgroundImage: ((currentSP.photoUrl).toString()=='null')?
+              AssetImage('assets/images/default_profile_pic.jpg'):
+              NetworkImage(currentSP.photoUrl),
+            ),
+            SizedBox(width: 10.0,),
+            Padding(
+              padding: EdgeInsets.all(20),
+              child: Text(
+                currentSP.name,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
         ),
       ),
     );
