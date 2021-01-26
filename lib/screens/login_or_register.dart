@@ -97,7 +97,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                             // go to service provider home screen
                             SharedPrefs.preferences
                                 .setBool('isServiceProvider', true);
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SPNavigatorHome()),
@@ -106,7 +106,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                             // go to user home screen
                             SharedPrefs.preferences
                                 .setBool('isServiceProvider', false);
-                            Navigator.push(
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => UserNavigatorHome()),

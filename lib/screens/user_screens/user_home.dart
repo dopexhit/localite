@@ -129,20 +129,6 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                     ),
                   ),
                 ),
-                // RaisedButton(
-                //   onPressed: () async {
-                //     SharedPrefs.preferences.remove('isServiceProvider');
-                //     await AuthService().signOut().whenComplete(
-                //       () {
-                //         Navigator.pushReplacement(
-                //             context,
-                //             MaterialPageRoute(
-                //                 builder: (context) => SelectionScreen()));
-                //       },
-                //     );
-                //   },
-                //   child: Text('SignOut'),
-                // ),
               ],
             ),
           ),

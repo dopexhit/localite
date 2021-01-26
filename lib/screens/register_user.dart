@@ -123,7 +123,7 @@ class _RegisterUserState extends State<RegisterUser> {
                           // go to user home screen
                           SharedPrefs.preferences
                               .setBool('isServiceProvider', false);
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => UserNavigatorHome()));

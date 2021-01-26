@@ -49,8 +49,9 @@ class UserDetails extends ChangeNotifier {
         var name = userDetail.data()['name'];
         var contact = userDetail.data()['contact'];
         var uid = userDetail.data()['uid'];
+        var photoUrl= userDetail.data()['photoUrl'];
 
-        userData = UserData(uid: uid, name: name, contact: contact);
+        userData = UserData(uid: uid, name: name, contact: contact,photoUrl: photoUrl);
         GlobalUserDetail.userData = userData;
       } else {
         MyToast().getToastBottom('failed!');
@@ -93,6 +94,7 @@ class SPDetails extends ChangeNotifier {
         var address = spDetail.data()['address'];
         var latitude = spDetail.data()['latitude'];
         var longitude = spDetail.data()['longitude'];
+        var photoUrl = spDetail.data()['photoUrl'];
 
         spData = ServiceProviderData(
             uid: uid,
@@ -101,7 +103,8 @@ class SPDetails extends ChangeNotifier {
             address: address,
             longitude: longitude,
             latitude: latitude,
-            service: service);
+            service: service,
+            photoUrl: photoUrl );
 
         GlobalServiceProviderDetail.spData = spData;
       } else {

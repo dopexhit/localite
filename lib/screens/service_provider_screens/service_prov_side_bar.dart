@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/service_provider_screens/service_provider_accepted_requests.dart';
+import 'package:localite/screens/service_provider_screens/update_service_provider_profile.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 
@@ -35,7 +36,12 @@ class SPDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Update Profile"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                      builder: (_) => UpdateSPProfile()
+                  ));
+            },
           ),
           SizedBox(
             height: 10.0,

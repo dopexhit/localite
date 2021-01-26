@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/user_screens/user_accepted_request.dart';
+import 'package:localite/screens/user_screens/update_user_profile.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 
@@ -23,7 +24,12 @@ class UserDrawer extends StatelessWidget {
           ),
           ListTile(
             title: Text("Update Profile"),
-            onTap: () {},
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(
+                    builder: (_) => UpdateUserProfile()
+                  ));
+            },
           ),
           SizedBox(
             height: 10.0,

@@ -213,7 +213,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                               // go to service provider home screen
                               SharedPrefs.preferences
                                   .setBool('isServiceProvider', true);
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SPNavigatorHome()));

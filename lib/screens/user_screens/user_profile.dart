@@ -17,93 +17,18 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  File _imageFile;
   UserData currentUser;
-
-  _getImage(BuildContext context, ImageSource source) async {
-    final image = await ImagePicker.pickImage(source: source, maxWidth: 400.0);
-    setState(() {
-      _imageFile = image;
-    });
-    await uploadPic(context);
-    Navigator.pop(context);
-  }
-
-  uploadPic(BuildContext context) async {
-    String fileName = _imageFile.path;
-    Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then((newImageDownloadUrl) {
-      FirebaseFirestore.instance
-          .collection('Users')
-          .doc(currentUser.uid)
-          .update({
-        'photoUrl': newImageDownloadUrl,
-      });
-    });
-  }
-
-  // user can choose camera as well as gallery to upload their profile picture
-  void _openImagePicker(BuildContext context) {
-    showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return Container(
-            height: 150.0,
-            width: 300.0,
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  "Pick an Image",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                FlatButton(
-                  child: Text(
-                    "Use Camera",
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                  onPressed: () {
-                    _getImage(context, ImageSource.camera);
-                  },
-                ),
-                SizedBox(
-                  height: 5.0,
-                ),
-                FlatButton(
-                  onPressed: () {
-                    _getImage(context, ImageSource.gallery);
-                  },
-                  child: Text(
-                    "From Gallery",
-                    style: TextStyle(
-                      color: Colors.blue,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          );
-        });
-  }
 
   @override
   Widget build(BuildContext context) {
-    currentUser = Provider.of<UserDetails>(context).getUserDetails;
+    currentUser = GlobalUserDetail.userData;
     return StreamBuilder<DocumentSnapshot>(
         stream: DatabaseService().getUserProfile(currentUser.uid),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             String photoUrl = snapshot.data.data()['photoUrl'].toString();
+            String name = snapshot.data.data()['name'].toString();
+            String contact = snapshot.data.data()['contact'].toString();
             return Scaffold(
               endDrawer: UserDrawer(),
               body: Center(
@@ -129,23 +54,11 @@ class _UserProfileState extends State<UserProfile> {
                         ),
                       ),
 
-                      // icon button to pick image from camera or gallery
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: FlatButton.icon(
-                          onPressed: () {
-                            _openImagePicker(context);
-                          },
-                          icon: Icon(Icons.add_a_photo),
-                          label: Text(""),
-                        ),
-                      ),
-
                       SizedBox(
                         height: 12.0,
                       ),
                       Text(
-                        "${currentUser.name}",
+                        name,
                         style: GoogleFonts.gabriela(
                           letterSpacing: 4,
                           color: Colors.black,
@@ -167,7 +80,7 @@ class _UserProfileState extends State<UserProfile> {
                             width: 20.0,
                           ),
                           Text(
-                            "${currentUser.contact}",
+                            contact,
                             style: GoogleFonts.gabriela(
                               letterSpacing: 4,
                               color: Colors.black,

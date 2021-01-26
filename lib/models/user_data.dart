@@ -2,7 +2,7 @@ class UserData {
   String uid;
   String name;
   String contact;
-  //String photoUrl;
+  String photoUrl;
 
-  UserData({this.uid,this.name, this.contact});
+  UserData({this.uid,this.name, this.contact, this.photoUrl});
 }

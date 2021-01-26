@@ -44,6 +44,7 @@ class _NearbySPState extends State<NearbySP> {
                             latitude: double.parse(
                                 serviceProvider.data()['latitude'].toString()),
                             service: serviceProvider.data()['service'],
+                            photoUrl: serviceProvider.data()['photoUrl']
                           );
 
                           var latitudeDiff =
@@ -72,16 +73,6 @@ class _NearbySPState extends State<NearbySP> {
           ),
         ),
       ),
-      // bottomNavigationBar: Padding(
-      //   padding: EdgeInsets.only(bottom: 12),
-      //   child: Row(
-      //     children: [
-      //       Expanded(child: Icon(Icons.chat)),
-      //       Expanded(child: Icon(Icons.home_filled)),
-      //       Expanded(child: Icon(Icons.person)),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
