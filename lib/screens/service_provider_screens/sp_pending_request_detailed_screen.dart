@@ -32,11 +32,13 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
   String service = '';
   String time = '';
   String date = '';
+  String url;
 
   @override
   void initState() {
     super.initState();
     updateScreen();
+    getPhoto();
   }
 
   void updateScreen() {
@@ -83,6 +85,15 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
     });
   }
 
+  void getPhoto() {
+    _firestore.collection('Users').doc(widget.userUID).get().then((value) {
+      String photo = value.data()['photoUrl'].toString();
+      setState(() {
+        url = photo;
+      });
+    });
+  }
+
   _makePhoneCall(String contact) async {
     final url = 'tel:$contact';
     print(url);
@@ -105,11 +116,13 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                 //todo: add profile image
                 CircleAvatar(
                   radius: 30,
-                  backgroundImage: ((''/*photourl here*/).toString()=='null')?
-                  AssetImage('assets/images/default_profile_pic.jpg'):
-                  NetworkImage(''/*photourl here*/),
+                  backgroundImage: (url.toString() == 'null')
+                      ? AssetImage('assets/images/default_profile_pic.jpg')
+                      : NetworkImage(url),
                 ),
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 Text('name: $userName'),
                 Text('description: $description'),
                 Text('address: $address'),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/services/get_profile_image.dart';
 import 'package:localite/widgets/toast.dart';
 
 import '../chat_room.dart';
@@ -93,7 +94,7 @@ class TileStream extends StatelessWidget {
   }
 }
 
-class MessageTile extends StatelessWidget {
+class MessageTile extends StatefulWidget {
   final uid;
   final Timestamp timestamp;
   final String name;
@@ -101,9 +102,30 @@ class MessageTile extends StatelessWidget {
   MessageTile({this.uid, this.timestamp, this.name});
 
   @override
+  _MessageTileState createState() => _MessageTileState();
+}
+
+class _MessageTileState extends State<MessageTile> {
+  String url;
+  @override
+  void initState() {
+    super.initState();
+    getPhoto();
+  }
+
+  void getPhoto() {
+    _firestore.collection('Users').doc(widget.uid).get().then((value) {
+      String photo = value.data()['photoUrl'].toString();
+      setState(() {
+        url = photo;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int hour = timestamp.toDate().hour.toInt();
-    int minute = timestamp.toDate().minute.toInt();
+    int hour = widget.timestamp.toDate().hour.toInt();
+    int minute = widget.timestamp.toDate().minute.toInt();
     final String time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
@@ -114,8 +136,8 @@ class MessageTile extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ChatRoom(
-                      roomId: uid + '-' + loggedUser.uid,
-                      userUid: uid,
+                      roomId: widget.uid + '-' + loggedUser.uid,
+                      userUid: widget.uid,
                       spUid: loggedUser.uid,
                     )));
       },
@@ -129,17 +151,19 @@ class MessageTile extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    backgroundImage: ((''/*photourl here*/).toString()=='null')?
-                    AssetImage('assets/images/default_profile_pic.jpg'):
-                    NetworkImage(''/*photourl here*/),
+                    backgroundImage: (url == null || url == 'null')
+                        ? AssetImage('assets/images/default_profile_pic.jpg')
+                        : NetworkImage(url),
                   ),
-                  SizedBox(width: 15.0,),
+                  SizedBox(
+                    width: 15.0,
+                  ),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          name,
+                          widget.name,
                           style: TextStyle(fontSize: 20),
                         ),
                         SizedBox(height: 7),
