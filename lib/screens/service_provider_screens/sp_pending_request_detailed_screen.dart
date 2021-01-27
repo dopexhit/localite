@@ -103,6 +103,13 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
             child: Column(
               children: [
                 //todo: add profile image
+                CircleAvatar(
+                  radius: 30,
+                  backgroundImage: ((''/*photourl here*/).toString()=='null')?
+                  AssetImage('assets/images/default_profile_pic.jpg'):
+                  NetworkImage(''/*photourl here*/),
+                ),
+                SizedBox(height: 10.0,),
                 Text('name: $userName'),
                 Text('description: $description'),
                 Text('address: $address'),

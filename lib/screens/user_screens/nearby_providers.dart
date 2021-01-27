@@ -54,7 +54,7 @@ class _NearbySPState extends State<NearbySP> {
                                   .abs();
 
                           if (latitudeDiff <= 0.2 &&
-                              longitudeDiff <= 0.2) //todo change if condition
+                              longitudeDiff <= 0.2)
                             spTiles.add(SPTile(
                               currentSP: currentSP,
                             ));

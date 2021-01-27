@@ -118,6 +118,13 @@ class MessageTile extends StatelessWidget {
               //todo: add profile image
               Row(
                 children: [
+                  CircleAvatar(
+                    radius: 20,
+                    backgroundImage: ((''/*photourl here*/).toString()=='null')?
+                    AssetImage('assets/images/default_profile_pic.jpg'):
+                    NetworkImage(''/*photourl here*/),
+                  ),
+                  SizedBox(width: 15.0,),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
