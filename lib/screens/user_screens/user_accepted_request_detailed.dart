@@ -1,13 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/widgets/toast.dart';
 
 final _firestore = FirebaseFirestore.instance;
+
+String spUID;
 
 class UserAcceptedRequestDetailed extends StatefulWidget {
   final String requestId;
   final String typeOfRequest;
+  final String spUid;
 
-  UserAcceptedRequestDetailed({this.requestId, this.typeOfRequest});
+  UserAcceptedRequestDetailed({this.requestId, this.typeOfRequest, this.spUid});
   @override
   _UserAcceptedRequestDetailedState createState() =>
       _UserAcceptedRequestDetailedState();
@@ -17,6 +21,8 @@ class _UserAcceptedRequestDetailedState
     extends State<UserAcceptedRequestDetailed> {
   @override
   Widget build(BuildContext context) {
+    spUID = widget.spUid;
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -79,7 +85,7 @@ class TileStream extends StatelessWidget {
   }
 }
 
-class MessageTile extends StatelessWidget {
+class MessageTile extends StatefulWidget {
   final String address;
   final Timestamp timestamp;
   final String providerName;
@@ -96,12 +102,34 @@ class MessageTile extends StatelessWidget {
       this.spContact});
 
   @override
+  _MessageTileState createState() => _MessageTileState();
+}
+
+class _MessageTileState extends State<MessageTile> {
+  String url;
+
+  @override
+  void initState() {
+    super.initState();
+    getPhoto();
+  }
+
+  void getPhoto() {
+    _firestore.collection(widget.service).doc(spUID).get().then((value) {
+      String photo = value.data()['photoUrl'].toString();
+      setState(() {
+        url = photo;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    int hour = timestamp.toDate().hour.toInt();
-    int minute = timestamp.toDate().minute.toInt();
-    int day = timestamp.toDate().day;
-    int month = timestamp.toDate().month;
-    int year = timestamp.toDate().year;
+    int hour = widget.timestamp.toDate().hour.toInt();
+    int minute = widget.timestamp.toDate().minute.toInt();
+    int day = widget.timestamp.toDate().day;
+    int month = widget.timestamp.toDate().month;
+    int year = widget.timestamp.toDate().year;
     final String time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
@@ -130,30 +158,33 @@ class MessageTile extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        backgroundImage: ((''/*photourl here*/).toString()=='null')?
-                        AssetImage('assets/images/default_profile_pic.jpg'):
-                        NetworkImage(''/*photourl here*/),
+                        backgroundImage: (url.toString() == 'null')
+                            ? AssetImage(
+                                'assets/images/default_profile_pic.jpg')
+                            : NetworkImage(url),
                       ),
-                      SizedBox(width: 15.0,),
+                      SizedBox(
+                        width: 15.0,
+                      ),
                       Text(
-                        providerName,
+                        widget.providerName,
                         style: TextStyle(fontSize: 30),
                       ),
                     ],
                   ),
                   SizedBox(height: 7),
                   Text(
-                    service,
+                    widget.service,
                     style: TextStyle(color: Colors.black54, fontSize: 17),
                   ),
                   SizedBox(height: 40),
                   Text(
-                    'Work description: $description',
+                    'Work description: ${widget.description}',
                     style: TextStyle(fontSize: 15, color: Colors.black87),
                   ),
                   SizedBox(height: 20),
                   Text(
-                    'Your service address: $address',
+                    'Your service address: ${widget.address}',
                     style: TextStyle(fontSize: 15, color: Colors.black87),
                   ),
                   SizedBox(height: 20),
@@ -162,7 +193,7 @@ class MessageTile extends StatelessWidget {
                       Icon(Icons.call),
                       SizedBox(width: 10),
                       Text(
-                        spContact,
+                        widget.spContact,
                         style: TextStyle(fontSize: 15, color: Colors.black87),
                       ),
                     ],

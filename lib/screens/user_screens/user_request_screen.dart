@@ -129,7 +129,6 @@ class _UserRequestScreenState extends State<UserRequestScreen> {
                       MyToast()
                           .getToast('All fields must be entered to continue!');
                     } else {
-                      //todo add request
                       UserData user =
                           Provider.of<UserDetails>(GlobalContext.context)
                               .getUserDetails;

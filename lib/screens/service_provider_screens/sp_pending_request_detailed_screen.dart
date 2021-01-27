@@ -27,6 +27,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
   double latitude = 0;
   double longitude = 0;
   String contact = '';
+  String spContact = '';
   String spName = '';
   Timestamp requestTime = Timestamp.now();
   String service = '';
@@ -62,6 +63,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
             contact = doc.data()['contact'];
             service = doc.data()['service'];
             requestTime = doc.data()['timestamp'];
+            spContact = doc.data()['sp contact'];
 
             //get date and time from timestamp
             int hour = requestTime.toDate().hour;
@@ -266,6 +268,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                           'latitude': latitude,
                           'longitude': longitude,
                           'contact': contact,
+                          'sp contact': spContact,
                           'timestamp': requestTime,
                         });
                         // make user pending request = false and completed = true
