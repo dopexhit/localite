@@ -115,6 +115,7 @@ class MessageTile extends StatelessWidget {
         child: Container(
           child: Column(
             children: [
+              //todo: add profile image
               Row(
                 children: [
                   Expanded(

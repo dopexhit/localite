@@ -127,6 +127,7 @@ class MessageTile extends StatelessWidget {
         '/' +
         year.toString();
 
+    //todo: add profile image
     return Container(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),

@@ -121,6 +121,7 @@ class MessageTile extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            //todo: add profile image
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

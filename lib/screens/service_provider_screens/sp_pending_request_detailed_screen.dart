@@ -102,6 +102,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
           child: Container(
             child: Column(
               children: [
+                //todo: add profile image
                 Text('name: $userName'),
                 Text('description: $description'),
                 Text('address: $address'),

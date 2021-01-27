@@ -23,15 +23,6 @@ class ServiceProviderHomeScreen extends StatefulWidget {
 class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
   final _auth = FirebaseAuth.instance;
 
-  bool pendingVisibility = true;
-  bool completedVisibility = true;
-  int flexPending = 1;
-  int flexCompleted = 1;
-  bool pendingIconDown = true;
-  bool completedIconDown = true;
-  IconData pendingIcon = Icons.keyboard_arrow_down_rounded;
-  IconData completedIcon = Icons.keyboard_arrow_down_rounded;
-
   @override
   void initState() {
     super.initState();
@@ -64,20 +55,6 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
           child: Center(
               child: Column(
             children: [
-              // RaisedButton(
-              //   onPressed: () async {
-              //     SharedPrefs.preferences.remove('isServiceProvider');
-              //     await AuthService().signOut().whenComplete(
-              //       () {
-              //         Navigator.pushReplacement(
-              //             context,
-              //             MaterialPageRoute(
-              //                 builder: (context) => SelectionScreen()));
-              //       },
-              //     );
-              //   },
-              //   child: Text('SignOut'),
-              // ),
               Expanded(
                   child: Container(
                 margin:
@@ -150,50 +127,6 @@ class TileStreamPending extends StatelessWidget {
   }
 }
 
-class TileStreamCompleted extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: _firestore
-          .collection('Service Providers')
-          .doc(loggedUser.uid)
-          .collection('requests')
-          .orderBy('lastRequest', descending: true)
-          .snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final userListOfRequests = snapshot.data.docs;
-          List<MessageTile> tiles = [];
-
-          for (var doc in userListOfRequests) {
-            if (doc.data()['completed'] == true) {
-              final tile = MessageTile(
-                uid: doc.data()['uid'],
-                name: doc.data()['name'],
-                timestamp: doc.data()['lastRequest'],
-                type: 'completed',
-              );
-              tiles.add(tile);
-            }
-          }
-          return Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-              children: tiles,
-            ),
-          );
-        } else {
-          return Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
-            ),
-          );
-        }
-      },
-    );
-  }
-}
-
 class MessageTile extends StatelessWidget {
   final uid;
   final Timestamp timestamp;
@@ -212,29 +145,21 @@ class MessageTile extends StatelessWidget {
 
     return RawMaterialButton(
       onPressed: () {
-        if (type == 'completed') {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SPShowAllCompletedRequests(
-                        requestId: uid + '-' + loggedUser.uid,
-                      )));
-        } else if (type == 'pending') {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SPPendingRequestDetail(
-                        requestID: uid + '-' + loggedUser.uid,
-                        userUID: uid,
-                        spUID: loggedUser.uid,
-                      )));
-        }
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SPPendingRequestDetail(
+                      requestID: uid + '-' + loggedUser.uid,
+                      userUID: uid,
+                      spUID: loggedUser.uid,
+                    )));
       },
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
         child: Container(
           child: Column(
             children: [
+              //todo: add profile image
               Row(
                 children: [
                   Expanded(

@@ -8,8 +8,8 @@ import 'package:localite/screens/chat_room.dart';
 import 'package:localite/screens/user_screens/user_request_screen.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_location_picker/simple_location_picker_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:simple_location_picker/simple_location_picker_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedUser;
