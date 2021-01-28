@@ -142,30 +142,34 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                     onPressed: () async {
                       double lat = 28.1, long = 77.1;
 
-                      if (address != '' && address != null) {
+                      if (address == null || address == '') {
+                        MyToast().getToast('Please fill the address first!');
+                      } else {
                         List<Location> locations =
                             await locationFromAddress(address);
-                        if (locations != null) {
+
+                        if (locations != null && locations != []) {
                           lat = locations[0].latitude;
                           long = locations[0].longitude;
-                        }
-                      }
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SimpleLocationPicker(
-                                    initialLatitude: lat,
-                                    initialLongitude: long,
-                                    appBarTitle: "Select Location",
-                                  ))).then((value) {
-                        if (value != null) {
-                          setState(() {
-                            selectedLocation = value;
-                            latitude = selectedLocation.latitude;
-                            longitude = selectedLocation.longitude;
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SimpleLocationPicker(
+                                        initialLatitude: lat,
+                                        initialLongitude: long,
+                                        appBarTitle: "Select Location",
+                                      ))).then((value) {
+                            if (value != null) {
+                              setState(() {
+                                selectedLocation = value;
+                                latitude = selectedLocation.latitude;
+                                longitude = selectedLocation.longitude;
+                              });
+                            }
                           });
                         }
-                      });
+                      }
                     },
                   ),
                   SizedBox(height: 24.0),
