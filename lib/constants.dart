@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const kLoginDecoration = InputDecoration(
   hintText: 'Enter ...',
@@ -34,3 +35,4 @@ const kSendButtonTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 18.0,
 );
+

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/constants.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
 
 import '../chat_room.dart';
@@ -150,12 +152,7 @@ class _MessageTileState extends State<MessageTile> {
               //todo: add profile image
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 20,
-                    backgroundImage: (url.toString() == 'null')
-                        ? AssetImage('assets/images/default_profile_pic.jpg')
-                        : NetworkImage(url),
-                  ),
+                  getDefaultProfilePic(url, widget.name, 30),
                   SizedBox(
                     width: 15.0,
                   ),

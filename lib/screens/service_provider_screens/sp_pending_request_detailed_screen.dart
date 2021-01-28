@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/constants.dart';
 import 'package:localite/screens/chat_room.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:simple_location_picker/simple_location_picker_screen.dart';
@@ -116,12 +118,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
             child: Column(
               children: [
                 //todo: add profile image
-                CircleAvatar(
-                  radius: 30,
-                  backgroundImage: (url.toString() == 'null')
-                      ? AssetImage('assets/images/default_profile_pic.jpg')
-                      : NetworkImage(url),
-                ),
+                getDefaultProfilePic(url, userName, 30),
                 SizedBox(
                   height: 10.0,
                 ),
