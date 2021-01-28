@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:localite/services/get_profile_image.dart';
 import 'package:localite/widgets/toast.dart';
 
 import '../chat_room.dart';
