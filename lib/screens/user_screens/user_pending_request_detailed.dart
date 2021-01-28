@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/constants.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../chat_room.dart';
@@ -164,12 +166,7 @@ class _MessageTileState extends State<MessageTile> {
                 Text(time),
               ],
             ),
-            CircleAvatar(
-              radius: 30,
-              backgroundImage: (url.toString() == 'null')
-                  ? AssetImage('assets/images/default_profile_pic.jpg')
-                  : NetworkImage(url),
-            ),
+            getDefaultProfilePic(url, widget.providerName, 30),
             SizedBox(
               height: 10.0,
             ),

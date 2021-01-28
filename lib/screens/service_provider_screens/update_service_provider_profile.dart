@@ -4,10 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localite/constants.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/services/database.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 
 class UpdateSPProfile extends StatefulWidget {
   @override
@@ -117,13 +119,7 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                     ),
                     Align(
                       alignment: Alignment.topCenter,
-                      child: CircleAvatar(
-                        radius: 40.0,
-                        backgroundImage: (photoUrl == 'null')
-                            ? AssetImage(
-                            'assets/images/default_profile_pic.jpg')
-                            : NetworkImage(photoUrl),
-                      ),
+                      child: getDefaultProfilePic(photoUrl, name, 40),
                     ),
                     SizedBox(
                       height: 15.0,

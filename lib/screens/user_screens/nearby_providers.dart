@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/constants.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/screens/service_provider_screens/service_provider_detail.dart';
 import 'package:localite/services/database.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 
 class NearbySP extends StatefulWidget {
   final String title;
@@ -98,12 +100,7 @@ class SPTile extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(width: 10.0,),
-            CircleAvatar(
-              radius: 20,
-              backgroundImage: ((currentSP.photoUrl).toString()=='null')?
-              AssetImage('assets/images/default_profile_pic.jpg'):
-              NetworkImage(currentSP.photoUrl),
-            ),
+            getDefaultProfilePic(currentSP.photoUrl, currentSP.name, 20),
             SizedBox(width: 10.0,),
             Padding(
               padding: EdgeInsets.all(20),

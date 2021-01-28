@@ -4,10 +4,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localite/constants.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/user_screens/user_side_bar.dart';
 import 'package:localite/services/database.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
 
@@ -38,20 +40,7 @@ class _UserProfileState extends State<UserProfile> {
                       // photo
                       Align(
                         alignment: Alignment.topCenter,
-                        child: CircleAvatar(
-                          radius: 50.0,
-                          backgroundColor: Colors.blueAccent,
-                          child: ClipOval(
-                            child: SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: (photoUrl == 'null')
-                                  ? Image.asset(
-                                      'assets/images/default_profile_pic.jpg')
-                                  : Image.network(photoUrl, fit: BoxFit.fill),
-                            ),
-                          ),
-                        ),
+                        child: getDefaultProfilePic(photoUrl, name, 50),
                       ),
 
                       SizedBox(

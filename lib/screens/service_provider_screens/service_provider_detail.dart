@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:localite/constants.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/chat_room.dart';
 import 'package:localite/screens/user_screens/user_request_screen.dart';
+import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -83,12 +85,7 @@ class _SPDetailState extends State<SPDetail> {
               ),
               Align(
                 alignment: Alignment.topCenter,
-                child: CircleAvatar(
-                  radius: 40.0,
-                  backgroundImage: (photoUrl == 'null')
-                      ? AssetImage('assets/images/default_profile_pic.jpg')
-                      : NetworkImage(photoUrl),
-                ),
+                child: getDefaultProfilePic(photoUrl, widget.currentSp.name, 40),
               ),
               SizedBox(height: 20),
               Text('Name: ' + widget.currentSp.name),
