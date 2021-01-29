@@ -10,11 +10,11 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
-        return Wrapper(); // home or signup
-      }));
-    });
+    // Future.delayed(Duration(seconds: 3), () {
+    //   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) {
+    //     return Wrapper(); // home or signup
+    //   }));
+    // });
     super.initState();
   }
 
@@ -26,9 +26,14 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body: Center(
-        child: Text('Localite'),
+      backgroundColor: Color(0xffBBEABA),
+      body: Container(
+        width: double.infinity,
+        child: Stack(
+          children: [],
+        ),
       ),
     );
   }
