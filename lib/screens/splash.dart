@@ -32,7 +32,62 @@ class _SplashPageState extends State<SplashPage> {
       body: Container(
         width: double.infinity,
         child: Stack(
-          children: [],
+          children: <Widget>[
+            Positioned(
+              top: -50,
+              left: 0,
+              child: Container(
+                width: width,
+                height: 400,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/splashImage.png'),
+                        fit: BoxFit.cover
+                    )
+                ),
+              ),
+            ),
+            Positioned(
+              top: -50,
+              left: 0,
+              child: Container(
+                width: width,
+                height: 400,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/splashImage.png'),
+                        fit: BoxFit.cover
+                    )
+                ),
+              ),
+            ),Positioned(
+              top: -50,
+              left: 0,
+              child: Container(
+                width: width,
+                height: 400,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/splashImage.png'),
+                        fit: BoxFit.cover
+                    )
+                ),
+              ),
+            ),Positioned(
+              top: -50,
+              left: 0,
+              child: Container(
+                width: width,
+                height: 400,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/splashImage.png'),
+                        fit: BoxFit.cover
+                    )
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
