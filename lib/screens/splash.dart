@@ -18,7 +18,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   @override
   void initState() {
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade,duration: Duration(seconds: 1),child: SelectionScreen()));
+      Navigator.pushReplacement(context, PageTransition(type: PageTransitionType.fade,duration: Duration(seconds: 1),child: Wrapper()));
     });
     super.initState();
     controller=AnimationController(
@@ -137,18 +137,15 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
               left: 130,
               child: Opacity(
                 opacity: controller.value,
-                child: Hero(
-                  tag: 'logoText',
-                  child: Container(
-                    width: width,
-                    child: Text(
-                      'sAmigo',
-                      style: GoogleFonts.boogaloo(
-                        fontSize: 60,
-                        letterSpacing: 2,
-                        color: Color(0xff515151),
-                        fontWeight: FontWeight.w200,
-                      ),
+                child: Container(
+                  width: width,
+                  child: Text(
+                    'sAmigo',
+                    style: GoogleFonts.boogaloo(
+                      fontSize: 60,
+                      letterSpacing: 2,
+                      color: Color(0xff515151),
+                      fontWeight: FontWeight.w200,
                     ),
                   ),
                 ),
