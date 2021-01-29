@@ -23,7 +23,7 @@ String searchValue = '';
 class _UserHomeScreenState extends State<UserHomeScreen> {
   SimpleLocationResult selectedLocation;
   String location = SharedPrefs.preferences.getString('address');
-  String tempLocation;
+  String tempLocation = SharedPrefs.preferences.getString('address');
 
   @override
   void initState() {
@@ -56,6 +56,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                         style: TextStyle(
                           color: Colors.black87,
                         ),
+                        keyboardType: TextInputType.streetAddress,
                         textAlign: TextAlign.center,
                         decoration: kLoginDecoration.copyWith(
                           hintText: 'Enter your location',

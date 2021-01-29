@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' as map;
+import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong/latlong.dart';
 
 import 'map_result.dart';
@@ -42,8 +43,8 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
       appBar: AppBar(
         backgroundColor: Color(0xff97d486),
         iconTheme: IconThemeData(color: Colors.black54),
-        title:
-            Text(widget.appBarTitle, style: TextStyle(color: Colors.black54)),
+        title: Text(widget.appBarTitle,
+            style: GoogleFonts.boogaloo(color: Colors.black54, fontSize: 25)),
         actions: <Widget>[
           // DISPLAY_ONLY MODE: no save button for display only mode
           widget.displayOnly
