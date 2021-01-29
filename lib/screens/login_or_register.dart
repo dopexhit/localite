@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/screens/register_service_provider.dart';
 import 'package:localite/screens/register_user.dart';
+import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/service_provider_screens/sp_navigator_home.dart';
 import 'package:localite/screens/user_screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
@@ -91,26 +94,58 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                         });
 
                         if (newUser != null) {
-                          MyToast().getToast('Signed in successfully!');
-
+                          bool isUser = false;
+                          await FirebaseFirestore.instance
+                              .collection('Users')
+                              .doc(newUser.user.uid.toString())
+                              .get()
+                              .then((value) {
+                            if (value.exists) {
+                              setState(() {
+                                isUser = true;
+                              });
+                            }
+                          });
                           if (widget.isServiceProvider == true) {
                             // go to service provider home screen
-                            SharedPrefs.preferences
-                                .setBool('isServiceProvider', true);
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SPNavigatorHome()),
-                            );
+                            if (isUser == true) {
+                              MyToast().getToast(
+                                  "Can't continue as service provider with user account");
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SelectionScreen()));
+                            } else {
+                              MyToast().getToast('Signed in successfully!');
+                              SharedPrefs.preferences
+                                  .setBool('isServiceProvider', true);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SPNavigatorHome()),
+                              );
+                            }
                           } else {
                             // go to user home screen
-                            SharedPrefs.preferences
-                                .setBool('isServiceProvider', false);
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserNavigatorHome()),
-                            );
+                            if (isUser == false) {
+                              MyToast().getToast(
+                                  "Can't continue as user with service provider account");
+                              await FirebaseAuth.instance.signOut();
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SelectionScreen()));
+                            } else {
+                              MyToast().getToast('Signed in successfully!');
+                              SharedPrefs.preferences
+                                  .setBool('isServiceProvider', false);
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserNavigatorHome()),
+                              );
+                            }
                           }
                         }
                       }
