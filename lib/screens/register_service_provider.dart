@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:localite/map/map_result.dart';
+import 'package:localite/map/map_screen.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/screens/service_provider_screens/sp_navigator_home.dart';
@@ -7,8 +9,7 @@ import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:simple_location_picker/simple_location_picker_screen.dart';
-import 'package:simple_location_picker/simple_location_result.dart';
+
 import '../constants.dart';
 
 class RegisterServiceProvider extends StatefulWidget {
@@ -158,6 +159,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                                   builder: (context) => SimpleLocationPicker(
                                         initialLatitude: lat,
                                         initialLongitude: long,
+                                    dest: false,
                                         appBarTitle: "Select Location",
                                       ))).then((value) {
                             if (value != null) {

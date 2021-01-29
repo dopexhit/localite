@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:localite/constants.dart';
+import 'package:localite/map/map_result.dart';
+import 'package:localite/map/map_screen.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/screens/user_screens/nearby_providers.dart';
 import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/toast.dart';
-import 'package:simple_location_picker/simple_location_picker_screen.dart';
-import 'package:simple_location_picker/simple_location_result.dart';
 
 class UserHomeScreen extends StatefulWidget {
   @override
@@ -89,6 +89,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
                                           SimpleLocationPicker(
                                             initialLatitude: lat,
                                             initialLongitude: long,
+                                            dest: false,
                                             appBarTitle: "Select Location",
                                           ))).then((value) {
                                 if (value != null) {

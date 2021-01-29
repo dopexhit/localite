@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/constants.dart';
+import 'package:localite/map/map_screen.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
@@ -11,7 +12,6 @@ import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:simple_location_picker/simple_location_picker_screen.dart';
 
 final _firestore = FirebaseFirestore.instance;
 User loggedUser;
@@ -85,7 +85,8 @@ class _SPDetailState extends State<SPDetail> {
               ),
               Align(
                 alignment: Alignment.topCenter,
-                child: getDefaultProfilePic(photoUrl, widget.currentSp.name, 40),
+                child:
+                    getDefaultProfilePic(photoUrl, widget.currentSp.name, 40),
               ),
               SizedBox(height: 20),
               Text('Name: ' + widget.currentSp.name),
@@ -128,6 +129,7 @@ class _SPDetailState extends State<SPDetail> {
                                   initialLatitude: widget.currentSp.latitude,
                                   initialLongitude: widget.currentSp.longitude,
                                   appBarTitle: "Display Location",
+                                  dest: false,
                                   displayOnly: true,
                                 )));
                   }),

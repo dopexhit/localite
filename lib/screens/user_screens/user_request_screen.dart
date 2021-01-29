@@ -2,12 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:localite/map/map_screen.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_location_picker/simple_location_picker_screen.dart';
 import '../../constants.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -102,6 +102,7 @@ class _UserRequestScreenState extends State<UserRequestScreen> {
                               builder: (context) => SimpleLocationPicker(
                                     initialLatitude: lat,
                                     initialLongitude: long,
+                                dest: false,
                                     appBarTitle: "Select Location",
                                   ))).then((value) {
                         if (value != null) {

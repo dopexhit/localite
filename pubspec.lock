@@ -266,7 +266,7 @@ packages:
     source: hosted
     version: "3.0.0"
   flutter_map:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_map
       url: "https://pub.dartlang.org"
@@ -674,13 +674,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.5.0"
-  simple_location_picker:
-    dependency: "direct main"
-    description:
-      name: simple_location_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.3"
   sky_engine:
     dependency: transitive
     description: flutter

@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:localite/constants.dart';
+import 'package:localite/map/map_screen.dart';
 import 'package:localite/screens/chat_room.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:simple_location_picker/simple_location_picker_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final _firestore = FirebaseFirestore.instance;
@@ -166,6 +166,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                         initialLatitude: latitude,
                                         initialLongitude: longitude,
                                         appBarTitle: "Display Location",
+                                        dest: false,
                                         displayOnly: true,
                                       )));
                         }),
