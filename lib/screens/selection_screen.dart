@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/animations/fade-animation.dart';
 import 'package:localite/screens/login_or_register.dart';
@@ -17,14 +18,21 @@ class SelectionScreen extends StatelessWidget {
             alignment: Alignment.topCenter,
             child: Column(
               children: [
+                SizedBox(height: 20),
                 Hero(
                   tag: 'logoIcon',
-                  child: Image(image: AssetImage('assets/images/homeIcon.png'),
-                  height: 80,width: 80,),
+                  child: SvgPicture.asset(
+                    'assets/images/appIcon.svg',
+                    height: 80,
+                    width: 80,
+                  ),
                 ),
-                SizedBox(width: 20.0,),
+                SizedBox(
+                  width: 20.0,
+                ),
                 FadeAnimation(
-                  0.5, Text(
+                  0.5,
+                  Text(
                     'sAmigo',
                     style: GoogleFonts.boogaloo(
                       fontSize: 40,
@@ -38,9 +46,11 @@ class SelectionScreen extends StatelessWidget {
             ),
           ),
           FadeAnimation(
-            1.5, Text(
+            1.5,
+            Text(
               'Hey there, sAmigo at your service,\n'
-                  'continue as:',
+              'continue as:',
+              textAlign: TextAlign.center,
               style: GoogleFonts.boogaloo(
                 fontSize: 25,
                 color: Color(0xff515151),
@@ -48,11 +58,14 @@ class SelectionScreen extends StatelessWidget {
             ),
           ),
           FadeAnimation(
-            1.5, SizedBox(height: 50.0, width: 0.6*width,
+            1.5,
+            SizedBox(
+              height: 50.0,
+              width: 0.6 * width,
               child: RaisedButton(
                 color: Color(0xffbbeaba),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
                 padding: EdgeInsets.all(8.0),
                 elevation: 4,
@@ -64,7 +77,7 @@ class SelectionScreen extends StatelessWidget {
                             LoginAndRegisterScreen(isServiceProvider: false)),
                   );
                 },
-                child:  Text(
+                child: Text(
                   'Our Precious Customer',
                   style: GoogleFonts.boogaloo(
                     fontSize: 25,
@@ -75,20 +88,57 @@ class SelectionScreen extends StatelessWidget {
             ),
           ),
           FadeAnimation(
-            1.5, Text(
-              '--------- or ---------',
-              style: GoogleFonts.boogaloo(
-                fontSize: 25,
-                color: Color(0xff515151),
-              ),
+            1.5,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 5),
+                      Divider(
+                        color: Color(0xff515151),
+                        thickness: 2,
+                        indent: 110,
+                        endIndent: 7,
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    'or',
+                    style: GoogleFonts.boogaloo(
+                      fontSize: 25,
+                      color: Color(0xff515151),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 5),
+                      Divider(
+                        color: Color(0xff515151),
+                        thickness: 2,
+                        indent: 7,
+                        endIndent: 110,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           FadeAnimation(
-            1.5, SizedBox(height: 50.0, width: 0.75*width,
+            1.5,
+            SizedBox(
+              height: 50.0,
+              width: 0.75 * width,
               child: RaisedButton(
                 color: Color(0xffbbeaba),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(32.0),
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
                 padding: EdgeInsets.all(8.0),
                 elevation: 4,
@@ -110,7 +160,9 @@ class SelectionScreen extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(width: 30.0,),
+          SizedBox(
+            width: 70.0,
+          ),
         ],
       ),
     );

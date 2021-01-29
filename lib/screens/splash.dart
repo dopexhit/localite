@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/animations/fade-animation.dart';
 import 'package:localite/services/wrapper.dart';
@@ -114,26 +115,24 @@ class _SplashPageState extends State<SplashPage>
                 ),
               ),
             ),
-            Positioned(
-              top: 300,
+            Center(
               child: Opacity(
                 opacity: controller.value,
                 child: Hero(
                   tag: 'logoIcon',
-                  child: Container(
-                    width: width,
-                    height: 125,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                      image: AssetImage('assets/images/homeIcon.png'),
-                      fit: BoxFit.contain,
-                    )),
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 80),
+                    child: SvgPicture.asset(
+                      'assets/images/appIcon.svg',
+                      height: 125,
+                      width: 125,
+                    ),
                   ),
                 ),
               ),
             ),
             Positioned(
-              top: 420,
+              top: 460,
               child: Opacity(
                 opacity: controller.value,
                 child: Hero(
