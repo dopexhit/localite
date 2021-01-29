@@ -23,9 +23,8 @@ class SelectionScreen extends StatelessWidget {
                   height: 80,width: 80,),
                 ),
                 SizedBox(width: 20.0,),
-                Hero(
-                  tag: 'logoText',
-                  child: Text(
+                FadeAnimation(
+                  0.5, Text(
                     'sAmigo',
                     style: GoogleFonts.boogaloo(
                       fontSize: 40,
@@ -49,26 +48,28 @@ class SelectionScreen extends StatelessWidget {
             ),
           ),
           FadeAnimation(
-            1.5, RaisedButton(
-              color: Color(0xffbbeaba),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0),
-              ),
-              padding: EdgeInsets.all(8.0),
-              elevation: 4,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginAndRegisterScreen(isServiceProvider: false)),
-                );
-              },
-              child:  Text(
-                'Our Precious Customer',
-                style: GoogleFonts.boogaloo(
-                  fontSize: 25,
-                  color: Color(0xff515151),
+            1.5, SizedBox(height: 50.0, width: 0.6*width,
+              child: RaisedButton(
+                color: Color(0xffbbeaba),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+                padding: EdgeInsets.all(8.0),
+                elevation: 4,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginAndRegisterScreen(isServiceProvider: false)),
+                  );
+                },
+                child:  Text(
+                  'Our Precious Customer',
+                  style: GoogleFonts.boogaloo(
+                    fontSize: 25,
+                    color: Color(0xff515151),
+                  ),
                 ),
               ),
             ),
@@ -83,30 +84,33 @@ class SelectionScreen extends StatelessWidget {
             ),
           ),
           FadeAnimation(
-            1.5, RaisedButton(
-              color: Color(0xffbbeaba),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(32.0),
-              ),
-              padding: EdgeInsets.all(8.0),
-              elevation: 4,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          LoginAndRegisterScreen(isServiceProvider: true)),
-                );
-              },
-              child: Text(
-                'Our valuable Service Provider',
-                style: GoogleFonts.boogaloo(
-                  fontSize: 25,
-                  color: Color(0xff515151),
+            1.5, SizedBox(height: 50.0, width: 0.75*width,
+              child: RaisedButton(
+                color: Color(0xffbbeaba),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(32.0),
+                ),
+                padding: EdgeInsets.all(8.0),
+                elevation: 4,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            LoginAndRegisterScreen(isServiceProvider: true)),
+                  );
+                },
+                child: Text(
+                  'Our valuable Service Provider',
+                  style: GoogleFonts.boogaloo(
+                    fontSize: 25,
+                    color: Color(0xff515151),
+                  ),
                 ),
               ),
             ),
-          )
+          ),
+          SizedBox(width: 30.0,),
         ],
       ),
     );
