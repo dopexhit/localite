@@ -32,7 +32,7 @@ class AuthService {
         return null;
       }
     } catch (e) {
-      MyToast().getToast(e.message.toString());
+      print(e.message.toString());
       return null;
     }
   }
@@ -54,7 +54,7 @@ class AuthService {
         return null;
       }
     } catch (e) {
-      MyToast().getToast(e.message.toString());
+      print(e.message.toString());
       return null;
     }
   }
@@ -76,18 +76,17 @@ class AuthService {
         return null;
       }
     } catch (e) {
-      MyToast().getToast(e.message.toString());
+      print(e.message.toString());
       return null;
     }
   }
 
   //sign out
   Future signOut() async {
-    //todo: remove shared pref
     try {
       return await _auth.signOut();
     } catch (e) {
-      MyToast().getToast(e.toString());
+      print(e.toString());
       return null;
     }
   }
