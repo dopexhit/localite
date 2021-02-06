@@ -79,8 +79,8 @@ class _ChatRoomState extends State<ChatRoom> {
               Navigator.pop(context);
             }),
         title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
+          //mainAxisAlignment: MainAxisAlignment.start,
+          //mainAxisSize: MainAxisSize.min,
           children: [
             getDefaultProfilePic(widget.url, widget.receiverName, 18.5),
             SizedBox(

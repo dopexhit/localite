@@ -1,5 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/user_screens/user_chatlist.dart';
 import 'package:localite/screens/user_screens/user_home.dart';
@@ -53,18 +54,23 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           color: Color(0xffbbeaba),
-          buttonBackgroundColor: Colors.white,
-          backgroundColor: Color(0xffbbeaba),
-          animationCurve: Curves.decelerate,
+          buttonBackgroundColor: Color(0xfff0ffeb),//Color(0xffbbeaba),
+          backgroundColor: Color(0xfff0ffeb),
+          animationCurve: Curves.easeIn,
           animationDuration: Duration(
             milliseconds: 390,
           ),
           height: 50,
           items: [
-            Icon(
-              Icons.home_filled,
-              size: 20,
-            ),
+            // Icon(
+            //   Icons.home_filled,
+            //   size: 20,
+            // ),
+            SvgPicture.asset('assets/images/appIcon.svg',height: 20, width: 20,),
+            // SvgPicture.asset('assets/images/message_bubble.svg',height: 20, width: 20,),
+            // SvgPicture.asset('assets/images/pending_req_icon.svg',height: 20, width: 20,),
+            // SvgPicture.asset('assets/images/default_profile_pic.svg',height: 20, width: 20,),
+            //todo change icons
             Icon(
               Icons.chat,
               size: 20,

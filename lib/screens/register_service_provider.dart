@@ -10,6 +10,7 @@ import 'package:localite/screens/login_or_register.dart';
 import 'package:localite/screens/service_provider_screens/sp_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
+import 'package:localite/widgets/get_password_icon.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -297,7 +298,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                             ),
                           ),
                           SizedBox(width: 8.00,),
-                          IconButton(icon: Icon(Icons.remove_red_eye_rounded), onPressed:(){
+                          IconButton(icon: getPasswordIcon(hidePassword), onPressed:(){
                             setState(() {
                               hidePassword = !(hidePassword);
                             });
@@ -329,7 +330,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                             ),
                           ),
                           SizedBox(width: 8.00,),
-                          IconButton(icon: Icon(Icons.remove_red_eye_rounded), onPressed:(){
+                          IconButton(icon: getPasswordIcon(hideConfirmedPassword), onPressed:(){
                             setState(() {
                               hideConfirmedPassword = !(hideConfirmedPassword);
                             });

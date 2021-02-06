@@ -33,57 +33,68 @@ class _UserProfileState extends State<UserProfile> {
             String contact = snapshot.data.data()['contact'].toString();
             return Scaffold(
               endDrawer: UserDrawer(),
-              body: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      // photo
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: getDefaultProfilePic(photoUrl, name, 50),
-                      ),
-
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Text(
-                        name,
-                        style: GoogleFonts.gabriela(
-                          letterSpacing: 4,
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 30.0,
-                          ),
-                          Icon(Icons.phone),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          Text(
-                            contact,
-                            style: GoogleFonts.gabriela(
-                              letterSpacing: 4,
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
-                    ],
+              appBar: AppBar(backgroundColor: Color(0xfff0ffeb),
+                  iconTheme: IconThemeData(color: Color(0xff515151),),
+                  shadowColor: Colors.transparent,
+                  title: Text(
+                    'Your Profile',
+                    style: GoogleFonts.boogaloo(
+                        fontSize: 27,
+                        color: Color(0xff3d3f3f)),
                   ),
+              ),
+              backgroundColor: Color(0xfff0ffeb),
+              body: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(height: 50.0,),
+                    // photo
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: getDefaultProfilePic(photoUrl, name, 50),
+                    ),
+
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Text(
+                      name,
+                      style: GoogleFonts.boogaloo(
+                        fontSize: 25,
+                        letterSpacing: 2,
+                        color: Color(0xff515151),
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100.0,
+                        ),
+                        Icon(Icons.phone),
+                        SizedBox(
+                          width: 20.0,
+                        ),
+                        Text(
+                          contact,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 25,
+                            letterSpacing: 2,
+                            color: Color(0xff515151),
+                            fontWeight: FontWeight.w200,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                  ],
                 ),
               ),
             );

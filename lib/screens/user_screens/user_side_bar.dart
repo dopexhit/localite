@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/user_screens/user_accepted_request.dart';
 import 'package:localite/screens/user_screens/update_user_profile.dart';
@@ -9,65 +11,99 @@ class UserDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(
-                        "https://www.computerhope.com/jargon/n/navigate.jpg"),
-                    fit: BoxFit.cover)),
-            child: Text("Localite"),
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          ListTile(
-            title: Text("Update Profile"),
-            onTap: () {
-              Navigator.push(context,
-                  MaterialPageRoute(
-                    builder: (_) => UpdateUserProfile()
-                  ));
-            },
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          ListTile(
-            title: Text("Confirmed Requests"),
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserAcceptedRequests()));
-            },
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          ListTile(
-            title: Text("About Us"),
-            onTap: () {},
-          ),
-          SizedBox(
-            height: 10.0,
-          ),
-          ListTile(
-            title: Text("Sign Out"),
-            onTap: () async {
-              SharedPrefs.preferences.remove('isServiceProvider');
-              await AuthService().signOut().whenComplete(
-                () {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SelectionScreen()));
-                },
-              );
-            },
-          )
-        ],
+      child: Container(
+        color: Color(0xfff0ffeb),//todo change drawer color
+        child: ListView(
+          children: [
+            DrawerHeader(
+              // decoration: BoxDecoration(
+              //     image: DecorationImage(
+              //         image: NetworkImage(
+              //             "https://www.computerhope.com/jargon/n/navigate.jpg"),
+              //         fit: BoxFit.cover)),
+              child: Row(
+                children: [
+                  SvgPicture.asset('assets/images/appIcon.svg',width: 30,height: 30,),
+                  SizedBox(width: 10.0,),
+                  Text(
+                    'sAmigo',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.boogaloo(
+                      fontSize: 30,
+                      color: Color(0xff515151),
+                      fontWeight: FontWeight.w200,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            ListTile(
+              title: Text("Update Profile",
+                style: GoogleFonts.boogaloo(
+                  fontSize: 25,
+                  color: Color(0xff515151),
+                ),
+              ),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(
+                      builder: (_) => UpdateUserProfile()
+                    ));
+              },
+            ),
+            Padding(
+              //to make a horizontal line
+                padding: EdgeInsets.fromLTRB(15.0, 5.0, 30.0, 5.0),
+                child: Container(color: Color(0xff515151),height: 0.5,),
+            ),
+            ListTile(
+              title: Text("Confirmed Requests",style: GoogleFonts.boogaloo(
+                fontSize: 25,
+                color: Color(0xff515151),
+              ),),
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserAcceptedRequests()));
+              },
+            ),
+            Padding(
+              //to make a horizontal line
+              padding: EdgeInsets.fromLTRB(15.0, 5.0, 30.0, 5.0),
+              child: Container(color: Color(0xff515151),height: 0.5,),
+            ),
+            ListTile(
+              title: Text("About Us",style: GoogleFonts.boogaloo(
+                fontSize: 25,
+                color: Color(0xff515151),
+              ),),
+              onTap: () {},
+            ),
+            Padding(
+              //to make a horizontal line
+              padding: EdgeInsets.fromLTRB(15.0, 5.0, 30.0, 5.0),
+              child: Container(color: Color(0xff515151),height: 0.5,),
+            ),
+            ListTile(
+              title: Text("Sign Out",style: GoogleFonts.boogaloo(
+                fontSize: 25,
+                color: Color(0xff515151),
+              ),),
+              onTap: () async {
+                SharedPrefs.preferences.remove('isServiceProvider');
+                await AuthService().signOut().whenComplete(
+                  () {
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectionScreen()));
+                  },
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
