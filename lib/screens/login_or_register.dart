@@ -247,13 +247,13 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                     onTap: () {
                       if (widget.isServiceProvider == true) {
                         // go to service provider register screen
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => RegisterServiceProvider()));
                       } else {
                         // go to user register screen
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => RegisterUser()));

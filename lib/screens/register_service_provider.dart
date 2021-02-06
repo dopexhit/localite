@@ -6,6 +6,7 @@ import 'package:localite/map/map_result.dart';
 import 'package:localite/map/map_screen.dart';
 import 'package:localite/models/offered_services.dart';
 import 'package:localite/models/service_provider_data.dart';
+import 'package:localite/screens/login_or_register.dart';
 import 'package:localite/screens/service_provider_screens/sp_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
@@ -30,8 +31,8 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
   String error='';
   double latitude;
   double longitude;
-  String service = 'Carpenter';
-  bool showSpinner = false,hidePassword=true;
+  String service;
+  bool showSpinner = false,hidePassword=true,hideConfirmedPassword=true;
   final _formKey = GlobalKey<FormState>();
 
   DropdownButton<String> getDropdownButton() {
@@ -39,16 +40,21 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
 
     for (String serv in servicesList) {
       var dropdownitem = DropdownMenuItem<String>(
-        child: Text(serv),
+        child: Text(serv,style: GoogleFonts.boogaloo(
+          fontSize: 18,), textAlign: TextAlign.center,),
         value: serv,
       );
-
       myList.add(dropdownitem);
     }
 
     return DropdownButton<String>(
       value: service,
+      style: TextStyle(color: Color(0xff515151),),
       items: myList,
+      dropdownColor: Color(0xffbbeaba),
+      focusColor: Colors.grey,
+      elevation: 3,
+      underline: Container(color: Colors.transparent),
       onChanged: (value) {
         setState(() {
           service = value;
@@ -62,6 +68,8 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
     setState(() {
       error='';
       hidePassword=true;
+      hideConfirmedPassword=true;
+      service=null;
     });
   }
 
@@ -102,138 +110,252 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                           fontWeight: FontWeight.w200,
                         ),
                       ),
-                      TextFormField(
-                        onChanged: (value) {
-                          //Do something with the user input.
-                          name = value;
-                        },
-                        validator: (val) => val.isEmpty ? "Field can't be empty" : null,
-                        style: TextStyle(color: Colors.black87),
-                        textAlign: TextAlign.center,
-                        decoration: kLoginDecoration.copyWith(
-                          hintText: 'Enter your name',
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(30.0, 40.0, 30.0, 2.0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            //Do something with the user input.
+                            name = value;
+                          },
+                          validator: (val) => val.isEmpty ? "Field can't be empty" : null,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 18,
+                            color: Color(0xff515151),
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: kLoginDecoration.copyWith(
+                            hintText: 'Enter your name',
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 8.0,
                       ),
-                      TextFormField(
-                        onChanged: (value) {
-                          //Do something with the user input.
-                          email = value;
-                        },
-                        validator: (val) => val.isEmpty ? "Field can't be empty" : null,
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(color: Colors.black87),
-                        textAlign: TextAlign.center,
-                        decoration: kLoginDecoration.copyWith(
-                          hintText: 'Enter your email',
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            //Do something with the user input.
+                            email = value;
+                          },
+                          validator: (val) => val.isEmpty ? "Field can't be empty" : null,
+                          keyboardType: TextInputType.emailAddress,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 18,
+                            color: Color(0xff515151),
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: kLoginDecoration.copyWith(
+                            hintText: 'Enter your email',
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 8.0,
                       ),
-                      TextFormField(
-                        onChanged: (value) {
-                          //Do something with the user input.
-                          contact = value;
-                        },
-                        validator: (val) => val.isEmpty ? "Field can't be empty" : null,
-                        keyboardType: TextInputType.phone,
-                        style: TextStyle(color: Colors.black87),
-                        textAlign: TextAlign.center,
-                        decoration: kLoginDecoration.copyWith(
-                          hintText: 'Enter your phone no',
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            //Do something with the user input.
+                            contact = value;
+                          },
+                          validator: (val) => val.isEmpty ? "Field can't be empty" : null,
+                          keyboardType: TextInputType.phone,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 18,
+                            color: Color(0xff515151),
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: kLoginDecoration.copyWith(
+                            hintText: 'Enter your phone no',
+                          ),
                         ),
+                      ),
+                      SizedBox(height: 8.0),
+                      Row(
+                        children: [
+                          Padding(padding: EdgeInsets.fromLTRB(70.0, 13.0, 25.0, 15.0),
+                            child: Text('You are: ',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),),
+                          ),
+                          Container(
+                            child: Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 0.0, 20.0, 0.0),
+                              child: SizedBox(height:30,child: getDropdownButton()),
+                            ),
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide( width:0.5,style: BorderStyle.solid,),
+                                borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                              ),
+                            ),),
+                        ],
                       ),
                       SizedBox(
                         height: 8.0,
                       ),
-                      TextFormField(
-                        onChanged: (value) {
-                          //Do something with the user input.
-                          address = value;
-                        },
-                        validator: (val) => val.isEmpty ? "Field can't be empty" : null,
-                        style: TextStyle(color: Colors.black87),
-                        textAlign: TextAlign.center,
-                        decoration: kLoginDecoration.copyWith(
-                          hintText: 'Enter your address',
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+                        child: TextFormField(
+                          onChanged: (value) {
+                            //Do something with the user input.
+                            address = value;
+                          },
+                          validator: (val) => val.isEmpty ? "Field can't be empty" : null,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 18,
+                            color: Color(0xff515151),
+                          ),
+                          textAlign: TextAlign.center,
+                          decoration: kLoginDecoration.copyWith(
+                            hintText: 'Enter your address',
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8.0),
-                      getDropdownButton(),
-                      SizedBox(height: 8.0),
-                      TextFormField(
-                        onChanged: (value) {
-                          //Do something with the user input.
-                          password = value;
-                        },
-                        validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : null,
-                        obscureText: true,
-                        style: TextStyle(
-                          color: Colors.black87,
-                        ),
-                        textAlign: TextAlign.center,
-                        decoration: kLoginDecoration.copyWith(
-                            hintText: 'Enter your Password'),
+                      SizedBox(height: 10.0),
+                      Row(
+                        children: [
+                          Padding(padding: EdgeInsets.fromLTRB(30.0, 13.0, 25.0, 15.0),
+                            child: Text('Select default location for service: ',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 18,
+                                color: Color(0xff515151),
+                              ),),
+                          ),
+                          Material(
+                            color: Color(0xffbbeaba),
+                            borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                            elevation: 4.0,
+                            child: SizedBox(height: 35.0,
+                              child: MaterialButton(
+                                child: Text('Go to Map',style: GoogleFonts.boogaloo(
+                                  fontSize: 18,
+                                  color: Color(0xff515151),),),
+                                onPressed: () async {
+                                  double lat = 28.1, long = 77.1;
+
+                                  if (address == null || address == '') {
+                                    MyToast().getToast('Please fill the address first!');
+                                  } else {
+                                    List<Location> locations =
+                                    await locationFromAddress(address);
+
+                                    if (locations != null && locations != []) {
+                                      lat = locations[0].latitude;
+                                      long = locations[0].longitude;
+
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => SimpleLocationPicker(
+                                                initialLatitude: lat,
+                                                initialLongitude: long,
+                                                dest: false,
+                                                appBarTitle: "Select Location",
+                                              ))).then((value) {
+                                        if (value != null) {
+                                          setState(() {
+                                            selectedLocation = value;
+                                            latitude = selectedLocation.latitude;
+                                            longitude = selectedLocation.longitude;
+                                          });
+                                        }
+                                      });
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       SizedBox(height: 8.0),
-                      RaisedButton(
-                        child: Text('Select default location for service'),
-                        onPressed: () async {
-                          double lat = 28.1, long = 77.1;
-
-                          if (address == null || address == '') {
-                            MyToast().getToast('Please fill the address first!');
-                          } else {
-                            List<Location> locations =
-                                await locationFromAddress(address);
-
-                            if (locations != null && locations != []) {
-                              lat = locations[0].latitude;
-                              long = locations[0].longitude;
-
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => SimpleLocationPicker(
-                                            initialLatitude: lat,
-                                            initialLongitude: long,
-                                        dest: false,
-                                            appBarTitle: "Select Location",
-                                          ))).then((value) {
-                                if (value != null) {
-                                  setState(() {
-                                    selectedLocation = value;
-                                    latitude = selectedLocation.latitude;
-                                    longitude = selectedLocation.longitude;
-                                  });
-                                }
-                              });
-                            }
-                          }
-                        },
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(30.0, 2.0, 5.0, 10.0),
+                            child: SizedBox(
+                              width: 250.0,
+                              child: TextFormField(
+                                obscureText: hidePassword,
+                                validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : null,
+                                style: GoogleFonts.boogaloo(
+                                  fontSize: 18,
+                                  color: Color(0xff515151),
+                                ),
+                                textAlign: TextAlign.center,
+                                onChanged: (value) {
+                                  //Do something with the user input.
+                                  password = value;
+                                },
+                                decoration: kLoginDecoration.copyWith(hintText: 'Create a password'),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8.00,),
+                          IconButton(icon: Icon(Icons.remove_red_eye_rounded), onPressed:(){
+                            setState(() {
+                              hidePassword = !(hidePassword);
+                            });
+                          },
+                            focusColor: Color(0xffbbeaba),)
+                        ],
                       ),
-                      SizedBox(height: 24.0),
+                      SizedBox(height: 4.0),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(30.0, 0.0, 5.0, 15.0),
+                            child: SizedBox(
+                              width: 250.0,
+                              child: TextFormField(
+                                obscureText: hideConfirmedPassword,
+                                validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : val!=password ? "Passwords don't match":null,
+                                style: GoogleFonts.boogaloo(
+                                  fontSize: 18,
+                                  color: Color(0xff515151),
+                                ),
+                                textAlign: TextAlign.center,
+                                // onChanged: (value) {
+                                //   //Do something with the user input.
+                                //   password = value;
+                                // },
+                                decoration: kLoginDecoration.copyWith(hintText: 'Confirm password'),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8.00,),
+                          IconButton(icon: Icon(Icons.remove_red_eye_rounded), onPressed:(){
+                            setState(() {
+                              hideConfirmedPassword = !(hideConfirmedPassword);
+                            });
+                          },
+                            focusColor: Color(0xffbbeaba),)
+                        ],
+                      ),
+                      SizedBox(height: 12.0),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 16.0),
                         child: Material(
-                          color: Colors.lightBlueAccent,
+                          color: Color(0xffbbeaba),
                           borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                          elevation: 5.0,
+                          elevation: 4.0,
                           child: MaterialButton(
                             onPressed: () async {
+                              FocusScope.of(context).unfocus();
                               //service provider login functionality.
-                              if (email == null ||
-                                  password == null ||
-                                  contact == null ||
-                                  name == null ||
-                                  address == null ||
-                                  service == null) {
-                                MyToast().getToast('Enter all the fields!');
+                              if (_formKey.currentState.validate()!=true) {
+                                setState(() {
+                                  error='';
+                                });
                               } else if (latitude == null || longitude == null) {
-                                MyToast().getToast("Please select a location!");
+                                MyToast().getToast("Please confirm your location on map!");
+                              }else if(service==null){
+                                MyToast().getToast("Please select the service you may provide!");
                               } else {
                                 setState(() {
                                   showSpinner = true;
@@ -265,16 +387,53 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                                       MaterialPageRoute(
                                           builder: (context) => SPNavigatorHome()));
                                 }
+                                else{
+                                  setState(() {
+                                    error='The provided email is already registered';
+                                  });
+                                }
                               }
                             },
                             minWidth: 200.0,
                             height: 42.0,
                             child: Text(
-                              'Register',
+                              'Get Started',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 18,
+                                color: Color(0xff515151),
+                              ),
                             ),
                           ),
                         ),
                       ),
+                      SizedBox(height: 20),
+                      Text('Already registered? ',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.boogaloo(
+                          fontSize: 18,
+                          color: Color(0xff515151),
+                        ),),
+                      SizedBox(height: 5.0,),
+                      GestureDetector(
+                        child: Text('Login here',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 18,
+                            color: Colors.lightBlueAccent[100],
+                          ),),
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginAndRegisterScreen()));
+                        },
+                      ),
+                      SizedBox(height: 15.0,),
+                      Text(
+                        error,
+                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                      ),
+                      SizedBox(height: 10.0,)
                     ],
                   ),
                 ),
