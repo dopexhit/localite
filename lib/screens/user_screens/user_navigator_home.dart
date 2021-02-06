@@ -52,9 +52,9 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
       create: (context) => UserDetails(),
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
-          color: Colors.white70,
-          buttonBackgroundColor: Colors.white,
-          backgroundColor: Colors.blueAccent,
+          color: Color(0xffbbeaba),
+          buttonBackgroundColor: Color(0xffbbeaba),
+          backgroundColor: Color(0xfff0ffeb),
           animationCurve: Curves.decelerate,
           animationDuration: Duration(
             milliseconds: 390,
