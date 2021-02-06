@@ -111,6 +111,8 @@ class _SPDetailState extends State<SPDetail> {
                           MaterialPageRoute(
                               builder: (context) => ChatRoom(
                                     roomId: roomId,
+                                    receiverName: widget.currentSp.name,
+                                    url: photoUrl,
                                     receiver: widget.currentSp,
                                     userUid: loggedUser.uid,
                                     spUid: widget.currentSp.uid,

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
@@ -43,12 +44,27 @@ class _SPChatListState extends State<SPChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chats'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: TileStream(),
+      // appBar: AppBar(
+      //   title: Text('Chats'),
+      // ),
+      backgroundColor: Color(0xfff0ffeb),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 15, bottom: 5),
+                child: Text(
+                  'Your chats',
+                  style: GoogleFonts.boogaloo(
+                      fontSize: 27, color: Color(0xff3d3f3f)),
+                ),
+              ),
+              TileStream(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -131,6 +147,27 @@ class _MessageTileState extends State<MessageTile> {
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
 
+    int day = widget.timestamp.toDate().day;
+    int month = widget.timestamp.toDate().month;
+    int year = widget.timestamp.toDate().year;
+
+    Timestamp todayStamp = Timestamp.now();
+    int tday = todayStamp.toDate().day;
+    int tmonth = todayStamp.toDate().month;
+    int tyear = todayStamp.toDate().year;
+
+    String date = (day > 9 ? day.toString() : '0' + day.toString()) +
+        '/' +
+        (month > 9 ? month.toString() : '0' + month.toString()) +
+        '/' +
+        year.toString();
+
+    String todayDate = (tday > 9 ? tday.toString() : '0' + tday.toString()) +
+        '/' +
+        (tmonth > 9 ? tmonth.toString() : '0' + tmonth.toString()) +
+        '/' +
+        tyear.toString();
+
     return RawMaterialButton(
       onPressed: () async {
         Navigator.push(
@@ -140,6 +177,8 @@ class _MessageTileState extends State<MessageTile> {
                       roomId: widget.uid + '-' + loggedUser.uid,
                       userUid: widget.uid,
                       spUid: loggedUser.uid,
+                      receiverName: widget.name,
+                      url: url,
                     )));
       },
       child: Padding(
@@ -160,19 +199,29 @@ class _MessageTileState extends State<MessageTile> {
                       children: [
                         Text(
                           widget.name,
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.boogaloo(
+                              fontSize: 21,
+                              color: Color(0xff3d3f3f),
+                              letterSpacing: 0.8), //TextStyle(fontSize: 20),
                         ),
                         SizedBox(height: 7),
                       ],
                     ),
                   ),
-                  Text(time),
+                  Text(
+                    date == todayDate ? time : date,
+                    style: GoogleFonts.boogaloo(
+                        color: Colors.black54,
+                        // fontSize: 14.5,
+                        letterSpacing: 0.5),
+                  ),
                 ],
               ),
               SizedBox(height: 11),
               Divider(
                 height: 5,
                 color: Colors.black54,
+                indent: 50,
               )
             ],
           ),

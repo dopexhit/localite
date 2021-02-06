@@ -149,6 +149,8 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                       builder: (context) => ChatRoom(
                                           roomId: widget.requestID,
                                           userUid: widget.userUID,
+                                          receiverName: userName,
+                                          url: url,
                                           spUid: widget.spUID)));
                             })),
                   ],

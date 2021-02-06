@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
@@ -43,12 +44,24 @@ class _UserChatListState extends State<UserChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Chats'),
-      ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Expanded(child: TileStream()),
+      backgroundColor: Color(0xfff0ffeb),
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 15, bottom: 5),
+                child: Text(
+                  'Your chats',
+                  style: GoogleFonts.boogaloo(
+                      fontSize: 27, color: Color(0xff3d3f3f)),
+                ),
+              ),
+              Expanded(child: TileStream()),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -129,9 +142,29 @@ class _MessageTileState extends State<MessageTile> {
   Widget build(BuildContext context) {
     int hour = widget.timestamp.toDate().hour.toInt();
     int minute = widget.timestamp.toDate().minute.toInt();
+    int day = widget.timestamp.toDate().day;
+    int month = widget.timestamp.toDate().month;
+    int year = widget.timestamp.toDate().year;
+
+    Timestamp todayStamp = Timestamp.now();
+    int tday = todayStamp.toDate().day;
+    int tmonth = todayStamp.toDate().month;
+    int tyear = todayStamp.toDate().year;
     final String time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
+
+    String date = (day > 9 ? day.toString() : '0' + day.toString()) +
+        '/' +
+        (month > 9 ? month.toString() : '0' + month.toString()) +
+        '/' +
+        year.toString();
+
+    String todayDate = (tday > 9 ? tday.toString() : '0' + tday.toString()) +
+        '/' +
+        (tmonth > 9 ? tmonth.toString() : '0' + tmonth.toString()) +
+        '/' +
+        tyear.toString();
 
     return RawMaterialButton(
       onPressed: () {
@@ -142,19 +175,20 @@ class _MessageTileState extends State<MessageTile> {
                       roomId: loggedUser.uid + '-' + widget.uid,
                       userUid: loggedUser.uid,
                       spUid: widget.uid,
+                      receiverName: widget.name,
+                      url: url,
                     )));
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: EdgeInsets.only(left: 5, right: 10, top: 3, bottom: 3),
         child: Container(
           child: Column(
             children: [
-              //todo: add profile image
               Row(
                 children: [
-                  getDefaultProfilePic(url, widget.name, 30),
+                  getDefaultProfilePic(url, widget.name, 20),
                   SizedBox(
-                    width: 15.0,
+                    width: 20.0,
                   ),
                   Expanded(
                     child: Column(
@@ -162,23 +196,36 @@ class _MessageTileState extends State<MessageTile> {
                       children: [
                         Text(
                           widget.name,
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.boogaloo(
+                              fontSize: 21,
+                              color: Color(0xff3d3f3f),
+                              letterSpacing: 0.5), //TextStyle(fontSize: 20),
                         ),
-                        SizedBox(height: 7),
+                        SizedBox(height: 5),
                         Text(
                           widget.service,
-                          style: TextStyle(color: Colors.black54),
+                          style: GoogleFonts.boogaloo(
+                              color: Colors.black54,
+                              fontSize: 14.5,
+                              letterSpacing: 0.5),
                         ),
                       ],
                     ),
                   ),
-                  Text(time),
+                  Text(
+                    date == todayDate ? time : date,
+                    style: GoogleFonts.boogaloo(
+                        color: Colors.black54,
+                        // fontSize: 14.5,
+                        letterSpacing: 0.5),
+                  ),
                 ],
               ),
               SizedBox(height: 11),
               Divider(
                 height: 5,
                 color: Colors.black54,
+                indent: 50,
               )
             ],
           ),

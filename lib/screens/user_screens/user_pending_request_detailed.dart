@@ -213,6 +213,8 @@ class _MessageTileState extends State<MessageTile> {
                                   builder: (context) => ChatRoom(
                                       roomId: requestID,
                                       userUid: userUID,
+                                      receiverName: widget.providerName,
+                                      url: url,
                                       spUid: spUID)));
                         })),
               ],

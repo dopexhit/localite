@@ -48,9 +48,9 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
       create: (context) => SPDetails(),
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
-          color: Colors.white70,
+          color: Color(0xffbbeaba),
           buttonBackgroundColor: Colors.white,
-          backgroundColor: Colors.blueAccent,
+          backgroundColor: Color(0xffbbeaba),
           animationCurve: Curves.decelerate,
           animationDuration: Duration(
             milliseconds: 390,
