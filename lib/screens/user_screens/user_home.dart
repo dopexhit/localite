@@ -40,6 +40,7 @@ class _UserHomeScreenState extends State<UserHomeScreen> {
         return SystemChannels.platform.invokeMethod('SystemNavigator.pop');
       },
       child: Scaffold(
+        backgroundColor: Color(0xfff0ffeb),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),

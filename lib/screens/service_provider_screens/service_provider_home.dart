@@ -147,6 +147,7 @@ class _MessageTileState extends State<MessageTile> {
   void initState() {
     super.initState();
     getPhoto();
+    SPDetails();
   }
 
   void getPhoto() {
