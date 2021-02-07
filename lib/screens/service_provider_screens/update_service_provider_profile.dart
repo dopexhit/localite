@@ -50,19 +50,21 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
   }
 
   uploadPic(BuildContext context) async {
-    String fileName = _imageFile.path;
-    Reference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then((newImageDownloadUrl) {
-      FirebaseFirestore.instance
-          .collection(currentSP.service)
-          .doc(currentSP.uid)
-          .update({
-        'photoUrl': newImageDownloadUrl,
+    if(_imageFile!=null){
+      String fileName = _imageFile.path;
+      Reference firebaseStorageRef =
+      FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      taskSnapshot.ref.getDownloadURL().then((newImageDownloadUrl) {
+        FirebaseFirestore.instance
+            .collection(currentSP.service)
+            .doc(currentSP.uid)
+            .update({
+          'photoUrl': newImageDownloadUrl,
+        });
       });
-    });
+    }
   }
 
   // user can choose camera as well as gallery to upload their profile picture
@@ -159,20 +161,24 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                         height: 30.0,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 50.0,
-                          ),
                           Material(
                             borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             color: Color(0xffbbeaba),
                             elevation: 4,
                             child: MaterialButton(
                               onPressed: () => _openImagePicker(context),
-                              child: Text('Upload New Image',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                              ),),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.cloud_upload_rounded,size: 17.0,),
+                                  SizedBox(width: 7.0,),
+                                  Text('Upload New Image',style: GoogleFonts.boogaloo(
+                                    fontSize: 20,
+                                    color: Color(0xff515151),
+                                  ),),
+                                ],
+                              ),
                             ),
                           ),
                           SizedBox(
@@ -191,10 +197,16 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                                   'photoUrl': null,
                                 });
                               },
-                              child: Text('Delete Image',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                              ),
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete_forever_sharp,size: 17.0,),
+                                  SizedBox(width: 7.0,),
+                                  Text('Delete Image',style: GoogleFonts.boogaloo(
+                                    fontSize: 20,
+                                    color: Color(0xff515151),
+                                  ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -245,7 +257,7 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                               color: Color(0xff515151),
                             ),),
                             SizedBox(width: 13.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Expanded(
                               child: TextFormField(
                                 initialValue: contact,
                                 style: GoogleFonts.boogaloo(
@@ -276,7 +288,7 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                               color: Color(0xff515151),
                             ),),
                             SizedBox(width: 10.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Expanded(
                               child: TextFormField(
                                 initialValue: address,
                                 style: GoogleFonts.boogaloo(

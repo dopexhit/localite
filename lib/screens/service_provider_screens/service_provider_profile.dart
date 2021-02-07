@@ -88,16 +88,15 @@ class _SPProfileState extends State<SPProfile> {
                         color: Color(0xff515151),
                         fontWeight: FontWeight.w200,
                       ),
+                      textAlign: TextAlign.center,
                     ),
 
                     SizedBox(
                       height: 20.0,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 100.0,
-                        ),
                         Icon(Icons.phone),
                         SizedBox(
                           width: 20.0,

@@ -56,21 +56,21 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
   }
 
   uploadPic(BuildContext context) async {
-    // if(counter==0)await FirebaseFirestore.instance.collection('Users').doc(currentUser.uid).get().then((value) => oldPhotoUrl=value.data()['photoUrl'].toString());
-    // counter++;//counter to tell how many times the pic has been changed since activity has started
-    String fileName = _imageFile.path;
-    Reference firebaseStorageRef =
-        FirebaseStorage.instance.ref().child(fileName);
-    UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
-    TaskSnapshot taskSnapshot = await uploadTask;
-    taskSnapshot.ref.getDownloadURL().then((newImageDownloadUrl) {
-      FirebaseFirestore.instance
-          .collection('Users')
-          .doc(currentUser.uid)
-          .update({
-        'photoUrl': newImageDownloadUrl,
+    if(_imageFile!=null){
+      String fileName = _imageFile.path;
+      Reference firebaseStorageRef =
+      FirebaseStorage.instance.ref().child(fileName);
+      UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      taskSnapshot.ref.getDownloadURL().then((newImageDownloadUrl) {
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(currentUser.uid)
+            .update({
+          'photoUrl': newImageDownloadUrl,
+        });
       });
-    });
+    }
   }
 
   void _openImagePicker(BuildContext context) {
@@ -165,10 +165,8 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                         height: 30.0,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: 40.0,
-                          ),
                           Material(
                             borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             color: Color(0xffbbeaba),
@@ -234,7 +232,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                               color: Color(0xff515151),
                             ),),
                             SizedBox(width: 20.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Expanded(
                               child: TextFormField(
                                 initialValue: name,
                                 style: GoogleFonts.boogaloo(
@@ -264,7 +262,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                               color: Color(0xff515151),
                             ),),
                             SizedBox(width: 13.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Expanded(
                               child: TextFormField(
                                 initialValue: contact,
                                 style: GoogleFonts.boogaloo(

@@ -120,26 +120,30 @@ class SPTile extends StatelessWidget {
             SizedBox(width: 10.0,),
             Padding(
               padding: EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  Text(
-                    'Name :  '+currentSP.name,
-                    style: GoogleFonts.boogaloo(
-                      fontSize: 20,
-                      color: Color(0xff515151),
+              child: Expanded(
+                child: Column(
+                  //mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Name :  '+currentSP.name,
+                      style: GoogleFonts.boogaloo(
+                        fontSize: 20,
+                        color: Color(0xff515151),
+                      ),
+                      textAlign: TextAlign.start,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 5.0,),
-                  Text(
-                    'Address :  '+currentSP.address,
-                    style: GoogleFonts.boogaloo(
-                      fontSize: 20,
-                      color: Color(0xff515151),
+                    SizedBox(height: 5.0,),
+                    Text(
+                      'Address :  '+currentSP.address,
+                      style: GoogleFonts.boogaloo(
+                        fontSize: 20,
+                        color: Color(0xff515151),
+                      ),
+                      overflow: ,
+                      textAlign: TextAlign.start,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

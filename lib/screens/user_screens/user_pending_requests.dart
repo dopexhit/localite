@@ -100,7 +100,7 @@ class TileStreamPending extends StatelessWidget {
         } else {
           return Center(
             child: CircularProgressIndicator(
-              backgroundColor: Colors.lightBlueAccent,
+              backgroundColor: Colors.green[200],
             ),
           );
         }

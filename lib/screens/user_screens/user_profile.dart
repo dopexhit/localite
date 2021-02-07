@@ -73,10 +73,8 @@ class _UserProfileState extends State<UserProfile> {
                       height: 20.0,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        SizedBox(
-                          width: 100.0,
-                        ),
                         Icon(Icons.phone),
                         SizedBox(
                           width: 20.0,
@@ -100,7 +98,11 @@ class _UserProfileState extends State<UserProfile> {
               ),
             );
           } else
-            return Container();
+            return Center(
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.green[200],
+              ),
+            );
         });
   }
 }
