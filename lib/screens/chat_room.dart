@@ -82,7 +82,7 @@ class _ChatRoomState extends State<ChatRoom> {
           //mainAxisAlignment: MainAxisAlignment.start,
           //mainAxisSize: MainAxisSize.min,
           children: [
-            getDefaultProfilePic(widget.url, widget.receiverName, 18.5),
+            getDefaultProfilePic(widget.url, widget.receiverName, 18.5,false),
             SizedBox(
               width: 12,
             ),

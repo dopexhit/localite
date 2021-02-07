@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -153,6 +154,7 @@ class _MessageTileState extends State<MessageTile> {
 
     //todo: add profile image
     return Container(
+      color: Color(0xfff0ffeb),
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
         child: Column(
@@ -161,62 +163,77 @@ class _MessageTileState extends State<MessageTile> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Text(date),
+                Text(date,style: GoogleFonts.boogaloo(
+                    color: Color(0xff3d3f3f)),),
                 SizedBox(height: 5),
-                Text(time),
+                Text(time,style: GoogleFonts.boogaloo(
+                    color: Color(0xff3d3f3f)),),
               ],
             ),
-            getDefaultProfilePic(url, widget.providerName, 30),
+            getDefaultProfilePic(url, widget.providerName, 40,true),
             SizedBox(
               height: 10.0,
             ),
             Text(
               widget.providerName,
-              style: TextStyle(fontSize: 30),
+              style: GoogleFonts.boogaloo(
+                  fontSize: 30,
+                  color: Color(0xff3d3f3f)),
             ),
             SizedBox(height: 7),
             Text(
               widget.service,
-              style: TextStyle(color: Colors.black54, fontSize: 17),
+              style: GoogleFonts.boogaloo(
+                  fontSize: 20,
+                  color: Color(0xff3d3f3f)),
             ),
             SizedBox(height: 40),
             Text(
-              'Work description: ${widget.description}',
-              style: TextStyle(fontSize: 15, color: Colors.black87),
+              'Work description :  ${widget.description}',
+              style: GoogleFonts.boogaloo(
+                  fontSize: 18,
+                  color: Color(0xff3d3f3f)),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Text(
-              'Your service address: ${widget.address}',
-              style: TextStyle(fontSize: 15, color: Colors.black87),
+              'Your service address :  ${widget.address}',
+              style: GoogleFonts.boogaloo(
+                  fontSize: 18,
+                  color: Color(0xff3d3f3f)),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 30,),
+            Text('Reach Out :',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.boogaloo(
+                fontSize: 20,
+                color: Color(0xff3d3f3f),
+            ),),
+            SizedBox(height: 30),
             Row(
               children: [
                 Expanded(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                        icon: Icon(Icons.call),
-                        onPressed: () async =>
-                            _makePhoneCall(widget.spContact.toString())),
-                    Text(widget.spContact),
-                  ],
-                )),
+                    child: GestureDetector(
+                      child: Image.asset('assets/images/call_icon.png',width: 30.0, height: 30.0,),
+                      onTap: ()async{
+                        _makePhoneCall(widget.spContact.toString());
+                      },
+                    )),
                 Expanded(
-                    child: IconButton(
-                        icon: Icon(Icons.message),
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChatRoom(
-                                      roomId: requestID,
-                                      userUid: userUID,
-                                      receiverName: widget.providerName,
-                                      url: url,
-                                      spUid: spUID)));
-                        })),
+                    child:GestureDetector(
+                      child: Image.asset('assets/images/message_bubble.png',width: 30.0, height:30.0,),
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatRoom(
+                                    roomId: requestID,
+                                    userUid: userUID,
+                                    receiverName: widget.providerName,
+                                    url: url,
+                                    spUid: spUID)));
+                      },
+                    ),
+                ),
               ],
             ),
           ],

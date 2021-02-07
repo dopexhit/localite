@@ -12,7 +12,7 @@ class SPDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Color(0xfff0ffeb),//todo change drawer color
+        color: Color(0xffEBF6D2),
         child: ListView(
           children: [
             DrawerHeader(

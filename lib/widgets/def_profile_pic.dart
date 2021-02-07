@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-Widget getDefaultProfilePic(String url,String name,double radius)
+Widget getDefaultProfilePic(String url,String name,double radius,bool needBorder)
 {
   if(url.toString()=='null'){
     return CircleAvatar(
@@ -17,13 +17,21 @@ Widget getDefaultProfilePic(String url,String name,double radius)
     );
   }
   else{
-    return CircleAvatar(
-      radius: radius,
-      backgroundColor: Colors.green[300] ,
-      child: CircleAvatar(
-        radius: 0.95*radius,
+    if(needBorder==true){
+      return CircleAvatar(
+        radius: radius,
+        backgroundColor: Colors.green[300] ,
+        child: CircleAvatar(
+          radius: 0.95*radius,
+          backgroundImage: NetworkImage(url),
+        ),
+      );
+    }
+    else{
+      return CircleAvatar(
+        radius: radius,
         backgroundImage: NetworkImage(url),
-      ),
-    );
+      );
+    }
   }
 }

@@ -58,7 +58,7 @@ class _SPProfileState extends State<SPProfile> {
                     // photo
                     Align(
                       alignment: Alignment.topCenter,
-                      child: getDefaultProfilePic(photoUrl, name, 50),
+                      child: getDefaultProfilePic(photoUrl, name, 50, true),
                     ),
 
                     SizedBox(

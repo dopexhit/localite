@@ -25,6 +25,7 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
   String name;
   String contact;
   String photoUrl;
+  int counter=0;
 
   @override
   void initState() {
@@ -51,12 +52,12 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
         _imageFile = croppedImage;
       });
     }
-
-    await uploadPic(context);
     Navigator.pop(context);
   }
 
   uploadPic(BuildContext context) async {
+    // if(counter==0)await FirebaseFirestore.instance.collection('Users').doc(currentUser.uid).get().then((value) => oldPhotoUrl=value.data()['photoUrl'].toString());
+    // counter++;//counter to tell how many times the pic has been changed since activity has started
     String fileName = _imageFile.path;
     Reference firebaseStorageRef =
         FirebaseStorage.instance.ref().child(fileName);
@@ -150,7 +151,15 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                       ),
                       Align(
                         alignment: Alignment.topCenter,
-                        child: getDefaultProfilePic(photoUrl, name, 40.0),
+                        child: (_imageFile==null)?getDefaultProfilePic(photoUrl, name, 40.0,true):
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundColor: Colors.green[300] ,
+                          child: CircleAvatar(
+                            radius: 0.95*40,
+                            backgroundImage: FileImage(_imageFile),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 30.0,
@@ -158,114 +167,169 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                       Row(
                         children: [
                           SizedBox(
-                            width: 50.0,
+                            width: 40.0,
                           ),
                           Material(
                             borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             color: Color(0xffbbeaba),
                             elevation: 4,
-                            child: MaterialButton(
-                              onPressed: () => _openImagePicker(context),
-                              child: Text('Upload New Image',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                              ),),
+                            child: SizedBox( height: 40.0,
+                              child: MaterialButton(
+                                onPressed: () => _openImagePicker(context),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.cloud_upload_rounded,size: 17.0,),
+                                    SizedBox(width: 7.0,),
+                                    Text('Upload New Image',style: GoogleFonts.boogaloo(
+                                      fontSize: 20,
+                                      color: Color(0xff515151),
+                                    ),),
+                                  ],
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
-                            width: 30.0,
+                            width: 25.0,
                           ),
                           Material(
                             borderRadius: BorderRadius.all(Radius.circular(30.0)),
                             color: Color(0xffbbeaba),
                             elevation: 4,
-                            child: MaterialButton(
-                              onPressed: () {
-                                FirebaseFirestore.instance
-                                    .collection('Users')
-                                    .doc(currentUser.uid)
-                                    .update({
-                                  'photoUrl': null,
-                                });
-                              },
-                              child: Text('Delete Image',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                               ),
+                            child: SizedBox(height: 40.0,
+                              child: MaterialButton(
+                                onPressed: () {
+                                  FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(currentUser.uid)
+                                      .update({
+                                    'photoUrl': null,
+                                  });
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.delete_forever_sharp,size: 17.0,),
+                                    SizedBox(width: 7.0,),
+                                    Text('Delete Image',style: GoogleFonts.boogaloo(
+                                      fontSize: 20,
+                                      color: Color(0xff515151),
+                                     ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ],
                       ),
                       SizedBox(
-                        height: 15.0,
-                      ),
-                      SizedBox(
-                        width: 50.0,
+                        height: 30.0,
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                        child: TextFormField(
-                          initialValue: name,
-                          style: GoogleFonts.boogaloo(
-                            fontSize: 20,
-                            color: Color(0xff515151),
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                          onChanged: (val) {
-                            name = val;
-                          },
+                        child: Row(
+                          children: [
+                            Text('Name: ',style: GoogleFonts.boogaloo(
+                              fontSize: 20,
+                              color: Color(0xff515151),
+                            ),),
+                            SizedBox(width: 20.0,),
+                            SizedBox(width: 200.0,height: 30.0,
+                              child: TextFormField(
+                                initialValue: name,
+                                style: GoogleFonts.boogaloo(
+                                  fontSize: 20,
+                                  color: Color(0xff515151),
+                                ),
+                                // decoration: InputDecoration(
+                                //   border: InputBorder.none,
+                                // ),
+                                onChanged: (val) {
+                                  name = val;
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        height: 15.0,
+                        height: 20.0,
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
-                        child: TextFormField(
-                          initialValue: contact,
-                          style: GoogleFonts.boogaloo(
-                            fontSize: 20,
-                            color: Color(0xff515151),
-                          ),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                          keyboardType: TextInputType.number,
-                          onChanged: (val) {
-                            contact = val;
-                          },
+                        child: Row(
+                          children: [
+                            Text('Contact: ',style: GoogleFonts.boogaloo(
+                              fontSize: 20,
+                              color: Color(0xff515151),
+                            ),),
+                            SizedBox(width: 13.0,),
+                            SizedBox(width: 200.0,height: 30.0,
+                              child: TextFormField(
+                                initialValue: contact,
+                                style: GoogleFonts.boogaloo(
+                                  fontSize: 20,
+                                  color: Color(0xff515151),
+                                ),
+                                // decoration: InputDecoration(
+                                //   border: InputBorder.none,
+                                // ),
+                                keyboardType: TextInputType.number,
+                                onChanged: (val) {
+                                  contact = val;
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       SizedBox(
-                        height: 15.0,
+                        height: 75.0,
                       ),
                       Material(
                         borderRadius: BorderRadius.all(Radius.circular(30.0)),
                         color: Color(0xffbbeaba),
                         elevation: 4,
-                        child: MaterialButton(
-                            child: Text('Done',style: GoogleFonts.boogaloo(
-                              fontSize: 20,
-                              color: Color(0xff515151),
-                            ),),
-                            elevation: 4,
-                            onPressed: () async {
-                              if(name==null || contact==null) MyToast().getToastBottom('Fields cant be left empty');
-                              else{
-                                await FirebaseFirestore.instance
-                                    .collection('Users')
-                                    .doc(currentUser.uid)
-                                    .update({
-                                  'name': name,
-                                  'contact': contact,
-                                });
+                        child: SizedBox(height: 40,
+                          child: MaterialButton(
+                              child: Text('Save',style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),),
+                              elevation: 4,
+                              onPressed: () async {
+                                if(name==null || contact==null) MyToast().getToastBottom('Fields cant be left empty');
+                                else{
+                                  await uploadPic(context);
+                                  await FirebaseFirestore.instance
+                                      .collection('Users')
+                                      .doc(currentUser.uid)
+                                      .update({
+                                    'name': name,
+                                    'contact': contact,
+                                  });
+                                  Navigator.pop(context);
+                                }
+                              }),
+                        ),
+                      ),
+                      SizedBox(height: 40.0,),
+                      Material(
+                        borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                        color: Color(0xffF5C0AE),
+                        elevation: 4,
+                        child: SizedBox(height: 40,
+                          child: MaterialButton(
+                              child: Text('Cancel',style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),),
+                              elevation: 4,
+                              onPressed: () {
                                 Navigator.pop(context);
-                              }
-                            }),
-                      )
+                              }),
+                        ),
+                      ),
                     ],
                   ),
                 ),

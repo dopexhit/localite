@@ -212,7 +212,7 @@ class _MessageTileState extends State<MessageTile> {
                 //todo: add profile image
                 Row(
                   children: [
-                    getDefaultProfilePic(url, widget.name, 20.0),
+                    getDefaultProfilePic(url, widget.name, 20.0,false),
                     SizedBox(
                       width: 15.0,
                     ),

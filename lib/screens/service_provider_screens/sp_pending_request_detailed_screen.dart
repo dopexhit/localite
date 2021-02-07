@@ -118,7 +118,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
             child: Column(
               children: [
                 //todo: add profile image
-                getDefaultProfilePic(url, userName, 30),
+                getDefaultProfilePic(url, userName, 30,true),
                 SizedBox(
                   height: 10.0,
                 ),
