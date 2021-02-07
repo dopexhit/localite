@@ -25,7 +25,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Localite',
         home: SplashPage(),
-        theme: ThemeData.light().copyWith(accentColor: Colors.black54),
+        theme: ThemeData.light().copyWith(
+            accentColor: Colors.black54, highlightColor: Color(0xffbbeaba)),
       ),
     );
   }

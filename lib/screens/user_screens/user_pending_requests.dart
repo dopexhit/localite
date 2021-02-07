@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/user_screens/user_accepted_request_detailed.dart';
@@ -20,22 +22,40 @@ class _UserPendingRequestsState extends State<UserPendingRequests> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Expanded(
-            child: Padding(
-          padding: EdgeInsets.only(top: 20, left: 8, right: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'Pending requests',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15),
+        child: Stack(
+          children: [
+            SvgPicture.asset('assets/images/design.svg'),
+            Padding(
+              padding: EdgeInsets.only(top: 7, left: 4, right: 4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 15, bottom: 5, left: 35, right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Pending requests',
+                          style: GoogleFonts.boogaloo(
+                              fontSize: 29, color: Color(0xff515151)),
+                        ),
+                        SizedBox(
+                            height: 32,
+                            width: 32,
+                            child:
+                                SvgPicture.asset('assets/images/appIcon.svg'))
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  TileStreamPending(),
+                ],
               ),
-              SizedBox(height: 20),
-              TileStreamPending(),
-            ],
-          ),
-        )),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -69,9 +89,12 @@ class TileStreamPending extends StatelessWidget {
             }
           }
           return Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-              children: tiles,
+            child: Scrollbar(
+              radius: Radius.circular(5),
+              child: ListView(
+                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0),
+                children: tiles,
+              ),
             ),
           );
         } else {
@@ -125,57 +148,95 @@ class _MessageTileState extends State<MessageTile> {
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
 
-    return RawMaterialButton(
-      onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UserPendingRequestDetailed(
-                      requestId: userUID + '-' + widget.uid,
-                      userUid: userUID,
-                      spUid: widget.uid,
-                    )));
-      },
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        child: Container(
-          child: Column(
-            children: [
-              //todo: add profile image
-              Row(
-                children: [
-                  getDefaultProfilePic(url, widget.name, 20),
-                  SizedBox(
-                    width: 15.0,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+    int day = widget.timestamp.toDate().day;
+    int month = widget.timestamp.toDate().month;
+    int year = widget.timestamp.toDate().year;
+
+    Timestamp todayStamp = Timestamp.now();
+    int tday = todayStamp.toDate().day;
+    int tmonth = todayStamp.toDate().month;
+    int tyear = todayStamp.toDate().year;
+
+    String date = (day > 9 ? day.toString() : '0' + day.toString()) +
+        '/' +
+        (month > 9 ? month.toString() : '0' + month.toString()) +
+        '/' +
+        year.toString();
+
+    String todayDate = (tday > 9 ? tday.toString() : '0' + tday.toString()) +
+        '/' +
+        (tmonth > 9 ? tmonth.toString() : '0' + tmonth.toString()) +
+        '/' +
+        tyear.toString();
+
+    return Column(
+      children: [
+        RawMaterialButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UserPendingRequestDetailed(
+                          requestId: userUID + '-' + widget.uid,
+                          userUid: userUID,
+                          spUid: widget.uid,
+                        )));
+          },
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 7, vertical: 0),
+            child: Card(
+              elevation: 3,
+              color: Color(0xfff0ffeb),
+              child: Padding(
+                padding:
+                    EdgeInsets.only(left: 12.0, right: 12, top: 8, bottom: 8),
+                child: Column(
+                  children: [
+                    Row(
                       children: [
-                        Text(
-                          widget.name,
-                          style: TextStyle(fontSize: 20),
+                        getDefaultProfilePic(url, widget.name, 20),
+                        SizedBox(
+                          width: 20.0,
                         ),
-                        SizedBox(height: 7),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                widget.name,
+                                style: GoogleFonts.boogaloo(
+                                    fontSize: 21,
+                                    color: Color(0xff515151),
+                                    letterSpacing: 0.5),
+                              ),
+                              //   SizedBox(height: 7),
+                              Text(
+                                widget.service,
+                                style: GoogleFonts.boogaloo(
+                                    color: Colors.black54,
+                                    fontSize: 14.5,
+                                    letterSpacing: 0.5),
+                              ),
+                              SizedBox(height: 5)
+                            ],
+                          ),
+                        ),
                         Text(
-                          widget.service,
-                          style: TextStyle(color: Colors.black54),
-                        )
+                          date == todayDate ? time : date,
+                          style: GoogleFonts.boogaloo(
+                              color: Colors.black54,
+                              // fontSize: 14.5,
+                              letterSpacing: 0.5),
+                        ),
                       ],
                     ),
-                  ),
-                  Text(time),
-                ],
+                  ],
+                ),
               ),
-              SizedBox(height: 11),
-              Divider(
-                height: 5,
-                color: Colors.black54,
-              )
-            ],
+            ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

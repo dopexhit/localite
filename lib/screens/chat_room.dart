@@ -243,7 +243,7 @@ class ChatStream extends StatelessWidget {
           return Expanded(
             child: ListView(
               reverse: true,
-              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 15),
+              padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 8),
               children: msgBubbles,
             ),
           );
@@ -404,7 +404,10 @@ class MessageBubble extends StatelessWidget {
                   child: Text(
                     date,
                     textAlign: TextAlign.center,
-                    style: GoogleFonts.boogaloo(color: Colors.black54),
+                    style: GoogleFonts.boogaloo(
+                      color: Colors.black54,
+                      fontSize: 12,
+                    ),
                   ),
                 ),
               ),

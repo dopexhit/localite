@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
@@ -44,23 +45,40 @@ class _UserChatListState extends State<UserChatList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xfff0ffeb),
+      backgroundColor: Colors.white70,
       body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 15, bottom: 5),
-                child: Text(
-                  'Your chats',
-                  style: GoogleFonts.boogaloo(
-                      fontSize: 27, color: Color(0xff3d3f3f)),
-                ),
+        child: Stack(
+          children: [
+            SvgPicture.asset('assets/images/design.svg'),
+            Padding(
+              padding: EdgeInsets.only(left: 4, right: 4, top: 7),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: 15, bottom: 5, left: 35, right: 30),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Your chats',
+                          style: GoogleFonts.boogaloo(
+                              fontSize: 29, color: Color(0xff515151)),
+                        ),
+                        SizedBox(
+                            height: 32,
+                            width: 32,
+                            child:
+                                SvgPicture.asset('assets/images/appIcon.svg'))
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 15),
+                  TileStream(),
+                ],
               ),
-              Expanded(child: TileStream()),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -92,9 +110,12 @@ class TileStream extends StatelessWidget {
             tiles.add(tile);
           }
           return Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-              children: tiles,
+            child: Scrollbar(
+              radius: Radius.circular(5),
+              child: ListView(
+                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 0),
+                children: tiles,
+              ),
             ),
           );
         } else {
@@ -180,54 +201,53 @@ class _MessageTileState extends State<MessageTile> {
                     )));
       },
       child: Padding(
-        padding: EdgeInsets.only(left: 5, right: 10, top: 3, bottom: 3),
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  getDefaultProfilePic(url, widget.name, 20),
-                  SizedBox(
-                    width: 20.0,
-                  ),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.name,
-                          style: GoogleFonts.boogaloo(
-                              fontSize: 21,
-                              color: Color(0xff3d3f3f),
-                              letterSpacing: 0.5), //TextStyle(fontSize: 20),
-                        ),
-                        SizedBox(height: 5),
-                        Text(
-                          widget.service,
-                          style: GoogleFonts.boogaloo(
-                              color: Colors.black54,
-                              fontSize: 14.5,
-                              letterSpacing: 0.5),
-                        ),
-                      ],
+        padding: EdgeInsets.only(left: 7, right: 7),
+        child: Card(
+          color: Color(0xfff0ffeb),
+          elevation: 3,
+          child: Padding(
+            padding: EdgeInsets.only(left: 12.0, right: 12, top: 8, bottom: 8),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    getDefaultProfilePic(url, widget.name, 20),
+                    SizedBox(
+                      width: 20.0,
                     ),
-                  ),
-                  Text(
-                    date == todayDate ? time : date,
-                    style: GoogleFonts.boogaloo(
-                        color: Colors.black54,
-                        // fontSize: 14.5,
-                        letterSpacing: 0.5),
-                  ),
-                ],
-              ),
-              SizedBox(height: 11),
-              Divider(
-                height: 5,
-                color: Colors.black54,
-                indent: 50,
-              )
-            ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.name,
+                            style: GoogleFonts.boogaloo(
+                                fontSize: 21,
+                                color: Color(0xff515151),
+                                letterSpacing: 0.5), //TextStyle(fontSize: 20),
+                          ),
+                          Text(
+                            widget.service,
+                            style: GoogleFonts.boogaloo(
+                                color: Colors.black54,
+                                fontSize: 14.5,
+                                letterSpacing: 0.5),
+                          ),
+                          SizedBox(height: 5)
+                        ],
+                      ),
+                    ),
+                    Text(
+                      date == todayDate ? time : date,
+                      style: GoogleFonts.boogaloo(
+                          color: Colors.black54,
+                          // fontSize: 14.5,
+                          letterSpacing: 0.5),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
