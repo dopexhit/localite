@@ -1,18 +1,12 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:localite/constants.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/models/service_provider_data.dart';
-import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/service_provider_screens/service_prov_side_bar.dart';
 import 'package:localite/services/database.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
-import 'package:localite/widgets/toast.dart';
-import 'package:provider/provider.dart';
 
 class SPProfile extends StatefulWidget {
   @override
@@ -38,20 +32,33 @@ class _SPProfileState extends State<SPProfile> {
             String address = snapshot.data.data()['address'].toString();
             return Scaffold(
               endDrawer: SPDrawer(),
-              appBar: AppBar(
-                backgroundColor: Color(0xfff0ffeb),
-                iconTheme: IconThemeData(
-                  color: Color(0xff515151),
-                ),
-                shadowColor: Colors.transparent,
-                automaticallyImplyLeading: false,
-                title: Text(
-                  'Your Profile',
-                  style: GoogleFonts.boogaloo(
-                      fontSize: 27, color: Color(0xff3d3f3f)),
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(100),
+                child: Column(
+                  children: [
+                    SizedBox(height: 7),
+                    AppBar(
+                      backgroundColor: Colors.white70,
+                      iconTheme: IconThemeData(
+                        color: Color(0xff515151),
+                      ),
+                      shadowColor: Colors.transparent,
+                      automaticallyImplyLeading: false,
+                      title: Row(
+                        children: [
+                          SizedBox(width: 23),
+                          Text(
+                            'Your Profile',
+                            style: GoogleFonts.boogaloo(
+                                fontSize: 29, color: Color(0xff515151)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              backgroundColor: Color(0xfff0ffeb),
+              backgroundColor: Colors.white70,
               body: SingleChildScrollView(
                 child: Column(
                   children: <Widget>[

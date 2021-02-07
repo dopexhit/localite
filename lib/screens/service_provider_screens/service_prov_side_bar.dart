@@ -12,19 +12,24 @@ class SPDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Color(0xffEBF6D2),
+        color: Color(0xfff0ffeb),
         child: ListView(
           children: [
             DrawerHeader(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/drawer_head.png"),
+                      image: AssetImage("assets/images/drawer_head.png"),
                       fit: BoxFit.contain)),
               child: Row(
                 children: [
-                  SvgPicture.asset('assets/images/appIcon.svg',width: 30,height: 30,),
-                  SizedBox(width: 10.0,),
+                  SvgPicture.asset(
+                    'assets/images/appIcon.svg',
+                    width: 30,
+                    height: 30,
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
                   Text(
                     'sAmigo',
                     textAlign: TextAlign.center,
@@ -38,10 +43,13 @@ class SPDrawer extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text("Confirmed Requests",style: GoogleFonts.boogaloo(
-                fontSize: 20,
-                color: Color(0xff515151),
-              ),),
+              title: Text(
+                "Confirmed Requests",
+                style: GoogleFonts.boogaloo(
+                  fontSize: 20,
+                  color: Color(0xff515151),
+                ),
+              ),
               onTap: () {
                 Navigator.push(
                     context,
@@ -52,42 +60,58 @@ class SPDrawer extends StatelessWidget {
             Padding(
               //to make a horizontal line
               padding: EdgeInsets.fromLTRB(15.0, 5.0, 30.0, 5.0),
-              child: Container(color: Color(0xff515151),height: 0.5,),
+              child: Container(
+                color: Color(0xff515151),
+                height: 0.5,
+              ),
             ),
             ListTile(
-              title: Text("Update Profile",style: GoogleFonts.boogaloo(
-                fontSize: 20,
-                color: Color(0xff515151),
-              ),),
+              title: Text(
+                "Update Profile",
+                style: GoogleFonts.boogaloo(
+                  fontSize: 20,
+                  color: Color(0xff515151),
+                ),
+              ),
               onTap: () {
                 Navigator.push(context,
-                    MaterialPageRoute(
-                        builder: (_) => UpdateSPProfile()
-                    ));
+                    MaterialPageRoute(builder: (_) => UpdateSPProfile()));
               },
             ),
             Padding(
               //to make a horizontal line
               padding: EdgeInsets.fromLTRB(15.0, 5.0, 30.0, 5.0),
-              child: Container(color: Color(0xff515151),height: 0.5,),
+              child: Container(
+                color: Color(0xff515151),
+                height: 0.5,
+              ),
             ),
             ListTile(
-              title: Text("About Us",style: GoogleFonts.boogaloo(
-                fontSize: 20,
-                color: Color(0xff515151),
-              ),),
+              title: Text(
+                "About Us",
+                style: GoogleFonts.boogaloo(
+                  fontSize: 20,
+                  color: Color(0xff515151),
+                ),
+              ),
               onTap: () {},
             ),
             Padding(
               //to make a horizontal line
               padding: EdgeInsets.fromLTRB(15.0, 5.0, 30.0, 5.0),
-              child: Container(color: Color(0xff515151),height: 0.5,),
+              child: Container(
+                color: Color(0xff515151),
+                height: 0.5,
+              ),
             ),
             ListTile(
-              title: Text("Sign Out",style: GoogleFonts.boogaloo(
-                fontSize: 20,
-                color: Color(0xff515151),
-              ),),
+              title: Text(
+                "Sign Out",
+                style: GoogleFonts.boogaloo(
+                  fontSize: 20,
+                  color: Color(0xff515151),
+                ),
+              ),
               onTap: () async {
                 SharedPrefs.preferences.remove('isServiceProvider');
                 await AuthService().signOut().whenComplete(

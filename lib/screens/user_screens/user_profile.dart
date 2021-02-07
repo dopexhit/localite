@@ -33,23 +33,40 @@ class _UserProfileState extends State<UserProfile> {
             String contact = snapshot.data.data()['contact'].toString();
             return Scaffold(
               endDrawer: UserDrawer(),
-              appBar: AppBar(backgroundColor: Color(0xfff0ffeb),
-                  iconTheme: IconThemeData(color: Color(0xff515151),),
-                  shadowColor: Colors.transparent,
-                  automaticallyImplyLeading: false,
-                  title: Text(
-                    'Your Profile',
-                    style: GoogleFonts.boogaloo(
-                        fontSize: 27,
-                        color: Color(0xff3d3f3f)),
-                  ),
+              appBar: PreferredSize(
+                preferredSize: Size.fromHeight(100),
+                child: Column(
+                  children: [
+                    SizedBox(height: 7),
+                    AppBar(
+                      backgroundColor: Colors.white70,
+                      iconTheme: IconThemeData(
+                        color: Color(0xff515151),
+                      ),
+                      shadowColor: Colors.transparent,
+                      automaticallyImplyLeading: false,
+                      title: Row(
+                        children: [
+                          SizedBox(width: 23),
+                          Text(
+                            'Your Profile',
+                            style: GoogleFonts.boogaloo(
+                                fontSize: 29, color: Color(0xff515151)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              backgroundColor: Color(0xfff0ffeb),
+              backgroundColor: Colors.white70,
               body: SingleChildScrollView(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(height: 50.0,),
+                    SizedBox(
+                      height: 50.0,
+                    ),
                     // photo
                     Align(
                       alignment: Alignment.topCenter,
