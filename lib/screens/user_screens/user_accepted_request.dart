@@ -192,7 +192,7 @@ class _MessageTileState extends State<MessageTile> {
               children: [
                 Row(
                   children: [
-                    getDefaultProfilePic(url, widget.name, 20),
+                    getDefaultProfilePic(url, widget.name, 20,false),
                     SizedBox(
                       width: 20.0,
                     ),
