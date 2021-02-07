@@ -40,6 +40,7 @@ class _SplashPageState extends State<SplashPage>
   @override
   void dispose() {
     super.dispose();
+    controller.dispose();
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
 
@@ -135,19 +136,16 @@ class _SplashPageState extends State<SplashPage>
               top: 460,
               child: Opacity(
                 opacity: controller.value,
-                child: Hero(
-                  tag: 'logoText',
-                  child: Container(
-                    width: width,
-                    child: Text(
-                      'sAmigo',
-                      textAlign: TextAlign.center,
-                      style: GoogleFonts.boogaloo(
-                        fontSize: 60,
-                        letterSpacing: 2,
-                        color: Color(0xff515151),
-                        fontWeight: FontWeight.w200,
-                      ),
+                child: Container(
+                  width: width,
+                  child: Text(
+                    'sAmigo',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.boogaloo(
+                      fontSize: 60,
+                      letterSpacing: 2,
+                      color: Color(0xff515151),
+                      fontWeight: FontWeight.w200,
                     ),
                   ),
                 ),

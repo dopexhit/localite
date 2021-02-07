@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/screens/service_provider_screens/service_provider_detail.dart';
@@ -19,12 +20,20 @@ class _NearbySPState extends State<NearbySP> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xfff0ffeb),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text('The ${widget.title}s available nearby are:'),
+              SizedBox(height: 20.0),
+              Text('The ${widget.title}s available nearby:',
+                style: GoogleFonts.boogaloo(
+                  fontSize: 25,
+                  color: Color(0xff515151),
+                ),
+              ),
               SizedBox(height: 30),
               Expanded(
                 child: Container(
@@ -97,6 +106,7 @@ class SPTile extends StatelessWidget {
         elevation: 4,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         margin: EdgeInsets.all(10),
+        color: Color(0xffbbeaba),
         child: Row(
           children: [
             SizedBox(width: 10.0,),
@@ -106,6 +116,10 @@ class SPTile extends StatelessWidget {
               padding: EdgeInsets.all(20),
               child: Text(
                 currentSP.name,
+                style: GoogleFonts.boogaloo(
+                  fontSize: 20,
+                  color: Color(0xff515151),
+                ),
                 textAlign: TextAlign.center,
               ),
             ),

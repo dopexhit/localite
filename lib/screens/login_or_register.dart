@@ -11,6 +11,7 @@ import 'package:localite/screens/service_provider_screens/sp_navigator_home.dart
 import 'package:localite/screens/user_screens/user_navigator_home.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
+import 'package:localite/widgets/get_password_icon.dart';
 import 'package:localite/widgets/toast.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import '../constants.dart';
@@ -85,7 +86,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                       },
                       //keyboardType: TextInputType.emailAddress,
                       style: GoogleFonts.boogaloo(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: Color(0xff515151),
                       ),
                       textAlign: TextAlign.center,
@@ -106,7 +107,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                             obscureText: hidePassword,
                             validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : null,
                             style: GoogleFonts.boogaloo(
-                              fontSize: 18,
+                              fontSize: 20,
                               color: Color(0xff515151),
                             ),
                             textAlign: TextAlign.center,
@@ -119,7 +120,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                         ),
                       ),
                       SizedBox(width: 8.00,),
-                      IconButton(icon: Icon(Icons.remove_red_eye_rounded), onPressed:(){
+                      IconButton(icon: getPasswordIcon(hidePassword), onPressed:(){
                         setState(() {
                           hidePassword = !(hidePassword);
                         });
@@ -233,7 +234,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                   Text('New user? ',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.boogaloo(
-                      fontSize: 18,
+                      fontSize: 20,
                       color: Color(0xff515151),
                     ),),
                   SizedBox(height: 5.0,),
@@ -241,7 +242,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                     child: Text('Register here',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.boogaloo(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: Colors.lightBlueAccent[100],
                       ),),
                     onTap: () {
@@ -263,7 +264,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                   SizedBox(height: 30.0,),
                   Text(
                     error,
-                    style: TextStyle(color: Colors.red, fontSize: 14.0),
+                    style: TextStyle(color: Colors.red, fontSize: 15.0),
                   )
                 ],
               ),

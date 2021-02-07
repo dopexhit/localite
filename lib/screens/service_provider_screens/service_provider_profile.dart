@@ -26,6 +26,7 @@ class _SPProfileState extends State<SPProfile> {
 
   @override
   Widget build(BuildContext context) {
+    SPDetails();
     currentSP = GlobalServiceProviderDetail.spData;
     return StreamBuilder<DocumentSnapshot>(
         stream:
@@ -38,70 +39,81 @@ class _SPProfileState extends State<SPProfile> {
             String address = snapshot.data.data()['address'].toString();
             return Scaffold(
               endDrawer: SPDrawer(),
-              body: Center(
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      // photo
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: getDefaultProfilePic(photoUrl, name, 50),
-                      ),
+              appBar: AppBar(backgroundColor: Color(0xfff0ffeb),
+                iconTheme: IconThemeData(color: Color(0xff515151),),
+                shadowColor: Colors.transparent,
+                automaticallyImplyLeading: false,
+                title: Text(
+                  'Your Profile',
+                  style: GoogleFonts.boogaloo(
+                      fontSize: 27,
+                      color: Color(0xff3d3f3f)),
+                ),
+              ),
+              backgroundColor: Color(0xfff0ffeb),
+              body: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 50.0,),
+                    // photo
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: getDefaultProfilePic(photoUrl, name, 50),
+                    ),
 
-                      SizedBox(
-                        height: 12.0,
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Text(
+                      name,
+                      style: GoogleFonts.boogaloo(
+                        fontSize: 25,
+                        letterSpacing: 2,
+                        color: Color(0xff515151),
+                        fontWeight: FontWeight.w200,
                       ),
-                      Text(
-                        name,
-                        style: GoogleFonts.gabriela(
-                          letterSpacing: 4,
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                    ),
+
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Text(
+                      "Address: $address",
+                      style: GoogleFonts.boogaloo(
+                        fontSize: 25,
+                        letterSpacing: 2,
+                        color: Color(0xff515151),
+                        fontWeight: FontWeight.w200,
+                      ),
+                    ),
+
+                    SizedBox(
+                      height: 20.0,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100.0,
                         ),
-                      ),
-
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Text(
-                        "Address: $address",
-                        style: GoogleFonts.gabriela(
-                          letterSpacing: 4,
-                          color: Colors.black,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
+                        Icon(Icons.phone),
+                        SizedBox(
+                          width: 20.0,
                         ),
-                      ),
-
-                      SizedBox(
-                        height: 12.0,
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 80.0,
+                        Text(
+                          contact,
+                          style: GoogleFonts.boogaloo(
+                            fontSize: 25,
+                            letterSpacing: 2,
+                            color: Color(0xff515151),
+                            fontWeight: FontWeight.w200,
                           ),
-                          Icon(Icons.phone),
-                          SizedBox(
-                            width: 20.0,
-                          ),
-                          Text(
-                            contact,
-                            style: GoogleFonts.gabriela(
-                              letterSpacing: 4,
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 24,
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 24,
+                    ),
+                  ],
                 ),
               ),
             );

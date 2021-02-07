@@ -142,9 +142,9 @@ class _MessageTileState extends State<MessageTile> {
   String url;
   @override
   void initState() {
+    SPDetails();
     super.initState();
     getPhoto();
-    SPDetails();
   }
 
   void getPhoto() {
