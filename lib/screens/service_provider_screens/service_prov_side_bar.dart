@@ -16,11 +16,11 @@ class SPDrawer extends StatelessWidget {
         child: ListView(
           children: [
             DrawerHeader(
-              // decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //         image: NetworkImage(
-              //             "https://www.computerhope.com/jargon/n/navigate.jpg"),
-              //         fit: BoxFit.cover)),
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          "assets/images/drawer_head.png"),
+                      fit: BoxFit.contain)),
               child: Row(
                 children: [
                   SvgPicture.asset('assets/images/appIcon.svg',width: 30,height: 30,),
@@ -39,7 +39,7 @@ class SPDrawer extends StatelessWidget {
             ),
             ListTile(
               title: Text("Confirmed Requests",style: GoogleFonts.boogaloo(
-                fontSize: 25,
+                fontSize: 20,
                 color: Color(0xff515151),
               ),),
               onTap: () {
@@ -56,7 +56,7 @@ class SPDrawer extends StatelessWidget {
             ),
             ListTile(
               title: Text("Update Profile",style: GoogleFonts.boogaloo(
-                fontSize: 25,
+                fontSize: 20,
                 color: Color(0xff515151),
               ),),
               onTap: () {
@@ -73,7 +73,7 @@ class SPDrawer extends StatelessWidget {
             ),
             ListTile(
               title: Text("About Us",style: GoogleFonts.boogaloo(
-                fontSize: 25,
+                fontSize: 20,
                 color: Color(0xff515151),
               ),),
               onTap: () {},
@@ -85,7 +85,7 @@ class SPDrawer extends StatelessWidget {
             ),
             ListTile(
               title: Text("Sign Out",style: GoogleFonts.boogaloo(
-                fontSize: 25,
+                fontSize: 20,
                 color: Color(0xff515151),
               ),),
               onTap: () async {

@@ -82,7 +82,7 @@ class _RegisterUserState extends State<RegisterUser> {
                           },
                           validator: (val) => val.isEmpty ? "Field can't be empty" : null,
                           style: GoogleFonts.boogaloo(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Color(0xff515151),
                           ),
                           textAlign: TextAlign.center,
@@ -104,7 +104,7 @@ class _RegisterUserState extends State<RegisterUser> {
                           validator: (val) => val.isEmpty ? "Field can't be empty" : null,
                           keyboardType: TextInputType.emailAddress,
                           style: GoogleFonts.boogaloo(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Color(0xff515151),
                           ),
                           textAlign: TextAlign.center,
@@ -126,7 +126,7 @@ class _RegisterUserState extends State<RegisterUser> {
                           validator: (val) => val.isEmpty ? "Field can't be empty" : null,
                           keyboardType: TextInputType.phone,
                           style: GoogleFonts.boogaloo(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Color(0xff515151),
                           ),
                           textAlign: TextAlign.center,
@@ -148,7 +148,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                 obscureText: hidePassword,
                                 validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : null,
                                 style: GoogleFonts.boogaloo(
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   color: Color(0xff515151),
                                 ),
                                 textAlign: TextAlign.center,
@@ -180,7 +180,7 @@ class _RegisterUserState extends State<RegisterUser> {
                                 obscureText: hideConfirmedPassword,
                                 validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : val!=password ? "Passwords don't match":null,
                                 style: GoogleFonts.boogaloo(
-                                  fontSize: 18,
+                                  fontSize: 20,
                                   color: Color(0xff515151),
                                 ),
                                 textAlign: TextAlign.center,
@@ -253,7 +253,7 @@ class _RegisterUserState extends State<RegisterUser> {
                             child: Text(
                               'Get Started',
                               style: GoogleFonts.boogaloo(
-                                fontSize: 18,
+                                fontSize: 25,
                                 color: Color(0xff515151),
                               ),
                             ),
@@ -264,7 +264,7 @@ class _RegisterUserState extends State<RegisterUser> {
                       Text('Already registered? ',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.boogaloo(
-                          fontSize: 18,
+                          fontSize: 20,
                           color: Color(0xff515151),
                         ),),
                       SizedBox(height: 5.0,),
@@ -272,7 +272,7 @@ class _RegisterUserState extends State<RegisterUser> {
                         child: Text('Login here',
                           textAlign: TextAlign.center,
                           style: GoogleFonts.boogaloo(
-                            fontSize: 18,
+                            fontSize: 20,
                             color: Colors.lightBlueAccent[100],
                           ),),
                         onTap: () {
@@ -285,7 +285,7 @@ class _RegisterUserState extends State<RegisterUser> {
                       SizedBox(height: 15.0,),
                       Text(
                         error,
-                        style: TextStyle(color: Colors.red, fontSize: 14.0),
+                        style: TextStyle(color: Colors.red, fontSize: 15.0),
                       ),
                       SizedBox(height: 10.0,)
                     ],

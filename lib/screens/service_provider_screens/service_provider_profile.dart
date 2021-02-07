@@ -42,6 +42,7 @@ class _SPProfileState extends State<SPProfile> {
               appBar: AppBar(backgroundColor: Color(0xfff0ffeb),
                 iconTheme: IconThemeData(color: Color(0xff515151),),
                 shadowColor: Colors.transparent,
+                automaticallyImplyLeading: false,
                 title: Text(
                   'Your Profile',
                   style: GoogleFonts.boogaloo(
