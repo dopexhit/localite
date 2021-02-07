@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/service_provider_screens/sp_pending_request_detailed_screen.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
@@ -57,7 +58,7 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
               Expanded(
                   child: Container(
                 margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 10),
+                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
                 child: Padding(
                   padding: EdgeInsets.only(top: 8, left: 8, right: 8),
                   child: Column(
@@ -66,9 +67,10 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                       Text(
                         'Pending requests',
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 15),
+                        style: GoogleFonts.boogaloo(
+                            fontSize: 29, color: Color(0xff515151)),
                       ),
-                      SizedBox(height: 25),
+                      SizedBox(height: 15),
                       TileStreamPending(),
                     ],
                   ),
@@ -109,9 +111,12 @@ class TileStreamPending extends StatelessWidget {
             }
           }
           return Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-              children: tiles,
+            child: Scrollbar(
+              radius: Radius.circular(5),
+              child: ListView(
+                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 0),
+                children: tiles,
+              ),
             ),
           );
         } else {
@@ -164,6 +169,27 @@ class _MessageTileState extends State<MessageTile> {
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
 
+    int day = widget.timestamp.toDate().day;
+    int month = widget.timestamp.toDate().month;
+    int year = widget.timestamp.toDate().year;
+
+    Timestamp todayStamp = Timestamp.now();
+    int tday = todayStamp.toDate().day;
+    int tmonth = todayStamp.toDate().month;
+    int tyear = todayStamp.toDate().year;
+
+    String date = (day > 9 ? day.toString() : '0' + day.toString()) +
+        '/' +
+        (month > 9 ? month.toString() : '0' + month.toString()) +
+        '/' +
+        year.toString();
+
+    String todayDate = (tday > 9 ? tday.toString() : '0' + tday.toString()) +
+        '/' +
+        (tmonth > 9 ? tmonth.toString() : '0' + tmonth.toString()) +
+        '/' +
+        tyear.toString();
+
     return RawMaterialButton(
       onPressed: () {
         Navigator.push(
@@ -180,12 +206,11 @@ class _MessageTileState extends State<MessageTile> {
         child: Container(
           child: Column(
             children: [
-              //todo: add profile image
               Row(
                 children: [
                   getDefaultProfilePic(url, widget.name, 20,false),
                   SizedBox(
-                    width: 15.0,
+                    width: 20.0,
                   ),
                   Expanded(
                     child: Column(
@@ -193,13 +218,22 @@ class _MessageTileState extends State<MessageTile> {
                       children: [
                         Text(
                           widget.name,
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.boogaloo(
+                              fontSize: 22,
+                              color: Color(0xff515151),
+                              letterSpacing: 0.5),
                         ),
                         SizedBox(height: 7),
                       ],
                     ),
                   ),
-                  Text(time),
+                  Text(
+                    date == todayDate ? time : date,
+                    style: GoogleFonts.boogaloo(
+                        color: Colors.black54,
+                        // fontSize: 14.5,
+                        letterSpacing: 0.5),
+                  ),
                 ],
               ),
               SizedBox(height: 11),
