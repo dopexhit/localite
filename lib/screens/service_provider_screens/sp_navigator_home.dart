@@ -50,7 +50,7 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           color: Color(0xffbbeaba),
-          buttonBackgroundColor: Colors.white,
+          buttonBackgroundColor: Color(0xfff0ffeb),
           backgroundColor: Color(0xffbbeaba),
           animationCurve: Curves.decelerate,
           animationDuration: Duration(
@@ -58,7 +58,11 @@ class _SPNavigatorHomeState extends State<SPNavigatorHome> {
           ),
           height: 50,
           items: [
-            SvgPicture.asset('assets/images/appIcon.svg',height: 20, width: 20,),
+            SvgPicture.asset(
+              'assets/images/appIcon.svg',
+              height: 20,
+              width: 20,
+            ),
             //todo change icons
             Icon(
               Icons.chat,
