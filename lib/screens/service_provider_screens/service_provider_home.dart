@@ -58,7 +58,7 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
               Expanded(
                   child: Container(
                 margin:
-                    EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+                    EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                 child: Padding(
                   padding: EdgeInsets.only(top: 8, left: 8, right: 8),
                   child: Column(
@@ -202,13 +202,13 @@ class _MessageTileState extends State<MessageTile> {
                     )));
       },
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
         child: Container(
           child: Column(
             children: [
               Row(
                 children: [
-                  getDefaultProfilePic(url, widget.name, 20,false),
+                  getDefaultProfilePic(url, widget.name, 20, false),
                   SizedBox(
                     width: 20.0,
                   ),
@@ -236,9 +236,9 @@ class _MessageTileState extends State<MessageTile> {
                   ),
                 ],
               ),
-              SizedBox(height: 11),
+              SizedBox(height: 6),
               Divider(
-                height: 5,
+                // thickness: 1,
                 color: Colors.black54,
               )
             ],

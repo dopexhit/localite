@@ -35,7 +35,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
   String service = '';
   String time = '';
   String date = '';
-  String url;
+  String url = '';
 
   @override
   void initState() {
@@ -118,7 +118,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
             child: Column(
               children: [
                 //todo: add profile image
-                getDefaultProfilePic(url, userName, 30,true),
+                getDefaultProfilePic(url, userName, 30, true),
                 SizedBox(
                   height: 10.0,
                 ),

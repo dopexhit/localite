@@ -20,23 +20,22 @@ class UpdateSPProfile extends StatefulWidget {
 }
 
 class _UpdateSPProfileState extends State<UpdateSPProfile> {
-
-  ServiceProviderData currentSP=GlobalServiceProviderDetail.spData;
+  ServiceProviderData currentSP = GlobalServiceProviderDetail.spData;
   File _imageFile;
   String name;
   String contact;
-  String photoUrl,address;
+  String photoUrl, address;
 
   _getImage(BuildContext context, ImageSource source) async {
     final image = await ImagePicker.pickImage(source: source, maxWidth: 400.0);
-    if(image!=null){
+    if (image != null) {
       final croppedImage = await ImageCropper.cropImage(
         sourcePath: image.path,
         compressQuality: 100,
         androidUiSettings: AndroidUiSettings(
           toolbarTitle: "Edit Image",
           toolbarColor: Color(0xffbbeaba),
-          backgroundColor:Color(0xfff0ffeb),
+          backgroundColor: Color(0xfff0ffeb),
           statusBarColor: Color(0xffbbeaba),
           toolbarWidgetColor: Colors.black87,
           activeControlsWidgetColor: Colors.green,
@@ -52,7 +51,7 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
   uploadPic(BuildContext context) async {
     String fileName = _imageFile.path;
     Reference firebaseStorageRef =
-    FirebaseStorage.instance.ref().child(fileName);
+        FirebaseStorage.instance.ref().child(fileName);
     UploadTask uploadTask = firebaseStorageRef.putFile(_imageFile);
     TaskSnapshot taskSnapshot = await uploadTask;
     taskSnapshot.ref.getDownloadURL().then((newImageDownloadUrl) {
@@ -77,7 +76,9 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
             padding: EdgeInsets.all(10.0),
             child: Column(
               children: <Widget>[
-                SizedBox(height: 10.0,),
+                SizedBox(
+                  height: 10.0,
+                ),
                 Text(
                   "Pick an Image",
                   style: GoogleFonts.boogaloo(
@@ -87,7 +88,9 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                     fontWeight: FontWeight.w200,
                   ),
                 ),
-                SizedBox(height: 5.0,),
+                SizedBox(
+                  height: 5.0,
+                ),
                 FlatButton(
                   child: Text(
                     "Use Camera",
@@ -103,7 +106,10 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                 Padding(
                   //to make a horizontal line
                   padding: EdgeInsets.fromLTRB(50.0, 2.5, 50.0, 2.5),
-                  child: Container(color: Color(0xff515151),height: 0.5,),
+                  child: Container(
+                    color: Color(0xff515151),
+                    height: 0.5,
+                  ),
                 ),
                 FlatButton(
                   onPressed: () {
@@ -126,7 +132,8 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-        stream: DatabaseService().getSPProfile(currentSP.uid,currentSP.service),
+        stream:
+            DatabaseService().getSPProfile(currentSP.uid, currentSP.service),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             photoUrl = snapshot.data.data()['photoUrl'].toString();
@@ -145,15 +152,16 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                       ),
                       Align(
                         alignment: Alignment.topCenter,
-                        child: (_imageFile==null)?getDefaultProfilePic(photoUrl, name, 40.0,true):
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundColor: Colors.green[300] ,
-                          child: CircleAvatar(
-                            radius: 0.95*40,
-                            backgroundImage: FileImage(_imageFile),
-                          ),
-                        ),
+                        child: (_imageFile == null)
+                            ? getDefaultProfilePic(photoUrl, name, 40.0, true)
+                            : CircleAvatar(
+                                radius: 40,
+                                backgroundColor: Colors.green[300],
+                                child: CircleAvatar(
+                                  radius: 0.95 * 40,
+                                  backgroundImage: FileImage(_imageFile),
+                                ),
+                              ),
                       ),
                       SizedBox(
                         height: 30.0,
@@ -164,22 +172,30 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                             width: 50.0,
                           ),
                           Material(
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
                             color: Color(0xffbbeaba),
                             elevation: 4,
                             child: MaterialButton(
                               onPressed: () => _openImagePicker(context),
-                              child: Text('Upload New Image',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                              ),),
+                              child: Expanded(
+                                child: Text(
+                                  'Upload New Image',
+                                  softWrap: true,
+                                  style: GoogleFonts.boogaloo(
+                                    fontSize: 20,
+                                    color: Color(0xff515151),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
                             width: 30.0,
                           ),
                           Material(
-                            borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
                             color: Color(0xffbbeaba),
                             elevation: 4,
                             child: MaterialButton(
@@ -191,10 +207,14 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                                   'photoUrl': null,
                                 });
                               },
-                              child: Text('Delete Image',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                              ),
+                              child: Expanded(
+                                child: Text(
+                                  'Delete Image',
+                                  style: GoogleFonts.boogaloo(
+                                    fontSize: 20,
+                                    color: Color(0xff515151),
+                                  ),
+                                ),
                               ),
                             ),
                           ),
@@ -210,12 +230,19 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                         padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                         child: Row(
                           children: [
-                            Text('Name: ',style: GoogleFonts.boogaloo(
-                              fontSize: 20,
-                              color: Color(0xff515151),
-                            ),),
-                            SizedBox(width: 20.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Text(
+                              'Name: ',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 20.0,
+                            ),
+                            SizedBox(
+                              width: 200.0,
+                              height: 30.0,
                               child: TextFormField(
                                 initialValue: name,
                                 style: GoogleFonts.boogaloo(
@@ -240,12 +267,19 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                         padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                         child: Row(
                           children: [
-                            Text('Contact: ',style: GoogleFonts.boogaloo(
-                              fontSize: 20,
-                              color: Color(0xff515151),
-                            ),),
-                            SizedBox(width: 13.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Text(
+                              'Contact: ',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 13.0,
+                            ),
+                            SizedBox(
+                              width: 200.0,
+                              height: 30.0,
                               child: TextFormField(
                                 initialValue: contact,
                                 style: GoogleFonts.boogaloo(
@@ -271,12 +305,19 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                         padding: EdgeInsets.fromLTRB(50, 0, 50, 0),
                         child: Row(
                           children: [
-                            Text('Address: ',style: GoogleFonts.boogaloo(
-                              fontSize: 20,
-                              color: Color(0xff515151),
-                            ),),
-                            SizedBox(width: 10.0,),
-                            SizedBox(width: 200.0,height: 30.0,
+                            Text(
+                              'Address: ',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10.0,
+                            ),
+                            SizedBox(
+                              width: 200.0,
+                              height: 30.0,
                               child: TextFormField(
                                 initialValue: address,
                                 style: GoogleFonts.boogaloo(
@@ -302,14 +343,19 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                         color: Color(0xffbbeaba),
                         elevation: 4,
                         child: MaterialButton(
-                            child: Text('Done',style: GoogleFonts.boogaloo(
-                              fontSize: 20,
-                              color: Color(0xff515151),
-                            ),),
+                            child: Text(
+                              'Done',
+                              style: GoogleFonts.boogaloo(
+                                fontSize: 20,
+                                color: Color(0xff515151),
+                              ),
+                            ),
                             elevation: 4,
                             onPressed: () async {
-                              if(name==null || contact==null) MyToast().getToastBottom('Fields cant be left empty');
-                              else{
+                              if (name == null || contact == null)
+                                MyToast().getToastBottom(
+                                    'Fields cant be left empty');
+                              else {
                                 await uploadPic(context);
                                 await FirebaseFirestore.instance
                                     .collection(currentSP.service)
@@ -323,17 +369,23 @@ class _UpdateSPProfileState extends State<UpdateSPProfile> {
                               }
                             }),
                       ),
-                      SizedBox(height: 40.0,),
+                      SizedBox(
+                        height: 40.0,
+                      ),
                       Material(
                         borderRadius: BorderRadius.all(Radius.circular(30.0)),
                         color: Color(0xffF5C0AE),
                         elevation: 4,
-                        child: SizedBox(height: 40,
+                        child: SizedBox(
+                          height: 40,
                           child: MaterialButton(
-                              child: Text('Cancel',style: GoogleFonts.boogaloo(
-                                fontSize: 20,
-                                color: Color(0xff515151),
-                              ),),
+                              child: Text(
+                                'Cancel',
+                                style: GoogleFonts.boogaloo(
+                                  fontSize: 20,
+                                  color: Color(0xff515151),
+                                ),
+                              ),
                               elevation: 4,
                               onPressed: () {
                                 Navigator.pop(context);
