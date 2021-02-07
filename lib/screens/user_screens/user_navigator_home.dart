@@ -54,8 +54,8 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
       child: Scaffold(
         bottomNavigationBar: CurvedNavigationBar(
           color: Color(0xffbbeaba),
-          buttonBackgroundColor: Color(0xfff0ffeb),//Color(0xffbbeaba),
-          backgroundColor: Color(0xfff0ffeb),
+          buttonBackgroundColor: Colors.white70, //Color(0xfff0ffeb),
+          backgroundColor: Color(0xffbbeaba),
           animationCurve: Curves.easeIn,
           animationDuration: Duration(
             milliseconds: 390,
@@ -66,7 +66,11 @@ class _UserNavigatorHomeState extends State<UserNavigatorHome> {
             //   Icons.home_filled,
             //   size: 20,
             // ),
-            SvgPicture.asset('assets/images/appIcon.svg',height: 20, width: 20,),
+            SvgPicture.asset(
+              'assets/images/appIcon.svg',
+              height: 20,
+              width: 20,
+            ),
             //todo change icons
             Icon(
               Icons.chat,
