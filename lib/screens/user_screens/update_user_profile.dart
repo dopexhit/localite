@@ -221,7 +221,6 @@ class _UpdateUserProfileState extends State<UpdateUserProfile> {
                                 color: Color(0xffbbeaba),
                                 elevation: 4,
                                 child: SizedBox(
-                                  height: 40.0,
                                   child: MaterialButton(
                                     onPressed: () {
                                       FirebaseFirestore.instance
