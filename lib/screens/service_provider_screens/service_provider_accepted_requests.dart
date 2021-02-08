@@ -173,6 +173,8 @@ class _MessageTileState extends State<MessageTile> {
                 builder: (context) => SPShowAllCompletedRequests(
                       requestId: widget.uid + '-' + serviceProviderUID,
                       userUid: widget.uid,
+                      url: url,
+                      name: widget.name,
                     )));
       },
       child: Padding(
@@ -187,7 +189,7 @@ class _MessageTileState extends State<MessageTile> {
               children: [
                 Row(
                   children: [
-                    getDefaultProfilePic(url, widget.name, 20,false),
+                    getDefaultProfilePic(url, widget.name, 20, false),
                     SizedBox(
                       width: 20.0,
                     ),
