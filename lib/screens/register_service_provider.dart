@@ -227,7 +227,7 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                       SizedBox(height: 10.0),
                       Row(
                         children: [
-                          Padding(padding: EdgeInsets.fromLTRB(30.0, 13.0, 25.0, 15.0),
+                          Padding(padding: EdgeInsets.fromLTRB(30.0, 13.0, 10.0, 15.0),
                             child: Container(
                               constraints: BoxConstraints(maxWidth: 0.5*width),
                               child: Expanded(
@@ -243,45 +243,48 @@ class _RegisterServiceProviderState extends State<RegisterServiceProvider> {
                             color: Color(0xffbbeaba),
                             borderRadius: BorderRadius.all(Radius.circular(20.0)),
                             elevation: 4.0,
-                            child: SizedBox(height: 35.0,
-                              child: MaterialButton(
-                                child: Text('Go to Map',style: GoogleFonts.boogaloo(
-                                  fontSize: 18,
-                                  color: Color(0xff515151),),),
-                                onPressed: () async {
-                                  double lat = 28.1, long = 77.1;
-
-                                  if (address == null || address == '') {
-                                    MyToast().getToast('Please fill the address first!');
-                                  } else {
-                                    List<Location> locations =
-                                    await locationFromAddress(address);
-
-                                    if (locations != null && locations != []) {
-                                      lat = locations[0].latitude;
-                                      long = locations[0].longitude;
-
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => SimpleLocationPicker(
-                                                initialLatitude: lat,
-                                                initialLongitude: long,
-                                                dest: false,
-                                                appBarTitle: "Select Location",
-                                              ))).then((value) {
-                                        if (value != null) {
-                                          setState(() {
-                                            selectedLocation = value;
-                                            latitude = selectedLocation.latitude;
-                                            longitude = selectedLocation.longitude;
-                                          });
-                                        }
-                                      });
-                                    }
-                                  }
-                                },
+                            child: MaterialButton(
+                              child: Container(
+                                constraints: BoxConstraints(maxWidth: 70.0,),
+                                child: Expanded(
+                                  child: Text('Go to Map',style: GoogleFonts.boogaloo(
+                                    fontSize: 18,
+                                    color: Color(0xff515151),),),
+                                ),
                               ),
+                              onPressed: () async {
+                                double lat = 28.1, long = 77.1;
+
+                                if (address == null || address == '') {
+                                  MyToast().getToast('Please fill the address first!');
+                                } else {
+                                  List<Location> locations =
+                                  await locationFromAddress(address);
+
+                                  if (locations != null && locations != []) {
+                                    lat = locations[0].latitude;
+                                    long = locations[0].longitude;
+
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => SimpleLocationPicker(
+                                              initialLatitude: lat,
+                                              initialLongitude: long,
+                                              dest: false,
+                                              appBarTitle: "Select Location",
+                                            ))).then((value) {
+                                      if (value != null) {
+                                        setState(() {
+                                          selectedLocation = value;
+                                          latitude = selectedLocation.latitude;
+                                          longitude = selectedLocation.longitude;
+                                        });
+                                      }
+                                    });
+                                  }
+                                }
+                              },
                             ),
                           ),
                         ],
