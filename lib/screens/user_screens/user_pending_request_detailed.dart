@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
@@ -37,9 +38,42 @@ class _UserPendingRequestDetailedState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(70),
+        child: Column(
+          children: [
+            SizedBox(height: 7),
+            AppBar(
+              backgroundColor: Color(0xffbbeaba),
+              iconTheme: IconThemeData(
+                color: Color(0xff515151),
+              ),
+              automaticallyImplyLeading: false,
+              leading: GestureDetector(
+                  child: Icon(Icons.arrow_back_ios),
+                  onTap: () {
+                    Navigator.pop(context);
+                  }),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image(image: Svg('assets/images/appIcon.svg'),height: 20.0,width: 20.0,),
+                  SizedBox(width: 10),
+                  Text(
+                    'sAmigo',
+                    style: GoogleFonts.boogaloo(
+                        fontSize: 29, color: Color(0xff515151)),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Color(0xfff0ffeb),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+          padding: EdgeInsets.symmetric(vertical:0, horizontal: 0),
           child: TileStream(
             type: 'pending',
             id: widget.requestId,
@@ -82,7 +116,7 @@ class TileStream extends StatelessWidget {
           }
           return Expanded(
             child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
+              //padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
               children: tiles,
             ),
           );
@@ -154,9 +188,16 @@ class _MessageTileState extends State<MessageTile> {
 
     //todo: add profile image
     return Container(
-      color: Color(0xfff0ffeb),
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+          image: DecorationImage(
+            image: Svg('assets/images/details_background.svg'),
+            fit: BoxFit.cover,
+          )
+      ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+        padding: EdgeInsets.symmetric(horizontal: 40, vertical: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -170,7 +211,9 @@ class _MessageTileState extends State<MessageTile> {
                     color: Color(0xff3d3f3f)),),
               ],
             ),
-            getDefaultProfilePic(url, widget.providerName, 40,true),
+            Align(
+                alignment: Alignment.topLeft,
+                child: getDefaultProfilePic(url, widget.providerName, 40,true)),
             SizedBox(
               height: 10.0,
             ),

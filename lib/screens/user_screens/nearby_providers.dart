@@ -41,7 +41,7 @@ class _NearbySPState extends State<NearbySP> {
                   SizedBox(height: 30),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10),
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
                       child: StreamBuilder<QuerySnapshot>(
                         stream: DatabaseService().getAllSP(widget.title),
                         builder: (context, snapshot) {
@@ -78,7 +78,7 @@ class _NearbySPState extends State<NearbySP> {
                               children: spTiles,
                             );
                           } else {
-                            return Container();
+                            return Container();//todo message when no sp nearby
                           }
                         },
                       ),
@@ -108,21 +108,23 @@ class SPTile extends StatelessWidget {
               builder: (context) => SPDetail(currentSp: currentSP),
             ));
       },
-      child: Card(
-        elevation: 4,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-        color: Color(0xfff0ffeb),
-        child: Row(
-          children: [
-            SizedBox(width: 10.0,),
-            getDefaultProfilePic(currentSP.photoUrl, currentSP.name, 20,false),
-            SizedBox(width: 10.0,),
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Expanded(
+      child: Container(
+        child: Card(
+          semanticContainer: true,
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          elevation: 4,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
+          color: Color(0xfff0ffeb),
+          child: Row(
+            children: [
+              SizedBox(width: 10.0,),
+              getDefaultProfilePic(currentSP.photoUrl, currentSP.name, 20,false),
+              SizedBox(width: 10.0,),
+              Padding(
+                padding: EdgeInsets.all(10),
                 child: Column(
-                  //mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
                       'Name :  '+currentSP.name,
@@ -130,22 +132,22 @@ class SPTile extends StatelessWidget {
                         fontSize: 20,
                         color: Color(0xff515151),
                       ),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.left,
                     ),
                     SizedBox(height: 5.0,),
                     Text(
-                      'Address :  '+currentSP.address,
+                      'Address :  '+currentSP.address,//todo this is overflowing
                       style: GoogleFonts.boogaloo(
                         fontSize: 20,
                         color: Color(0xff515151),
                       ),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.left,
                     ),
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
