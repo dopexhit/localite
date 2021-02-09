@@ -120,7 +120,6 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
           preferredSize: Size.fromHeight(70),
           child: Column(
             children: [
-              SizedBox(height: 7),
               AppBar(
                 backgroundColor: Color(0xffbbeaba),
                 iconTheme: IconThemeData(
