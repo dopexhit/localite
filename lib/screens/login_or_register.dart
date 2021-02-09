@@ -43,6 +43,7 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Color(0xfff0ffeb),
       body: SafeArea(
@@ -97,36 +98,44 @@ class _LoginAndRegisterScreenState extends State<LoginAndRegisterScreen> {
                   SizedBox(
                     height: 8.0,
                   ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.fromLTRB(50.0, 2.0, 5.0, 2.0),
-                        child: SizedBox(
-                          width: 250.0,
-                          child: TextFormField(
-                            obscureText: hidePassword,
-                            validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : null,
-                            style: GoogleFonts.boogaloo(
-                              fontSize: 20,
-                              color: Color(0xff515151),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: width),
+                    child: Expanded(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.fromLTRB(50.0, 2.0, 0.0, 2.0),
+                            child: Container(
+                              constraints: BoxConstraints(maxWidth: 0.7*width),
+                              child: Expanded(
+                                child: TextFormField(
+                                  obscureText: hidePassword,
+                                  validator: (val) =>val.isEmpty ? "Field can't be empty" : val.length<6 ? 'A valid password must be at least 6 charcters' : null,
+                                  style: GoogleFonts.boogaloo(
+                                    fontSize: 20,
+                                    color: Color(0xff515151),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                  onChanged: (value) {
+                                    //Do something with the user input.
+                                    password = value;
+                                  },
+                                  decoration: kLoginDecoration.copyWith(hintText: 'Enter password'),
+                                ),
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                            onChanged: (value) {
-                              //Do something with the user input.
-                              password = value;
-                            },
-                            decoration: kLoginDecoration.copyWith(hintText: 'Enter password'),
                           ),
-                        ),
+                          Expanded(
+                            child: IconButton(icon: getPasswordIcon(hidePassword), onPressed:(){
+                              setState(() {
+                                hidePassword = !(hidePassword);
+                              });
+                            },
+                            focusColor: Color(0xffbbeaba),),
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 8.00,),
-                      IconButton(icon: getPasswordIcon(hidePassword), onPressed:(){
-                        setState(() {
-                          hidePassword = !(hidePassword);
-                        });
-                      },
-                      focusColor: Color(0xffbbeaba),)
-                    ],
+                    ),
                   ),
                   SizedBox(
                     height: 60.0,

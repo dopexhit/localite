@@ -153,7 +153,7 @@ class SPTile extends StatelessWidget {
                     constraints: BoxConstraints(maxWidth: 250),
                     child: Expanded(
                       child: Text(
-                        'Address :  ' + currentSP.address,
+                        'Address : ' + currentSP.address,
                         style: GoogleFonts.boogaloo(
                           fontSize: 20,
                           color: Color(0xff515151),

@@ -44,12 +44,13 @@ class _UserChatListState extends State<UserChatList> {
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white70,
       body: SafeArea(
         child: Stack(
           children: [
-            SvgPicture.asset('assets/images/design.svg'),
+            SvgPicture.asset('assets/images/design.svg',width: width,),
             Padding(
               padding: EdgeInsets.only(left: 4, right: 4, top: 7),
               child: Column(

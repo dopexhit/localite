@@ -45,12 +45,13 @@ class _SPChatListState extends State<SPChatList> {
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white70,
       body: SafeArea(
         child: Stack(
           children: [
-            SvgPicture.asset('assets/images/design.svg'),
+            SvgPicture.asset('assets/images/design.svg',width: width,),
             Padding(
               padding: EdgeInsets.only(top: 7, left: 4, right: 4),
               child: Column(

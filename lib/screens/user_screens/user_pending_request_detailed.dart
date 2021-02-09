@@ -188,8 +188,6 @@ class _MessageTileState extends State<MessageTile> {
 
     //todo: add profile image
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
           image: DecorationImage(
             image: Svg('assets/images/details_background.svg'),
