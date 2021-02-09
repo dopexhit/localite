@@ -9,6 +9,7 @@ import 'package:localite/models/service_provider_data.dart';
 import 'package:localite/models/user_data.dart';
 import 'package:localite/screens/chat_room.dart';
 import 'package:localite/screens/user_screens/user_request_screen.dart';
+import 'package:localite/services/shared_pref.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:provider/provider.dart';
@@ -88,89 +89,124 @@ class _SPDetailState extends State<SPDetail> {
               ),
               Align(
                 alignment: Alignment.topCenter,
-                child:
-                    getDefaultProfilePic(photoUrl, widget.currentSp.name, 40,true),
+                child: getDefaultProfilePic(
+                    photoUrl, widget.currentSp.name, 40, true),
               ),
               SizedBox(height: 20),
-              Text('Name :  ' + widget.currentSp.name,style: GoogleFonts.boogaloo(
-                  fontSize: 25,
-                  color: Color(0xff3d3f3f)),),
+              Text(
+                'Name :  ' + widget.currentSp.name,
+                style: GoogleFonts.boogaloo(
+                    fontSize: 25, color: Color(0xff3d3f3f)),
+              ),
               SizedBox(height: 20),
-              Text('Address :  ' + widget.currentSp.address,style: GoogleFonts.boogaloo(
-                  fontSize: 25,
-                  color: Color(0xff3d3f3f)),),
+              Text(
+                'Address :  ' + widget.currentSp.address,
+                style: GoogleFonts.boogaloo(
+                    fontSize: 25, color: Color(0xff3d3f3f)),
+              ),
               SizedBox(height: 40),
-              Text('Reach Out :',style: GoogleFonts.boogaloo(
-                  fontSize: 25,
-                  color: Color(0xff3d3f3f)),),
-              SizedBox(height: 25.0,),
+              Text(
+                'Reach Out :',
+                style: GoogleFonts.boogaloo(
+                    fontSize: 25, color: Color(0xff3d3f3f)),
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
-                    child: Image.asset('assets/images/call_icon.png',width: 30.0, height: 30.0,),
-                    onTap: ()async{
+                    child: Image.asset(
+                      'assets/images/call_icon.png',
+                      width: 30.0,
+                      height: 30.0,
+                    ),
+                    onTap: () async {
                       _makePhoneCall(widget.currentSp.contact.toString());
                     },
                   ),
                   SizedBox(width: 30),
                   GestureDetector(
-                    child: Image.asset('assets/images/message_bubble.png',width: 30.0, height: 30.0,),
-                    onTap: (){
+                    child: Image.asset(
+                      'assets/images/message_bubble.png',
+                      width: 30.0,
+                      height: 30.0,
+                    ),
+                    onTap: () {
                       String roomId =
                           loggedUser.uid + '-' + widget.currentSp.uid;
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => ChatRoom(
-                                roomId: roomId,
-                                receiverName: widget.currentSp.name,
-                                url: photoUrl,
-                                receiver: widget.currentSp,
-                                userUid: loggedUser.uid,
-                                spUid: widget.currentSp.uid,
-                              )));
+                                    roomId: roomId,
+                                    receiverName: widget.currentSp.name,
+                                    url: photoUrl,
+                                    receiver: widget.currentSp,
+                                    userUid: loggedUser.uid,
+                                    spUid: widget.currentSp.uid,
+                                  )));
                     },
                   ),
-                  SizedBox(width: 30.0,),
+                  SizedBox(
+                    width: 30.0,
+                  ),
                   GestureDetector(
-                    child: Image.asset('assets/images/map_marker.png',width: 30.0, height: 30.0,),
-                    onTap: (){
+                    child: Image.asset(
+                      'assets/images/map_marker.png',
+                      width: 30.0,
+                      height: 30.0,
+                    ),
+                    onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => SimpleLocationPicker(
-                                initialLatitude: widget.currentSp.latitude,
-                                initialLongitude: widget.currentSp.longitude,
-                                appBarTitle: "Display Location",
-                                dest: false,
-                                displayOnly: true,
-                              )));
+                                    initialLatitude: SharedPrefs.preferences
+                                        .getDouble(
+                                            'latitude'), // widget.currentSp.latitude,
+                                    initialLongitude: SharedPrefs.preferences
+                                        .getDouble(
+                                            'longitude'), //widget.currentSp.longitude,
+                                    destLatitude: widget.currentSp.latitude,
+                                    destLongitude: widget.currentSp.longitude,
+
+                                    appBarTitle: "Location",
+                                    dest: true,
+                                    displayOnly: true,
+                                  )));
                     },
                   ),
                 ],
               ),
-              SizedBox(height: 50.0,),
+              SizedBox(
+                height: 50.0,
+              ),
               Visibility(
                 visible: !pendingReq,
                 child: Material(
                   borderRadius: BorderRadius.all(Radius.circular(30.0)),
                   color: Color(0xffbbeaba),
                   elevation: 4,
-                  child: SizedBox(height: 40.0,
+                  child: SizedBox(
+                    height: 40.0,
                     child: MaterialButton(
-                        child: Text('Request home service',style: GoogleFonts.boogaloo(
-                            fontSize: 27,
-                            color: Color(0xff3d3f3f)),),
+                        child: Text(
+                          'Request home service',
+                          style: GoogleFonts.boogaloo(
+                              fontSize: 27, color: Color(0xff3d3f3f)),
+                        ),
                         onPressed: () {
                           String requestId =
                               loggedUser.uid + '-' + widget.currentSp.uid;
                           Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => UserRequestScreen(
-                                      requestID: requestId,
-                                      receiver: widget.currentSp))).then((result) {
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserRequestScreen(
+                                          requestID: requestId,
+                                          receiver: widget.currentSp)))
+                              .then((result) {
                             checkRequest();
                           });
                           //  checkRequest();
@@ -182,7 +218,9 @@ class _SPDetailState extends State<SPDetail> {
                   visible: pendingReq,
                   child: Padding(
                     padding: EdgeInsets.only(top: 200),
-                    child: Container(height: 40.0,width: 260.0,
+                    child: Container(
+                      height: 40.0,
+                      width: 260.0,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(15.0)),
                         color: Color(0xffF5C0AE),
@@ -192,8 +230,7 @@ class _SPDetailState extends State<SPDetail> {
                         child: Text(
                           'Awaiting confirmation on your request!',
                           style: GoogleFonts.boogaloo(
-                              fontSize: 22,
-                              color: Color(0xff3d3f3f)),
+                              fontSize: 22, color: Color(0xff3d3f3f)),
                         ),
                       ),
                     ),

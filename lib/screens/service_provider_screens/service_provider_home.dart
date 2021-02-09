@@ -22,6 +22,9 @@ class ServiceProviderHomeScreen extends StatefulWidget {
 
 class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
   final _auth = FirebaseAuth.instance;
+  final Shader linearGradient = LinearGradient(
+    colors: <Color>[Colors.pinkAccent[100], Color(0xff8921aa)],
+  ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
 
   @override
   void initState() {
@@ -68,7 +71,10 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
                         'Pending requests',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.boogaloo(
-                            fontSize: 29, color: Color(0xff515151)),
+                          fontSize: 29,
+                          color: Color(0xff515151),
+                          // foreground: Paint()..shader = linearGradient
+                        ),
                       ),
                       SizedBox(height: 15),
                       TileStreamPending(),
