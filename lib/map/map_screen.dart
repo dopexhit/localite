@@ -41,22 +41,35 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff97d486),
+        backgroundColor: Color(0xffbbeaba), // Color(0xff97d486),
         iconTheme: IconThemeData(color: Colors.black54),
-        title: Text(widget.appBarTitle,
-            style: GoogleFonts.boogaloo(color: Colors.black54, fontSize: 25)),
+        title: Text(
+          widget.appBarTitle,
+          style: GoogleFonts.boogaloo(color: Colors.black54, fontSize: 25),
+        ),
         actions: <Widget>[
           // DISPLAY_ONLY MODE: no save button for display only mode
           widget.displayOnly
               ? Container()
-              : IconButton(
-                  icon: Icon(Icons.room_outlined,
-                      size: 30, color: Colors.black54),
-                  onPressed: () {
+              : GestureDetector(
+                  onTap: () {
                     Navigator.of(context).pop(_selectedLocation);
                   },
-                  color: Colors.black54,
-                ),
+                  child: Center(
+                    child: Text(
+                      'Save  ',
+                      style: GoogleFonts.boogaloo(
+                          color: Colors.blue[500], fontSize: 25),
+                    ),
+                  ),
+                ), //IconButton(
+          //   icon: Icon(Icons.room_outlined,
+          //       size: 30, color: Colors.black54),
+          //   onPressed: () {
+          //     Navigator.of(context).pop(_selectedLocation);
+          //   },
+          //   color: Colors.black54,
+          // ),
         ],
       ),
       body: widget.dest ? _sourceDest() : _osmWidget(),
@@ -108,7 +121,7 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
   Widget _sourceDest() {
     return map.FlutterMap(
         options: map.MapOptions(
-            center: _selectedLocation.getLatLng(),
+            center: LatLng(widget.destLatitude, widget.destLongitude),
             zoom: 15,
             onTap: (tapLoc) {
               // DISPLAY_ONLY MODE: no map taps for display only mode
@@ -151,7 +164,7 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
                   return Column(
                     children: [
                       Text(
-                        'Destination',
+                        'Provider\'s location',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontWeight: FontWeight.w800, fontSize: 15),

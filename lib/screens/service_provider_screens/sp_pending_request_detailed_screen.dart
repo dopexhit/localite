@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:localite/constants.dart';
 import 'package:localite/map/map_screen.dart';
+import 'package:localite/models/custom_user.dart';
 import 'package:localite/screens/chat_room.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
 import 'package:localite/widgets/toast.dart';
@@ -164,10 +164,16 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => SimpleLocationPicker(
-                                        initialLatitude: latitude,
-                                        initialLongitude: longitude,
-                                        appBarTitle: "Display Location",
-                                        dest: false,
+                                        initialLatitude:
+                                            GlobalServiceProviderDetail
+                                                .spData.latitude,
+                                        initialLongitude:
+                                            GlobalServiceProviderDetail
+                                                .spData.longitude,
+                                        destLatitude: latitude,
+                                        destLongitude: longitude,
+                                        appBarTitle: "Location",
+                                        dest: true,
                                         displayOnly: true,
                                       )));
                         }),
