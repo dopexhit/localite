@@ -102,7 +102,7 @@ class _UserRequestScreenState extends State<UserRequestScreen> {
                               builder: (context) => SimpleLocationPicker(
                                     initialLatitude: lat,
                                     initialLongitude: long,
-                                dest: false,
+                                    dest: false,
                                     appBarTitle: "Select Location",
                                   ))).then((value) {
                         if (value != null) {
@@ -174,7 +174,7 @@ void addUIDs(ServiceProviderData receiver) {
 
   docRefUser.get().then((value) {
     if (value.exists) {
-      docRefUser.update({'lastMsg': Timestamp.now(), 'pending': true});
+      docRefUser.update({'lastRequest': Timestamp.now(), 'pending': true});
     } else {
       docRefUser.set({
         'uid': receiver.uid,
@@ -195,7 +195,7 @@ void addUIDs(ServiceProviderData receiver) {
 
   docRefSP.get().then((value) {
     if (value.exists) {
-      docRefSP.update({'lastMsg': Timestamp.now(), 'pending': true});
+      docRefSP.update({'lastRequest': Timestamp.now(), 'pending': true});
     } else {
       docRefSP.set({
         'uid': loggedUser.uid,

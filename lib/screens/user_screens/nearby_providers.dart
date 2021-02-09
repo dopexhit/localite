@@ -32,7 +32,8 @@ class _NearbySPState extends State<NearbySP> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SizedBox(height: 20.0),
-                  Text('The ${widget.title}s available nearby:',
+                  Text(
+                    'The ${widget.title}s available nearby:',
                     style: GoogleFonts.boogaloo(
                       fontSize: 25,
                       color: Color(0xff515151),
@@ -41,35 +42,42 @@ class _NearbySPState extends State<NearbySP> {
                   SizedBox(height: 30),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      margin: EdgeInsets.symmetric(horizontal: 10),
                       child: StreamBuilder<QuerySnapshot>(
                         stream: DatabaseService().getAllSP(widget.title),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
-                            final serviceProviders = snapshot.data.docs.reversed;
+                            final serviceProviders =
+                                snapshot.data.docs.reversed;
                             List<SPTile> spTiles = [];
                             for (var serviceProvider in serviceProviders) {
-                              ServiceProviderData currentSP = ServiceProviderData(
-                                uid: serviceProvider.data()['uid'],
-                                name: serviceProvider.data()['name'],
-                                contact: serviceProvider.data()['contact'],
-                                address: serviceProvider.data()['address'],
-                                longitude: double.parse(
-                                    serviceProvider.data()['longitude'].toString()),
-                                latitude: double.parse(
-                                    serviceProvider.data()['latitude'].toString()),
-                                service: serviceProvider.data()['service'],
-                                photoUrl: serviceProvider.data()['photoUrl']
-                              );
+                              ServiceProviderData currentSP =
+                                  ServiceProviderData(
+                                      uid: serviceProvider.data()['uid'],
+                                      name: serviceProvider.data()['name'],
+                                      contact:
+                                          serviceProvider.data()['contact'],
+                                      address:
+                                          serviceProvider.data()['address'],
+                                      longitude: double.parse(serviceProvider
+                                          .data()['longitude']
+                                          .toString()),
+                                      latitude: double.parse(serviceProvider
+                                          .data()['latitude']
+                                          .toString()),
+                                      service:
+                                          serviceProvider.data()['service'],
+                                      photoUrl:
+                                          serviceProvider.data()['photoUrl']);
 
                               var latitudeDiff =
-                                  (currentSP.latitude - widget.userLatitude).abs();
+                                  (currentSP.latitude - widget.userLatitude)
+                                      .abs();
                               var longitudeDiff =
                                   (currentSP.longitude - widget.userLongitude)
                                       .abs();
 
-                              if (latitudeDiff <= 0.2 &&
-                                  longitudeDiff <= 0.2)
+                              if (latitudeDiff <= 0.2 && longitudeDiff <= 0.2)
                                 spTiles.add(SPTile(
                                   currentSP: currentSP,
                                 ));
@@ -78,7 +86,7 @@ class _NearbySPState extends State<NearbySP> {
                               children: spTiles,
                             );
                           } else {
-                            return Container();//todo message when no sp nearby
+                            return Container();
                           }
                         },
                       ),
@@ -108,43 +116,53 @@ class SPTile extends StatelessWidget {
               builder: (context) => SPDetail(currentSp: currentSP),
             ));
       },
-      child: Container(
-        child: Card(
-          semanticContainer: true,
-          clipBehavior: Clip.antiAliasWithSaveLayer,
-          elevation: 4,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          margin: EdgeInsets.fromLTRB(5.0, 10.0, 5.0, 10.0),
-          color: Color(0xfff0ffeb),
+      child: Card(
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+        color: Color(0xfff0ffeb),
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           child: Row(
             children: [
-              SizedBox(width: 10.0,),
-              getDefaultProfilePic(currentSP.photoUrl, currentSP.name, 20,false),
-              SizedBox(width: 10.0,),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Name :  '+currentSP.name,
-                      style: GoogleFonts.boogaloo(
-                        fontSize: 20,
-                        color: Color(0xff515151),
+              getDefaultProfilePic(
+                  currentSP.photoUrl, currentSP.name, 20, false),
+              SizedBox(
+                width: 15.0,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 250),
+                    child: Expanded(
+                      child: Text(
+                        'Name :  ' + currentSP.name,
+                        style: GoogleFonts.boogaloo(
+                          fontSize: 20,
+                          color: Color(0xff515151),
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                      textAlign: TextAlign.left,
                     ),
-                    SizedBox(height: 5.0,),
-                    Text(
-                      'Address :  '+currentSP.address,//todo this is overflowing
-                      style: GoogleFonts.boogaloo(
-                        fontSize: 20,
-                        color: Color(0xff515151),
+                  ),
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Container(
+                    constraints: BoxConstraints(maxWidth: 250),
+                    child: Expanded(
+                      child: Text(
+                        'Address :  ' + currentSP.address,
+                        style: GoogleFonts.boogaloo(
+                          fontSize: 20,
+                          color: Color(0xff515151),
+                        ),
+                        textAlign: TextAlign.start,
                       ),
-                      textAlign: TextAlign.left,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),

@@ -1,28 +1,98 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/constants.dart';
 import 'package:localite/widgets/def_profile_pic.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final _firestore = FirebaseFirestore.instance;
 
 String userUID;
 
+String contact = '';
+
 class SPShowAllCompletedRequests extends StatelessWidget {
   final String requestId;
   final String userUid;
+  final String url;
+  final String name;
 
-  SPShowAllCompletedRequests({this.requestId, this.userUid});
+  SPShowAllCompletedRequests(
+      {this.requestId, this.userUid, this.url, this.name});
+
+  _makePhoneCall(String contact) async {
+    final url = 'tel:$contact';
+    print(url);
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     userUID = userUid;
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color(0xffbbeaba),
+        iconTheme: IconThemeData(color: Colors.black54),
+        leading: GestureDetector(
+            child: Icon(Icons.arrow_back_ios),
+            onTap: () {
+              Navigator.pop(context);
+            }),
+        title: Text(
+          'History',
+          style: GoogleFonts.boogaloo(
+            fontSize: 26,
+            color: Colors.black54,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: TileStream(
-            id: requestId,
+          padding: EdgeInsets.only(bottom: 15, left: 10, right: 10, top: 20),
+          child: Column(
+            children: [
+              getDefaultProfilePic(url, name, 33, true),
+              SizedBox(height: 5),
+              Text(
+                name,
+                style: GoogleFonts.boogaloo(
+                  fontSize: 22,
+                  color: Colors.black54,
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Reach Out:',
+                    style: GoogleFonts.boogaloo(
+                      fontSize: 22,
+                      color: Colors.black54,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  GestureDetector(
+                    child: Image.asset(
+                      'assets/images/call_icon.png',
+                      width: 23.0,
+                      height: 30.0,
+                    ),
+                    onTap: () async {
+                      _makePhoneCall(contact);
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 15),
+              TileStream(
+                id: requestId,
+              ),
+            ],
           ),
         ),
       ),
@@ -50,19 +120,21 @@ class TileStream extends StatelessWidget {
           List<MessageTile> tiles = [];
 
           for (var doc in userListOfRequests) {
+            contact = doc.data()['contact'];
             final tile = MessageTile(
               address: doc.data()['address'],
               description: doc.data()['description'],
-              userName: doc.data()['user name'],
-              contact: doc.data()['contact'],
               timestamp: doc.data()['timestamp'],
             );
             tiles.add(tile);
           }
           return Expanded(
-            child: ListView(
-              padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 15),
-              children: tiles,
+            child: Scrollbar(
+              radius: Radius.circular(5),
+              child: ListView(
+                padding: EdgeInsets.only(left: 15, right: 15),
+                children: tiles,
+              ),
             ),
           );
         } else {
@@ -77,48 +149,25 @@ class TileStream extends StatelessWidget {
   }
 }
 
-class MessageTile extends StatefulWidget {
+class MessageTile extends StatelessWidget {
   final String address;
   final Timestamp timestamp;
-  final String userName;
+
   final String description;
-  final String contact;
 
-  MessageTile(
-      {this.address,
-      this.timestamp,
-      this.userName,
-      this.description,
-      this.contact});
-
-  @override
-  _MessageTileState createState() => _MessageTileState();
-}
-
-class _MessageTileState extends State<MessageTile> {
-  String url;
-  @override
-  void initState() {
-    super.initState();
-    getPhoto();
-  }
-
-  void getPhoto() {
-    _firestore.collection('Users').doc(userUID).get().then((value) {
-      String photo = value.data()['photoUrl'].toString();
-      setState(() {
-        url = photo;
-      });
-    });
-  }
+  MessageTile({
+    this.address,
+    this.timestamp,
+    this.description,
+  });
 
   @override
   Widget build(BuildContext context) {
-    int hour = widget.timestamp.toDate().hour.toInt();
-    int minute = widget.timestamp.toDate().minute.toInt();
-    int day = widget.timestamp.toDate().day;
-    int month = widget.timestamp.toDate().month;
-    int year = widget.timestamp.toDate().year;
+    int hour = timestamp.toDate().hour.toInt();
+    int minute = timestamp.toDate().minute.toInt();
+    int day = timestamp.toDate().day;
+    int month = timestamp.toDate().month;
+    int year = timestamp.toDate().year;
     final String time = (hour > 9 ? hour.toString() : '0' + hour.toString()) +
         ':' +
         (minute > 9 ? minute.toString() : '0' + minute.toString());
@@ -128,66 +177,41 @@ class _MessageTileState extends State<MessageTile> {
         '/' +
         year.toString();
 
-    return Card(
-      elevation: 5,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
+    return Container(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //todo: add profile image
-                  Row(
-                    children: [
-                      getDefaultProfilePic(url, widget.userName, 30,true),
-                      SizedBox(
-                        width: 15.0,
-                      ),
-                      Text(
-                        widget.userName,
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 40),
-                  Text(
-                    'Work description: ${widget.description}',
-                    style: TextStyle(fontSize: 15, color: Colors.black87),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    'Your service address: ${widget.address}',
-                    style: TextStyle(fontSize: 15, color: Colors.black87),
-                  ),
-                  SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Icon(Icons.call),
-                      SizedBox(width: 10),
-                      Text(
-                        widget.contact,
-                        style: TextStyle(fontSize: 15, color: Colors.black87),
-                      ),
-                    ],
-                  )
-                ],
+        padding: EdgeInsets.only(left: 10, right: 10, top: 15),
+        child: Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Text('$date, $time',
+                    style: GoogleFonts.boogaloo(
+                      fontSize: 15,
+                      color: Colors.black54,
+                    )),
               ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(date),
-                SizedBox(height: 5),
-                Text(time),
-              ],
-            ),
-          ],
+              SizedBox(height: 10),
+              Text('Work description: $description',
+                  style: GoogleFonts.boogaloo(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  )),
+              SizedBox(height: 10),
+              Text('Your service address: $address',
+                  style: GoogleFonts.boogaloo(
+                    fontSize: 17,
+                    color: Colors.black54,
+                  )),
+              SizedBox(height: 15),
+              Center(
+                child: SizedBox(
+                  width: 220,
+                  child: Divider(thickness: 1, color: Colors.black54),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

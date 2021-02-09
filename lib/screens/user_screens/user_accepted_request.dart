@@ -179,6 +179,9 @@ class _MessageTileState extends State<MessageTile> {
                       requestId: userUID + '-' + widget.uid,
                       typeOfRequest: widget.type,
                       spUid: widget.uid,
+                      url: url,
+                      name: widget.name,
+                      service: widget.service,
                     )));
       },
       child: Padding(
@@ -192,7 +195,7 @@ class _MessageTileState extends State<MessageTile> {
               children: [
                 Row(
                   children: [
-                    getDefaultProfilePic(url, widget.name, 20,false),
+                    getDefaultProfilePic(url, widget.name, 20, false),
                     SizedBox(
                       width: 20.0,
                     ),
