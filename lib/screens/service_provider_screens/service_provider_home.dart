@@ -48,42 +48,49 @@ class _ServiceProviderHomeScreenState extends State<ServiceProviderHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final width=MediaQuery.of(context).size.width;
     GlobalContext.context = context;
     return WillPopScope(
       onWillPop: () {
         return SystemChannels.platform.invokeMethod('SystemNavigator.pop');
       },
       child: Scaffold(
+        backgroundColor: Color(0xfff0ffeb),
         body: SafeArea(
-          child: Center(
-              child: Column(
+          child: Stack(
             children: [
-              Expanded(
-                  child: Container(
-                margin:
-                    EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                child: Padding(
-                  padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+              SvgPicture.asset('assets/images/design.svg',width: width,),
+              Center(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        'Pending requests',
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.boogaloo(
-                          fontSize: 29,
-                          color: Color(0xff515151),
-                          // foreground: Paint()..shader = linearGradient
-                        ),
+                children: [
+                  Expanded(
+                      child: Container(
+                    margin:
+                        EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8, left: 8, right: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            'Pending requests',
+                            textAlign: TextAlign.center,
+                            style: GoogleFonts.boogaloo(
+                              fontSize: 29,
+                              color: Color(0xff515151),
+                              // foreground: Paint()..shader = linearGradient
+                            ),
+                          ),
+                          SizedBox(height: 15),
+                          TileStreamPending(),
+                        ],
                       ),
-                      SizedBox(height: 15),
-                      TileStreamPending(),
-                    ],
-                  ),
-                ),
+                    ),
+                  )),
+                ],
               )),
             ],
-          )),
+          ),
         ),
       ),
     );
