@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart' as map;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:latlong/latlong.dart';
-
 import 'map_result.dart';
 
 class SimpleLocationPicker extends StatefulWidget {
@@ -41,7 +40,7 @@ class _SimpleLocationPickerState extends State<SimpleLocationPicker> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xffbbeaba), // Color(0xff97d486),
+        backgroundColor: Color(0xffbbeaba),
         iconTheme: IconThemeData(color: Colors.black54),
         title: Text(
           widget.appBarTitle,

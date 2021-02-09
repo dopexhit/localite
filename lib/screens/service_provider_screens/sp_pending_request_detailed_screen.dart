@@ -112,7 +112,7 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
 
   @override
   Widget build(BuildContext context) {
-    final width=MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
     return ModalProgressHUD(
       inAsyncCall: false,
       child: Scaffold(
@@ -173,52 +173,71 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                       height: 20.0,
                     ),
                     Container(
-                      constraints: BoxConstraints(maxWidth: 0.8*width),
+                      constraints: BoxConstraints(maxWidth: 0.8 * width),
                       child: Expanded(
-                        child: Text('Name: $userName',
+                        child: Text(
+                          'Name: $userName',
                           style: GoogleFonts.boogaloo(
                             fontSize: 20,
                             color: Color(0xff515151),
-                          ),),
+                          ),
+                        ),
                       ),
                     ),
-                    SizedBox(height: 10.0,),
-                    Text('Description: $description',
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      'Description: $description',
                       style: GoogleFonts.boogaloo(
                         fontSize: 20,
                         color: Color(0xff515151),
-                      ),),
-                    SizedBox(height: 10.0,),
-                    Text('address: $address',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                    Text(
+                      'address: $address',
                       style: GoogleFonts.boogaloo(
                         fontSize: 20,
                         color: Color(0xff515151),
-                      ),),
-                    SizedBox(height: 30.0,),
-                    Text('Request made at $time on $date',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                      'Request made at $time on $date',
                       style: GoogleFonts.boogaloo(
                         fontSize: 15,
                         color: Color(0xff515151),
-                      ),),
-                    SizedBox(height: 30.0,),
-                    Text('Reach Out:',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    Text(
+                      'Reach Out:',
                       style: GoogleFonts.boogaloo(
                         fontSize: 20,
                         color: Color(0xff515151),
-                      ),),
-                    SizedBox(height: 10.0,),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GestureDetector(
-                          child: Image.asset(
-                            'assets/images/call_icon.png',
-                            width: 30.0,
-                            height: 30.0,
-                          ),
+                            child: Image.asset(
+                              'assets/images/call_icon.png',
+                              width: 30.0,
+                              height: 30.0,
+                            ),
                             onTap: () async =>
-                                _makePhoneCall(contact.toString())
-                        ),
+                                _makePhoneCall(contact.toString())),
                         SizedBox(width: 30),
                         GestureDetector(
                           child: Image.asset(
@@ -252,41 +271,46 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => SimpleLocationPicker(
-                                      initialLatitude:
-                                      GlobalServiceProviderDetail
-                                          .spData.latitude,
-                                      initialLongitude:
-                                      GlobalServiceProviderDetail
-                                          .spData.longitude,
-                                      destLatitude: latitude,
-                                      destLongitude: longitude,
-                                      appBarTitle: "Location",
-                                      dest: true,
-                                      displayOnly: true,
-                                    )));
+                                          initialLatitude:
+                                              GlobalServiceProviderDetail
+                                                  .spData.latitude,
+                                          initialLongitude:
+                                              GlobalServiceProviderDetail
+                                                  .spData.longitude,
+                                          destLatitude: latitude,
+                                          destLongitude: longitude,
+                                          appBarTitle: "Location",
+                                          dest: true,
+                                          displayOnly: true,
+                                        )));
                           },
                         ),
                       ],
                     ),
-                    SizedBox(height: 60.0,),
+                    SizedBox(
+                      height: 60.0,
+                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: const EdgeInsets.fromLTRB(0.5,2.0,35,0.0),
+                            padding:
+                                const EdgeInsets.fromLTRB(0.5, 2.0, 35, 0.0),
                             child: Material(
-                              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
                               color: Color(0xffF5C0AE),
                               elevation: 4,
                               child: MaterialButton(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.close, color: Colors.red),
-                                    Text('Decline',style: GoogleFonts.boogaloo(
-                                      fontSize: 20,
-                                      color: Color(0xff515151),)),
+                                    Text('Decline',
+                                        style: GoogleFonts.boogaloo(
+                                          fontSize: 20,
+                                          color: Color(0xff515151),
+                                        )),
                                   ],
                                 ),
                                 onPressed: () async {
@@ -300,8 +324,10 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                     if (value.docs.isEmpty) {
                                       MyToast().getToast('No request found!');
                                     } else {
-                                      _firestore.runTransaction((transaction) async {
-                                        transaction.delete(value.docs.first.reference);
+                                      _firestore
+                                          .runTransaction((transaction) async {
+                                        transaction
+                                            .delete(value.docs.first.reference);
                                       });
                                     }
                                   });
@@ -334,22 +360,24 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                         ),
                         Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.fromLTRB(15,2.0,30,0.0),
-                              child: Material(
-                                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                                color: Color(0xffbbeaba),
-                                elevation: 4,
-                                child: MaterialButton(
-                          child: Row(
+                          padding: const EdgeInsets.fromLTRB(15, 2.0, 30, 0.0),
+                          child: Material(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
+                            color: Color(0xffbbeaba),
+                            elevation: 4,
+                            child: MaterialButton(
+                              child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Icon(Icons.check, color: Colors.green),
-                                  Text('Accept',style: GoogleFonts.boogaloo(
-                                    fontSize: 20,
-                                    color: Color(0xff515151),)),
+                                  Text('Accept',
+                                      style: GoogleFonts.boogaloo(
+                                        fontSize: 20,
+                                        color: Color(0xff515151),
+                                      )),
                                 ],
-                          ),
-                          onPressed: () {
+                              ),
+                              onPressed: () {
                                 // delete pending request
                                 var docRef = _firestore
                                     .collection('requests')
@@ -360,8 +388,10 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                   if (value.docs.isEmpty) {
                                     MyToast().getToast('No request found!');
                                   } else {
-                                    _firestore.runTransaction((transaction) async {
-                                      transaction.delete(value.docs.first.reference);
+                                    _firestore
+                                        .runTransaction((transaction) async {
+                                      transaction
+                                          .delete(value.docs.first.reference);
                                     });
                                   }
                                 });
@@ -389,7 +419,8 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                     .doc(widget.userUID)
                                     .collection('requests')
                                     .doc(widget.spUID)
-                                    .update({'pending': false, 'completed': true});
+                                    .update(
+                                        {'pending': false, 'completed': true});
 
                                 // make service provider pending request = false completed = true
                                 _firestore
@@ -397,13 +428,14 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
                                     .doc(widget.spUID)
                                     .collection('requests')
                                     .doc(widget.userUID)
-                                    .update({'pending': false, 'completed': true});
+                                    .update(
+                                        {'pending': false, 'completed': true});
 
                                 Navigator.pop(context);
-                          },
-                        ),
-                              ),
-                            )),
+                              },
+                            ),
+                          ),
+                        )),
                       ],
                     ),
                   ],
