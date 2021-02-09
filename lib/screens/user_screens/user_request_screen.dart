@@ -93,11 +93,12 @@ class _UserRequestScreenState extends State<UserRequestScreen> {
       ),
       body: Container(
         //width: width,
+        constraints: BoxConstraints.expand(),
         decoration: BoxDecoration(
             image: DecorationImage(
               image: Svg('assets/images/details_background.svg'),
               fit: BoxFit.cover,
-            )
+            ),
         ),
         child: SafeArea(
           child: Padding(
