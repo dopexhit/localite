@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:localite/screens/about_us.dart';
 import 'package:localite/screens/selection_screen.dart';
 import 'package:localite/screens/service_provider_screens/service_provider_accepted_requests.dart';
 import 'package:localite/screens/service_provider_screens/update_service_provider_profile.dart';
@@ -94,7 +95,10 @@ class SPDrawer extends StatelessWidget {
                   color: Color(0xff515151),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => AboutUs()));
+              },
             ),
             Padding(
               //to make a horizontal line

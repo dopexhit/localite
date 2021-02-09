@@ -7,6 +7,8 @@ import 'package:localite/screens/user_screens/update_user_profile.dart';
 import 'package:localite/services/auth.dart';
 import 'package:localite/services/shared_pref.dart';
 
+import '../about_us.dart';
+
 class UserDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,10 @@ class UserDrawer extends StatelessWidget {
                   color: Color(0xff515151),
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (_) => AboutUs()));
+              },
             ),
             Padding(
               //to make a horizontal line
