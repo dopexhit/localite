@@ -57,13 +57,18 @@ class _UserPendingRequestDetailedState
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image(image: Svg('assets/images/appIcon.svg'),height: 20.0,width: 20.0,),
+                  Image(
+                    image: Svg('assets/images/appIcon.svg'),
+                    height: 20.0,
+                    width: 20.0,
+                  ),
                   SizedBox(width: 10),
                   Text(
                     'sAmigo',
                     style: GoogleFonts.boogaloo(
                         fontSize: 29, color: Color(0xff515151)),
                   ),
+                  SizedBox(width: 60),
                 ],
               ),
             ),

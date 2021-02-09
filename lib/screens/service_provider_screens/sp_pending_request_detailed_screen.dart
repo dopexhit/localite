@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:localite/map/map_screen.dart';
 import 'package:localite/models/custom_user.dart';
@@ -115,6 +116,43 @@ class _SPPendingRequestDetailState extends State<SPPendingRequestDetail> {
     return ModalProgressHUD(
       inAsyncCall: false,
       child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70),
+          child: Column(
+            children: [
+              SizedBox(height: 7),
+              AppBar(
+                backgroundColor: Color(0xffbbeaba),
+                iconTheme: IconThemeData(
+                  color: Color(0xff515151),
+                ),
+                automaticallyImplyLeading: false,
+                leading: GestureDetector(
+                    child: Icon(Icons.arrow_back_ios),
+                    onTap: () {
+                      Navigator.pop(context);
+                    }),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image(
+                      image: Svg('assets/images/appIcon.svg'),
+                      height: 20.0,
+                      width: 20.0,
+                    ),
+                    SizedBox(width: 10),
+                    Text(
+                      'sAmigo',
+                      style: GoogleFonts.boogaloo(
+                          fontSize: 29, color: Color(0xff515151)),
+                    ),
+                    SizedBox(width: 60),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
         backgroundColor: Color(0xfff0ffeb),
         body: SafeArea(
           child: Padding(
