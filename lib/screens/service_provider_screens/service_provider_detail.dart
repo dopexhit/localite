@@ -119,161 +119,163 @@ class _SPDetailState extends State<SPDetail> {
         body: SafeArea(
             child: Padding(
           padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 100.0,
-              ),
-              Align(
-                alignment: Alignment.topCenter,
-                child: getDefaultProfilePic(
-                    photoUrl, widget.currentSp.name, 40, true),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Name :  ' + widget.currentSp.name,
-                style: GoogleFonts.boogaloo(
-                    fontSize: 25, color: Color(0xff3d3f3f)),
-              ),
-              SizedBox(height: 20),
-              Text(
-                'Address :  ' + widget.currentSp.address,
-                style: GoogleFonts.boogaloo(
-                    fontSize: 25, color: Color(0xff3d3f3f)),
-              ),
-              SizedBox(height: 40),
-              Text(
-                'Reach Out :',
-                style: GoogleFonts.boogaloo(
-                    fontSize: 25, color: Color(0xff3d3f3f)),
-              ),
-              SizedBox(
-                height: 25.0,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    child: Image.asset(
-                      'assets/images/call_icon.png',
-                      width: 30.0,
-                      height: 30.0,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 100.0,
+                ),
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: getDefaultProfilePic(
+                      photoUrl, widget.currentSp.name, 40, true),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Name :  ' + widget.currentSp.name,
+                  style: GoogleFonts.boogaloo(
+                      fontSize: 25, color: Color(0xff3d3f3f)),
+                ),
+                SizedBox(height: 20),
+                Text(
+                  'Address :  ' + widget.currentSp.address,
+                  style: GoogleFonts.boogaloo(
+                      fontSize: 25, color: Color(0xff3d3f3f)),
+                ),
+                SizedBox(height: 40),
+                Text(
+                  'Reach Out :',
+                  style: GoogleFonts.boogaloo(
+                      fontSize: 25, color: Color(0xff3d3f3f)),
+                ),
+                SizedBox(
+                  height: 25.0,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      child: Image.asset(
+                        'assets/images/call_icon.png',
+                        width: 30.0,
+                        height: 30.0,
+                      ),
+                      onTap: () async {
+                        _makePhoneCall(widget.currentSp.contact.toString());
+                      },
                     ),
-                    onTap: () async {
-                      _makePhoneCall(widget.currentSp.contact.toString());
-                    },
-                  ),
-                  SizedBox(width: 30),
-                  GestureDetector(
-                    child: Image.asset(
-                      'assets/images/message_bubble.png',
-                      width: 30.0,
-                      height: 30.0,
+                    SizedBox(width: 30),
+                    GestureDetector(
+                      child: Image.asset(
+                        'assets/images/message_bubble.png',
+                        width: 30.0,
+                        height: 30.0,
+                      ),
+                      onTap: () {
+                        String roomId =
+                            loggedUser.uid + '-' + widget.currentSp.uid;
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ChatRoom(
+                                      roomId: roomId,
+                                      receiverName: widget.currentSp.name,
+                                      url: photoUrl,
+                                      receiver: widget.currentSp,
+                                      userUid: loggedUser.uid,
+                                      spUid: widget.currentSp.uid,
+                                    )));
+                      },
                     ),
-                    onTap: () {
-                      String roomId =
-                          loggedUser.uid + '-' + widget.currentSp.uid;
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ChatRoom(
-                                    roomId: roomId,
-                                    receiverName: widget.currentSp.name,
-                                    url: photoUrl,
-                                    receiver: widget.currentSp,
-                                    userUid: loggedUser.uid,
-                                    spUid: widget.currentSp.uid,
-                                  )));
-                    },
-                  ),
-                  SizedBox(
-                    width: 30.0,
-                  ),
-                  GestureDetector(
-                    child: Image.asset(
-                      'assets/images/map_marker.png',
+                    SizedBox(
                       width: 30.0,
-                      height: 30.0,
                     ),
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => SimpleLocationPicker(
-                                    initialLatitude: SharedPrefs.preferences
-                                        .getDouble(
-                                            'latitude'), // widget.currentSp.latitude,
-                                    initialLongitude: SharedPrefs.preferences
-                                        .getDouble(
-                                            'longitude'), //widget.currentSp.longitude,
-                                    destLatitude: widget.currentSp.latitude,
-                                    destLongitude: widget.currentSp.longitude,
+                    GestureDetector(
+                      child: Image.asset(
+                        'assets/images/map_marker.png',
+                        width: 30.0,
+                        height: 30.0,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SimpleLocationPicker(
+                                      initialLatitude: SharedPrefs.preferences
+                                          .getDouble(
+                                              'latitude'), // widget.currentSp.latitude,
+                                      initialLongitude: SharedPrefs.preferences
+                                          .getDouble(
+                                              'longitude'), //widget.currentSp.longitude,
+                                      destLatitude: widget.currentSp.latitude,
+                                      destLongitude: widget.currentSp.longitude,
 
-                                    appBarTitle: "Location",
-                                    dest: true,
-                                    displayOnly: true,
-                                  )));
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 50.0,
-              ),
-              Visibility(
-                visible: !pendingReq,
-                child: Material(
-                  borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                  color: Color(0xffbbeaba),
-                  elevation: 4,
-                  child: SizedBox(
-                    height: 40.0,
-                    child: MaterialButton(
-                        child: Text(
-                          'Request home service',
-                          style: GoogleFonts.boogaloo(
-                              fontSize: 27, color: Color(0xff3d3f3f)),
-                        ),
-                        onPressed: () {
-                          String requestId =
-                              loggedUser.uid + '-' + widget.currentSp.uid;
-                          Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserRequestScreen(
-                                          requestID: requestId,
-                                          receiver: widget.currentSp)))
-                              .then((result) {
-                            checkRequest();
-                          });
-                          //  checkRequest();
-                        }),
+                                      appBarTitle: "Location",
+                                      dest: true,
+                                      displayOnly: true,
+                                    )));
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 50.0,
+                ),
+                Visibility(
+                  visible: !pendingReq,
+                  child: Material(
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    color: Color(0xffbbeaba),
+                    elevation: 4,
+                    child: SizedBox(
+                      height: 40.0,
+                      child: MaterialButton(
+                          child: Text(
+                            'Request home service',
+                            style: GoogleFonts.boogaloo(
+                                fontSize: 27, color: Color(0xff3d3f3f)),
+                          ),
+                          onPressed: () {
+                            String requestId =
+                                loggedUser.uid + '-' + widget.currentSp.uid;
+                            Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserRequestScreen(
+                                            requestID: requestId,
+                                            receiver: widget.currentSp)))
+                                .then((result) {
+                              checkRequest();
+                            });
+                            //  checkRequest();
+                          }),
+                    ),
                   ),
                 ),
-              ),
-              Visibility(
-                  visible: pendingReq,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 200),
-                    child: Container(
-                      height: 40.0,
-                      width: 260.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                        color: Color(0xffF5C0AE),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          'Awaiting confirmation on your request!',
-                          style: GoogleFonts.boogaloo(
-                              fontSize: 22, color: Color(0xff3d3f3f)),
+                Visibility(
+                    visible: pendingReq,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 200),
+                      child: Container(
+                        height: 40.0,
+                        width: 260.0,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                          color: Color(0xffF5C0AE),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            'Awaiting confirmation on your request!',
+                            style: GoogleFonts.boogaloo(
+                                fontSize: 22, color: Color(0xff3d3f3f)),
+                          ),
                         ),
                       ),
-                    ),
-                  )),
-            ],
+                    )),
+              ],
+            ),
           ),
         )),
       ),
