@@ -1,4 +1,4 @@
-# localite
+# sAmigo
 
 A new Flutter application.
 
