@@ -1,16 +1,14 @@
 # sAmigo
 
-A new Flutter application.
+"Always at your service"
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features
+  - User can sign up and create an account and add their details.
+  - User can register both as a customer or as a utility provider.
+  - User can search for specific utilities in his local area like carpenter,electrician, plumber, etc and view their service location on map.  
+  - User can negotiate either directly or chat with provider in a chatroom.
+  - User can request for services and utility provider may accept/reject them based on his choice.
+  - User can mark his/her location on map.
+  - User can update his/her profile and details in realtime.
+  - User and the utility providers can see their previous contact history in the form of a list.
+  - Interactive UI with flutter.
